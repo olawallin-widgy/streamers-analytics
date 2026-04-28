@@ -117,6 +117,9 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
 .en { font-weight: 600; color: #111; font-family: 'SF Mono', monospace; font-size: 11.5px; }
 .en.miss { color: #ef4444; }
 .en.dep { color: #bbb; text-decoration: line-through; }
+.ev-src { font-size: 9px; font-weight: 700; padding: 1px 5px; margin-left: 5px; vertical-align: middle; letter-spacing: .04em; }
+.ev-src.c { background: #eff6ff; color: #2563eb; }
+.ev-src.s { background: #f0fdf4; color: #16a34a; }
 .vol { color: #6366f1; font-weight: 700; font-variant-numeric: tabular-nums; }
 .vol.z { color: #ddd; font-weight: 400; }
 .vol.w { color: #d97706; }
@@ -383,9 +386,9 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="ev-sec"><div class="ev-sec-hd">Traffic signals (Amplitude native)</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Sessions (Amplitude native)</td><td class="vol z">—</td><td><span class="badge ok">Available</span></td><td><span class="prop ok">session_id</span><span class="prop ok">session_duration</span><span class="prop ok">device_type</span><span class="prop ok">country</span></td><td class="act-ok">No action needed</td></tr>
-        <tr><td class="en">UTM &amp; Referrer (user props)</td><td class="vol z">—</td><td><span class="badge ok">Available</span></td><td><span class="prop ok">gp:utm_source</span><span class="prop ok">gp:initial_utm_source</span><span class="prop ok">gp:referring_domain</span><span class="prop ok">gp:referrer</span></td><td class="act-ok">No action needed</td></tr>
-        <tr><td class="en">Registration Completed</td><td class="vol">145</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop miss">user_id ❌</span><span class="prop miss">utm_source ❌</span><span class="prop miss">referrer_streamer_id ❌</span></td><td class="act-warn">Add utm_source as event property. Add referrer_streamer_id. Fix user_id (gp: prefix).</td></tr>
+        <tr><td class="en">Sessions (Amplitude native) <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge ok">Available</span></td><td><span class="prop ok">session_id</span><span class="prop ok">session_duration</span><span class="prop ok">device_type</span><span class="prop ok">country</span></td><td class="act-ok">No action needed</td></tr>
+        <tr><td class="en">UTM &amp; Referrer (user props) <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge ok">Available</span></td><td><span class="prop ok">gp:utm_source</span><span class="prop ok">gp:initial_utm_source</span><span class="prop ok">gp:referring_domain</span><span class="prop ok">gp:referrer</span></td><td class="act-ok">No action needed</td></tr>
+        <tr><td class="en">Registration Completed <span class="ev-src c">client</span></td><td class="vol">145</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop miss">user_id ❌</span><span class="prop miss">utm_source ❌</span><span class="prop miss">referrer_streamer_id ❌</span></td><td class="act-warn">Add utm_source as event property. Add referrer_streamer_id. Fix user_id (gp: prefix).</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -420,32 +423,32 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="ev-sec"><div class="ev-sec-hd">Registration events</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Registration Started</td><td class="vol">540</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
-        <tr><td class="en">Registration Field Completed</td><td class="vol">630</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">field</span></td><td>—</td></tr>
-        <tr><td class="en">Age Verification Checked</td><td class="vol">193</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
-        <tr><td class="en">Registration Submitted</td><td class="vol">377</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
-        <tr><td class="en">Registration Completed</td><td class="vol">145</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop miss">user_id ❌</span><span class="prop miss">utm_source ❌</span></td><td class="act-warn">Add user_id (fix gp: prefix). Add utm_source.</td></tr>
-        <tr><td class="en">Registration Failed</td><td class="vol w">174 ⚠</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">error_type (generic) ⚠</span></td><td class="act-err">Send specific error values — email_already_exists, password_too_weak, etc.</td></tr>
+        <tr><td class="en">Registration Started <span class="ev-src c">client</span></td><td class="vol">540</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
+        <tr><td class="en">Registration Field Completed <span class="ev-src c">client</span></td><td class="vol">630</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">field</span></td><td>—</td></tr>
+        <tr><td class="en">Age Verification Checked <span class="ev-src c">client</span></td><td class="vol">193</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
+        <tr><td class="en">Registration Submitted <span class="ev-src c">client</span></td><td class="vol">377</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
+        <tr><td class="en">Registration Completed <span class="ev-src c">client</span></td><td class="vol">145</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop miss">user_id ❌</span><span class="prop miss">utm_source ❌</span></td><td class="act-warn">Add user_id (fix gp: prefix). Add utm_source.</td></tr>
+        <tr><td class="en">Registration Failed <span class="ev-src c">client</span></td><td class="vol w">174 ⚠</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">error_type (generic) ⚠</span></td><td class="act-err">Send specific error values — email_already_exists, password_too_weak, etc.</td></tr>
       </tbody></table>
     </div>
     <div class="ev-sec"><div class="ev-sec-hd">Login events</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Login Submitted</td><td class="vol">337</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
-        <tr><td class="en">Login Completed</td><td class="vol">261</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop ok">token_balance</span><span class="prop miss">user_id ❌</span><span class="prop miss">is_first_login ❌</span></td><td class="act-warn">Fix user_id (gp: prefix). Add is_first_login.</td></tr>
-        <tr><td class="en">Login Failed</td><td class="vol">95</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">error_type</span></td><td>—</td></tr>
-        <tr><td class="en">Password Reset Requested</td><td class="vol">6</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
-        <tr><td class="en">Password Reset Completed</td><td class="vol">7</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">user_id</span></td><td>—</td></tr>
-        <tr><td class="en">Logout</td><td class="vol">55</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
-        <tr><td class="en dep">User LoggedIn</td><td class="vol w">2,639 🗑</td><td><span class="badge dep">Remove</span></td><td>—</td><td class="act-err">Fires on every page load, not on login. Remove from code immediately.</td></tr>
+        <tr><td class="en">Login Submitted <span class="ev-src c">client</span></td><td class="vol">337</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
+        <tr><td class="en">Login Completed <span class="ev-src c">client</span></td><td class="vol">261</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop ok">token_balance</span><span class="prop miss">user_id ❌</span><span class="prop miss">is_first_login ❌</span></td><td class="act-warn">Fix user_id (gp: prefix). Add is_first_login.</td></tr>
+        <tr><td class="en">Login Failed <span class="ev-src c">client</span></td><td class="vol">95</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">error_type</span></td><td>—</td></tr>
+        <tr><td class="en">Password Reset Requested <span class="ev-src c">client</span></td><td class="vol">6</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
+        <tr><td class="en">Password Reset Completed <span class="ev-src c">client</span></td><td class="vol">7</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">user_id</span></td><td>—</td></tr>
+        <tr><td class="en">Logout <span class="ev-src c">client</span></td><td class="vol">55</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
+        <tr><td class="en dep">User LoggedIn <span class="ev-src c">client</span></td><td class="vol w">2,639 🗑</td><td><span class="badge dep">Remove</span></td><td>—</td><td class="act-err">Fires on every page load, not on login. Remove from code immediately.</td></tr>
       </tbody></table>
     </div>
     <div class="ev-sec"><div class="ev-sec-hd">Email &amp; Attribution</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Email Verification Resent</td><td class="vol">9</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
-        <tr><td class="en miss">Email Verified</td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — fire when user clicks verification link</td></tr>
-        <tr><td class="en">UTM &amp; Referrer (user props)</td><td class="vol z">—</td><td><span class="badge ok">Available</span></td><td><span class="prop ok">gp:utm_source</span><span class="prop ok">gp:initial_utm_source</span><span class="prop ok">gp:referring_domain</span></td><td class="act-warn">Also add utm_source as event property on Registration Completed.</td></tr>
+        <tr><td class="en">Email Verification Resent <span class="ev-src c">client</span></td><td class="vol">9</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
+        <tr><td class="en miss">Email Verified <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — fire when user clicks verification link</td></tr>
+        <tr><td class="en">UTM &amp; Referrer (user props) <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge ok">Available</span></td><td><span class="prop ok">gp:utm_source</span><span class="prop ok">gp:initial_utm_source</span><span class="prop ok">gp:referring_domain</span></td><td class="act-warn">Also add utm_source as event property on Registration Completed.</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -474,14 +477,14 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="ev-sec"><div class="ev-sec-hd">Filters &amp; Browse</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Performer Filter Applied</td><td class="vol">3,387</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">filter (inconsistent) ⚠</span></td><td class="act-warn">Standardise filter values to snake_case. Investigate missing: favorites, vip_room, new, trending.</td></tr>
-        <tr><td class="en">Stream Joined</td><td class="vol">1,020</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">stream_id</span><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span><span class="prop miss">last_filter_used ❌</span></td><td class="act-warn">Add last_filter_used — the active filter when the member joined.</td></tr>
+        <tr><td class="en">Performer Filter Applied <span class="ev-src c">client</span></td><td class="vol">3,387</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">filter (inconsistent) ⚠</span></td><td class="act-warn">Standardise filter values to snake_case. Investigate missing: favorites, vip_room, new, trending.</td></tr>
+        <tr><td class="en">Stream Joined <span class="ev-src c">client</span></td><td class="vol">1,020</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">stream_id</span><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span><span class="prop miss">last_filter_used ❌</span></td><td class="act-warn">Add last_filter_used — the active filter when the member joined.</td></tr>
       </tbody></table>
     </div>
     <div class="ev-sec"><div class="ev-sec-hd">Profiles</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Performer Profile Viewed</td><td class="vol">936</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">performer_name</span><span class="prop ok">streamer_id</span></td><td>—</td></tr>
+        <tr><td class="en">Performer Profile Viewed <span class="ev-src c">client</span></td><td class="vol">936</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">performer_name</span><span class="prop ok">streamer_id</span></td><td>—</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -516,26 +519,26 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="ev-sec"><div class="ev-sec-hd">Viewership</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Stream Started</td><td class="vol">40</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>—</td></tr>
-        <tr><td class="en">Stream Ended</td><td class="vol">51</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">duration_seconds</span><span class="prop ok">total_tips_received</span><span class="prop ok">unique_viewer_count</span></td><td>—</td></tr>
-        <tr><td class="en">Stream Joined</td><td class="vol">1,020</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">stream_id</span><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>—</td></tr>
-        <tr><td class="en">Stream Left</td><td class="vol">568</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">stream_id</span><span class="prop ok">streamer_id</span><span class="prop ok">duration_seconds</span></td><td class="act-ok">Only 56% of viewers trigger this — 44% close browser.</td></tr>
+        <tr><td class="en">Stream Started <span class="ev-src c">client</span></td><td class="vol">40</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>—</td></tr>
+        <tr><td class="en">Stream Ended <span class="ev-src c">client</span></td><td class="vol">51</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">duration_seconds</span><span class="prop ok">total_tips_received</span><span class="prop ok">unique_viewer_count</span></td><td>—</td></tr>
+        <tr><td class="en">Stream Joined <span class="ev-src c">client</span></td><td class="vol">1,020</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">stream_id</span><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>—</td></tr>
+        <tr><td class="en">Stream Left <span class="ev-src c">client</span></td><td class="vol">568</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">stream_id</span><span class="prop ok">streamer_id</span><span class="prop ok">duration_seconds</span></td><td class="act-ok">Only 56% of viewers trigger this — 44% close browser.</td></tr>
       </tbody></table>
     </div>
     <div class="ev-sec"><div class="ev-sec-hd">Engagement</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Performer Followed</td><td class="vol">118</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">action</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id — needed for per-stream follow rate.</td></tr>
-        <tr><td class="en">Conversation Opened</td><td class="vol">203</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id.</td></tr>
-        <tr><td class="en">Message Sent</td><td class="vol">34</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">message_length</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id.</td></tr>
-        <tr><td class="en">StreamSpecial Triggered</td><td class="vol">52</td><td><span class="badge pend">Undocumented</span></td><td><span class="prop ok">special_name</span><span class="prop ok">cost</span><span class="prop ok">streamer_id</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Likely spin wheel — dev must confirm. Add stream_id.</td></tr>
+        <tr><td class="en">Performer Followed <span class="ev-src c">client</span></td><td class="vol">118</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">action</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id — needed for per-stream follow rate.</td></tr>
+        <tr><td class="en">Conversation Opened <span class="ev-src c">client</span></td><td class="vol">203</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id.</td></tr>
+        <tr><td class="en">Message Sent <span class="ev-src c">client</span></td><td class="vol">34</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">message_length</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id.</td></tr>
+        <tr><td class="en">StreamSpecial Triggered <span class="ev-src c">client</span></td><td class="vol">52</td><td><span class="badge pend">Undocumented</span></td><td><span class="prop ok">special_name</span><span class="prop ok">cost</span><span class="prop ok">streamer_id</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Likely spin wheel — dev must confirm. Add stream_id.</td></tr>
       </tbody></table>
     </div>
     <div class="ev-sec"><div class="ev-sec-hd">Device &amp; Orientation</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Screen Orientation Changed</td><td class="vol">52</td><td><span class="badge pend">Undocumented</span></td><td>—</td><td class="act-warn">Captures rotations only. Add orientation to Stream Joined instead.</td></tr>
-        <tr><td class="en">Stream Joined</td><td class="vol">1,020</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">stream_id</span><span class="prop ok">streamer_id</span><span class="prop miss">orientation ❌</span></td><td class="act-warn">Add orientation (horizontal/vertical) at join time.</td></tr>
+        <tr><td class="en">Screen Orientation Changed <span class="ev-src c">client</span></td><td class="vol">52</td><td><span class="badge pend">Undocumented</span></td><td>—</td><td class="act-warn">Captures rotations only. Add orientation to Stream Joined instead.</td></tr>
+        <tr><td class="en">Stream Joined <span class="ev-src c">client</span></td><td class="vol">1,020</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">stream_id</span><span class="prop ok">streamer_id</span><span class="prop miss">orientation ❌</span></td><td class="act-warn">Add orientation (horizontal/vertical) at join time.</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -570,16 +573,16 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="ev-sec"><div class="ev-sec-hd">Funnel</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Token Purchase Started</td><td class="vol">24</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">source</span><span class="prop ok">current_balance</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id when source = liveshow.</td></tr>
-        <tr><td class="en">Token Purchase Submitted</td><td class="vol">14</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">token_amount (string) ⚠</span><span class="prop warn">price_usd (string) ⚠</span><span class="prop miss">stream_id ❌</span></td><td class="act-err">Change amounts to number. Add stream_id.</td></tr>
-        <tr><td class="en">Token Purchase Completed</td><td class="vol">7</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">token_amount (string) ⚠</span><span class="prop warn">price_usd (string) ⚠</span><span class="prop ok">new_balance</span><span class="prop miss">stream_id ❌</span><span class="prop miss">is_first_purchase ❌</span><span class="prop miss">payment_provider ❌</span><span class="prop miss">payment_method ❌</span></td><td class="act-err">Change amounts to number. Add stream_id, is_first_purchase, payment_provider, payment_method.</td></tr>
-        <tr><td class="en">Token Purchase Failed</td><td class="vol">6</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">failure_reason</span><span class="prop extra">order_id +</span><span class="prop miss">stream_id ❌</span><span class="prop miss">payment_provider ❌</span><span class="prop miss">payment_method ❌</span></td><td class="act-err">Add stream_id, payment_provider, payment_method — needed to see which provider has highest failure rate.</td></tr>
+        <tr><td class="en">Token Purchase Started <span class="ev-src c">client</span></td><td class="vol">24</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">source</span><span class="prop ok">current_balance</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id when source = liveshow.</td></tr>
+        <tr><td class="en">Token Purchase Submitted <span class="ev-src c">client</span></td><td class="vol">14</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">token_amount (string) ⚠</span><span class="prop warn">price_usd (string) ⚠</span><span class="prop miss">stream_id ❌</span></td><td class="act-err">Change amounts to number. Add stream_id.</td></tr>
+        <tr><td class="en">Token Purchase Completed <span class="ev-src c">client</span></td><td class="vol">7</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">token_amount (string) ⚠</span><span class="prop warn">price_usd (string) ⚠</span><span class="prop ok">new_balance</span><span class="prop miss">stream_id ❌</span><span class="prop miss">is_first_purchase ❌</span><span class="prop miss">payment_provider ❌</span><span class="prop miss">payment_method ❌</span></td><td class="act-err">Change amounts to number. Add stream_id, is_first_purchase, payment_provider, payment_method.</td></tr>
+        <tr><td class="en">Token Purchase Failed <span class="ev-src c">client</span></td><td class="vol">6</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">failure_reason</span><span class="prop extra">order_id +</span><span class="prop miss">stream_id ❌</span><span class="prop miss">payment_provider ❌</span><span class="prop miss">payment_method ❌</span></td><td class="act-err">Add stream_id, payment_provider, payment_method — needed to see which provider has highest failure rate.</td></tr>
       </tbody></table>
     </div>
     <div class="ev-sec"><div class="ev-sec-hd">Packages &amp; Context</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Token Package Selected</td><td class="vol">104</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">token_amount (string) ⚠</span><span class="prop warn">price_usd (string) ⚠</span><span class="prop miss">stream_id ❌</span></td><td class="act-err">Change token_amount + price_usd to number — blocks AOV calculation. Add stream_id.</td></tr>
+        <tr><td class="en">Token Package Selected <span class="ev-src c">client</span></td><td class="vol">104</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">token_amount (string) ⚠</span><span class="prop warn">price_usd (string) ⚠</span><span class="prop miss">stream_id ❌</span></td><td class="act-err">Change token_amount + price_usd to number — blocks AOV calculation. Add stream_id.</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -613,18 +616,18 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="ev-sec"><div class="ev-sec-hd">Tipping events</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Tip Panel Opened</td><td class="vol">431</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">context</span><span class="prop ok">streamer_id</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id.</td></tr>
-        <tr><td class="en">Tip Sent</td><td class="vol">111</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">amount</span><span class="prop ok">tip_type</span><span class="prop ok">streamer_id</span><span class="prop ok">remaining_balance</span><span class="prop ok">context</span><span class="prop miss">stream_id ❌</span><span class="prop miss">amount_usd ❌</span></td><td class="act-warn">Add stream_id + amount_usd.</td></tr>
-        <tr><td class="en">StreamSpecial Triggered</td><td class="vol">52</td><td><span class="badge pend">Undocumented</span></td><td><span class="prop ok">special_name</span><span class="prop ok">cost</span><span class="prop ok">streamer_id</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Clarify: is this the spin wheel? Confirm special_name values. Add stream_id.</td></tr>
-        <tr><td class="en miss">Spin Wheel Enabled</td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — fire when streamer enables the spin wheel. Props: streamer_id, stream_id.</td></tr>
-        <tr><td class="en miss">Spin Wheel Action Triggered</td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — viewer triggers action. Props: streamer_id, stream_id, action_name, cost_tokens, amount_usd, member_id.</td></tr>
+        <tr><td class="en">Tip Panel Opened <span class="ev-src c">client</span></td><td class="vol">431</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">context</span><span class="prop ok">streamer_id</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id.</td></tr>
+        <tr><td class="en">Tip Sent <span class="ev-src c">client</span></td><td class="vol">111</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">amount</span><span class="prop ok">tip_type</span><span class="prop ok">streamer_id</span><span class="prop ok">remaining_balance</span><span class="prop ok">context</span><span class="prop miss">stream_id ❌</span><span class="prop miss">amount_usd ❌</span></td><td class="act-warn">Add stream_id + amount_usd.</td></tr>
+        <tr><td class="en">StreamSpecial Triggered <span class="ev-src c">client</span></td><td class="vol">52</td><td><span class="badge pend">Undocumented</span></td><td><span class="prop ok">special_name</span><span class="prop ok">cost</span><span class="prop ok">streamer_id</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Clarify: is this the spin wheel? Confirm special_name values. Add stream_id.</td></tr>
+        <tr><td class="en miss">Spin Wheel Enabled <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — fire when streamer enables the spin wheel. Props: streamer_id, stream_id.</td></tr>
+        <tr><td class="en miss">Spin Wheel Action Triggered <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — viewer triggers action. Props: streamer_id, stream_id, action_name, cost_tokens, amount_usd, member_id.</td></tr>
       </tbody></table>
     </div>
     <div class="ev-sec"><div class="ev-sec-hd">Casino &amp; FTD events</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Casino Outclick</td><td class="vol">169</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">casino_name</span><span class="prop ok">affiliate_link</span><span class="prop ok">cta_text</span><span class="prop ok">source</span><span class="prop ok">streamer_id</span><span class="prop ok">member_id</span><span class="prop extra">partner +</span><span class="prop miss">operator_id ❌</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Rename partner → operator_id. Add stream_id.</td></tr>
-        <tr><td class="en">FTD Completed</td><td class="vol w">2 ⚠</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">member_username</span><span class="prop ok">operator_name</span><span class="prop ok">operator_id</span><span class="prop ok">amount</span><span class="prop ok">currency</span><span class="prop miss">user_id ❌</span><span class="prop miss">streamer_id ❌</span><span class="prop miss">stream_id ❌</span><span class="prop miss">transaction_id ❌</span></td><td class="act-err">Add user_id, streamer_id, stream_id, transaction_id. Verify 2 events are real, not test data.</td></tr>
+        <tr><td class="en">Casino Outclick <span class="ev-src c">client</span></td><td class="vol">169</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">casino_name</span><span class="prop ok">affiliate_link</span><span class="prop ok">cta_text</span><span class="prop ok">source</span><span class="prop ok">streamer_id</span><span class="prop ok">member_id</span><span class="prop extra">partner +</span><span class="prop miss">operator_id ❌</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Rename partner → operator_id. Add stream_id.</td></tr>
+        <tr><td class="en">FTD Completed <span class="ev-src s">server</span></td><td class="vol w">2 ⚠</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">member_username</span><span class="prop ok">operator_name</span><span class="prop ok">operator_id</span><span class="prop ok">amount</span><span class="prop ok">currency</span><span class="prop miss">user_id ❌</span><span class="prop miss">streamer_id ❌</span><span class="prop miss">stream_id ❌</span><span class="prop miss">transaction_id ❌</span></td><td class="act-err">Add user_id, streamer_id, stream_id, transaction_id. Verify 2 events are real, not test data.</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -654,16 +657,16 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="ev-sec"><div class="ev-sec-hd">Cohort retention</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Registration Completed</td><td class="vol">145</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop miss">user_id ❌</span></td><td class="act-err">Fix user_id (gp: prefix) — needed to link registrations to future sessions for cohort retention.</td></tr>
-        <tr><td class="en">Login Completed</td><td class="vol">261</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop ok">token_balance</span><span class="prop miss">user_id ❌</span></td><td class="act-err">Fix user_id — needed to identify the same returning member across sessions.</td></tr>
+        <tr><td class="en">Registration Completed <span class="ev-src c">client</span></td><td class="vol">145</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop miss">user_id ❌</span></td><td class="act-err">Fix user_id (gp: prefix) — needed to link registrations to future sessions for cohort retention.</td></tr>
+        <tr><td class="en">Login Completed <span class="ev-src c">client</span></td><td class="vol">261</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop ok">token_balance</span><span class="prop miss">user_id ❌</span></td><td class="act-err">Fix user_id — needed to identify the same returning member across sessions.</td></tr>
       </tbody></table>
     </div>
     <div class="ev-sec"><div class="ev-sec-hd">Activity &amp; Stickiness</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Sessions (Amplitude native)</td><td class="vol z">—</td><td><span class="badge ok">Available</span></td><td><span class="prop ok">session_id</span><span class="prop ok">device_type</span><span class="prop ok">country</span></td><td class="act-ok">Use for DAU/WAU and stickiness. No custom event needed.</td></tr>
-        <tr><td class="en">Login Completed</td><td class="vol">261</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop miss">user_id ❌</span></td><td class="act-err">Fix user_id — undercounts active members who stay logged in across sessions.</td></tr>
-        <tr><td class="en">Logout</td><td class="vol">55</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
+        <tr><td class="en">Sessions (Amplitude native) <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge ok">Available</span></td><td><span class="prop ok">session_id</span><span class="prop ok">device_type</span><span class="prop ok">country</span></td><td class="act-ok">Use for DAU/WAU and stickiness. No custom event needed.</td></tr>
+        <tr><td class="en">Login Completed <span class="ev-src c">client</span></td><td class="vol">261</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop miss">user_id ❌</span></td><td class="act-err">Fix user_id — undercounts active members who stay logged in across sessions.</td></tr>
+        <tr><td class="en">Logout <span class="ev-src c">client</span></td><td class="vol">55</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -693,22 +696,22 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="ev-sec"><div class="ev-sec-hd">Registration events</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Streamer Registration Started</td><td class="vol">52</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
-        <tr><td class="en">Streamer Registration Submitted</td><td class="vol">31</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
-        <tr><td class="en">Streamer Registration Completed</td><td class="vol">15</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop miss">streamer_id ❌</span></td><td class="act-warn">Add streamer_id — needed to track all activity per streamer.</td></tr>
-        <tr><td class="en">Streamer Registration Failed</td><td class="vol w">24 ⚠</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">error_type (generic) ⚠</span></td><td class="act-err">Send specific error values.</td></tr>
-        <tr><td class="en">Streamer Email Verification Resent</td><td class="vol">2</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
-        <tr><td class="en miss">Streamer Email Verified</td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — fire when streamer clicks verification link.</td></tr>
+        <tr><td class="en">Streamer Registration Started <span class="ev-src c">client</span></td><td class="vol">52</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
+        <tr><td class="en">Streamer Registration Submitted <span class="ev-src c">client</span></td><td class="vol">31</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
+        <tr><td class="en">Streamer Registration Completed <span class="ev-src c">client</span></td><td class="vol">15</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop miss">streamer_id ❌</span></td><td class="act-warn">Add streamer_id — needed to track all activity per streamer.</td></tr>
+        <tr><td class="en">Streamer Registration Failed <span class="ev-src c">client</span></td><td class="vol w">24 ⚠</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">error_type (generic) ⚠</span></td><td class="act-err">Send specific error values.</td></tr>
+        <tr><td class="en">Streamer Email Verification Resent <span class="ev-src c">client</span></td><td class="vol">2</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
+        <tr><td class="en miss">Streamer Email Verified <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — fire when streamer clicks verification link.</td></tr>
       </tbody></table>
     </div>
     <div class="ev-sec"><div class="ev-sec-hd">Login events</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Streamer Login Submitted</td><td class="vol">103</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
-        <tr><td class="en">Streamer Login Completed</td><td class="vol">70</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop warn">token_balance ⚠</span><span class="prop miss">streamer_id ❌</span></td><td class="act-warn">Rename token_balance → total_balance. Add streamer_id.</td></tr>
-        <tr><td class="en">Streamer Login Failed</td><td class="vol">36</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">error_type</span></td><td>—</td></tr>
-        <tr><td class="en">Streamer Logout</td><td class="vol">29</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
-        <tr><td class="en miss">Onboarding Completed</td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — fire when streamer finishes all onboarding steps. Needed for overall completion rate.</td></tr>
+        <tr><td class="en">Streamer Login Submitted <span class="ev-src c">client</span></td><td class="vol">103</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
+        <tr><td class="en">Streamer Login Completed <span class="ev-src c">client</span></td><td class="vol">70</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop warn">token_balance ⚠</span><span class="prop miss">streamer_id ❌</span></td><td class="act-warn">Rename token_balance → total_balance. Add streamer_id.</td></tr>
+        <tr><td class="en">Streamer Login Failed <span class="ev-src c">client</span></td><td class="vol">36</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">error_type</span></td><td>—</td></tr>
+        <tr><td class="en">Streamer Logout <span class="ev-src c">client</span></td><td class="vol">29</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
+        <tr><td class="en miss">Onboarding Completed <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — fire when streamer finishes all onboarding steps. Needed for overall completion rate.</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -734,10 +737,10 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="ev-sec"><div class="ev-sec-hd">KYC events (all pending)</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">KYC Started</td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td>—</td><td class="act-ok">Implement when KYROS integration is ready.</td></tr>
-        <tr><td class="en">KYC Step Completed</td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">step_name</span><span class="prop ok">step_number</span></td><td class="act-ok">Implement when KYROS integration is ready.</td></tr>
-        <tr><td class="en">KYC Completed</td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">user_id</span></td><td class="act-ok">Implement when KYROS integration is ready.</td></tr>
-        <tr><td class="en">KYC Failed</td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">user_id</span><span class="prop ok">failure_reason</span></td><td class="act-ok">Implement when KYROS integration is ready.</td></tr>
+        <tr><td class="en">KYC Started <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td>—</td><td class="act-ok">Implement when KYROS integration is ready.</td></tr>
+        <tr><td class="en">KYC Step Completed <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">step_name</span><span class="prop ok">step_number</span></td><td class="act-ok">Implement when KYROS integration is ready.</td></tr>
+        <tr><td class="en">KYC Completed <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">user_id</span></td><td class="act-ok">Implement when KYROS integration is ready.</td></tr>
+        <tr><td class="en">KYC Failed <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">user_id</span><span class="prop ok">failure_reason</span></td><td class="act-ok">Implement when KYROS integration is ready.</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -767,16 +770,16 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="ev-sec"><div class="ev-sec-hd">Account setup events</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Identity Verification Submitted</td><td class="vol">8</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
-        <tr><td class="en">Identity Verified</td><td class="vol">6</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
-        <tr><td class="en">Consent Form Viewed</td><td class="vol">15</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
-        <tr><td class="en">Terms Viewed</td><td class="vol">3</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
-        <tr><td class="en">Streamer Profile Updated</td><td class="vol">6</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">fields_updated</span></td><td>—</td></tr>
-        <tr><td class="en">Gallery Media Uploaded</td><td class="vol">17</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">media_type</span></td><td>—</td></tr>
-        <tr><td class="en miss">Referral Link Copied</td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — marked done in ClickUp but missing from Amplitude.</td></tr>
-        <tr><td class="en">Streamer Conversation Opened</td><td class="vol">35</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">member_name</span><span class="prop ok">member_id</span></td><td>—</td></tr>
-        <tr><td class="en">Streamer Message Sent</td><td class="vol">5</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">member_name</span><span class="prop ok">member_id</span><span class="prop ok">message_length</span></td><td>—</td></tr>
-        <tr><td class="en miss">Chat Disabled</td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — marked done in ClickUp but missing from Amplitude.</td></tr>
+        <tr><td class="en">Identity Verification Submitted <span class="ev-src c">client</span></td><td class="vol">8</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
+        <tr><td class="en">Identity Verified <span class="ev-src s">server</span></td><td class="vol">6</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
+        <tr><td class="en">Consent Form Viewed <span class="ev-src c">client</span></td><td class="vol">15</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
+        <tr><td class="en">Terms Viewed <span class="ev-src c">client</span></td><td class="vol">3</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
+        <tr><td class="en">Streamer Profile Updated <span class="ev-src c">client</span></td><td class="vol">6</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">fields_updated</span></td><td>—</td></tr>
+        <tr><td class="en">Gallery Media Uploaded <span class="ev-src c">client</span></td><td class="vol">17</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">media_type</span></td><td>—</td></tr>
+        <tr><td class="en miss">Referral Link Copied <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — marked done in ClickUp but missing from Amplitude.</td></tr>
+        <tr><td class="en">Streamer Conversation Opened <span class="ev-src c">client</span></td><td class="vol">35</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">member_name</span><span class="prop ok">member_id</span></td><td>—</td></tr>
+        <tr><td class="en">Streamer Message Sent <span class="ev-src c">client</span></td><td class="vol">5</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">member_name</span><span class="prop ok">member_id</span><span class="prop ok">message_length</span></td><td>—</td></tr>
+        <tr><td class="en miss">Chat Disabled <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — marked done in ClickUp but missing from Amplitude.</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -803,12 +806,12 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="ev-sec"><div class="ev-sec-hd">Show &amp; template events</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Show Scheduled</td><td class="vol">8</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">show_date</span></td><td>—</td></tr>
-        <tr><td class="en">Show Cancelled</td><td class="vol">2</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">show_id</span></td><td>—</td></tr>
-        <tr><td class="en miss">Show Deleted</td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — marked done in ClickUp but missing from Amplitude.</td></tr>
-        <tr><td class="en">Tip Template Created</td><td class="vol">1</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">action_count</span></td><td>—</td></tr>
-        <tr><td class="en">Tip Template Edited</td><td class="vol">5</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
-        <tr><td class="en miss">Tip Template Deleted</td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — marked done in ClickUp but missing from Amplitude.</td></tr>
+        <tr><td class="en">Show Scheduled <span class="ev-src c">client</span></td><td class="vol">8</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">show_date</span></td><td>—</td></tr>
+        <tr><td class="en">Show Cancelled <span class="ev-src c">client</span></td><td class="vol">2</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">show_id</span></td><td>—</td></tr>
+        <tr><td class="en miss">Show Deleted <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — marked done in ClickUp but missing from Amplitude.</td></tr>
+        <tr><td class="en">Tip Template Created <span class="ev-src c">client</span></td><td class="vol">1</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">action_count</span></td><td>—</td></tr>
+        <tr><td class="en">Tip Template Edited <span class="ev-src c">client</span></td><td class="vol">5</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
+        <tr><td class="en miss">Tip Template Deleted <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — marked done in ClickUp but missing from Amplitude.</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -841,11 +844,11 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="ev-sec"><div class="ev-sec-hd">Performance events</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Go Live Clicked</td><td class="vol">34</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>—</td></tr>
-        <tr><td class="en">Stream Started</td><td class="vol">40</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>—</td></tr>
-        <tr><td class="en">Stream Ended</td><td class="vol">51</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">duration_seconds</span><span class="prop ok">total_tips_received</span><span class="prop ok">unique_viewer_count</span><span class="prop miss">total_tips_usd ❌</span></td><td class="act-warn">Add total_tips_usd — dollar value of all tips in stream session.</td></tr>
-        <tr><td class="en">Casino Outclick</td><td class="vol">169</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">casino_name</span><span class="prop extra">partner +</span></td><td class="act-warn">Rename partner → operator_id.</td></tr>
-        <tr><td class="en">FTD Completed</td><td class="vol w">2 ⚠</td><td><span class="badge warn">Issue</span></td><td><span class="prop miss">streamer_id ❌</span><span class="prop miss">user_id ❌</span><span class="prop miss">transaction_id ❌</span></td><td class="act-err">Add streamer_id + user_id + transaction_id.</td></tr>
+        <tr><td class="en">Go Live Clicked <span class="ev-src c">client</span></td><td class="vol">34</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>—</td></tr>
+        <tr><td class="en">Stream Started <span class="ev-src c">client</span></td><td class="vol">40</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>—</td></tr>
+        <tr><td class="en">Stream Ended <span class="ev-src c">client</span></td><td class="vol">51</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">duration_seconds</span><span class="prop ok">total_tips_received</span><span class="prop ok">unique_viewer_count</span><span class="prop miss">total_tips_usd ❌</span></td><td class="act-warn">Add total_tips_usd — dollar value of all tips in stream session.</td></tr>
+        <tr><td class="en">Casino Outclick <span class="ev-src c">client</span></td><td class="vol">169</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">casino_name</span><span class="prop extra">partner +</span></td><td class="act-warn">Rename partner → operator_id.</td></tr>
+        <tr><td class="en">FTD Completed <span class="ev-src s">server</span></td><td class="vol w">2 ⚠</td><td><span class="badge warn">Issue</span></td><td><span class="prop miss">streamer_id ❌</span><span class="prop miss">user_id ❌</span><span class="prop miss">transaction_id ❌</span></td><td class="act-err">Add streamer_id + user_id + transaction_id.</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -872,10 +875,10 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="ev-sec"><div class="ev-sec-hd">Finance events (all pending)</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Withdrawal Requested</td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">amount</span><span class="prop ok">currency</span></td><td class="act-ok">Implement when finance module is ready.</td></tr>
-        <tr><td class="en">Withdrawal Completed</td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">amount</span><span class="prop ok">currency</span></td><td class="act-ok">Implement when finance module is ready.</td></tr>
-        <tr><td class="en">Bank Details Saved</td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">method</span></td><td class="act-ok">Implement when finance module is ready.</td></tr>
-        <tr><td class="en">VIP Room Price Set</td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">price_tokens</span><span class="prop ok">price_usd</span></td><td class="act-ok">Implement when finance module is ready.</td></tr>
+        <tr><td class="en">Withdrawal Requested <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">amount</span><span class="prop ok">currency</span></td><td class="act-ok">Implement when finance module is ready.</td></tr>
+        <tr><td class="en">Withdrawal Completed <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">amount</span><span class="prop ok">currency</span></td><td class="act-ok">Implement when finance module is ready.</td></tr>
+        <tr><td class="en">Bank Details Saved <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">method</span></td><td class="act-ok">Implement when finance module is ready.</td></tr>
+        <tr><td class="en">VIP Room Price Set <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">price_tokens</span><span class="prop ok">price_usd</span></td><td class="act-ok">Implement when finance module is ready.</td></tr>
       </tbody></table>
     </div>
   </div>
