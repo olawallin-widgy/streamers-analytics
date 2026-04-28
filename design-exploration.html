@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Exploration — Analytics</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f0f0; color: #1a1a1a; font-size: 14px; }
+
+  .page-label { text-align: center; padding: 40px 20px 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #999; }
+  .variant-label { text-align: center; padding: 32px 20px 8px; font-size: 13px; font-weight: 700; color: #444; letter-spacing: 0.04em; }
+  .variant-desc { text-align: center; font-size: 12px; color: #999; margin-bottom: 24px; }
+  .variant-wrap { max-width: 980px; margin: 0 auto 60px; padding: 0 20px; }
+
+  /* ═══════════════════════════════════
+     VARIANT A — Clean Minimal
+  ═══════════════════════════════════ */
+
+  .va { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+
+  /* header */
+  .va-header { padding: 20px 28px 0; border-bottom: 1px solid #f0f0f0; }
+  .va-brand { font-size: 12px; font-weight: 600; color: #999; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 16px; }
+  .va-nav { display: flex; gap: 0; overflow-x: auto; }
+  .va-nav-step { display: flex; align-items: center; gap: 0; flex-shrink: 0; }
+  .va-nav-btn { padding: 8px 16px 10px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #bbb; background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all .15s; }
+  .va-nav-btn:hover { color: #555; }
+  .va-nav-btn.active { color: #111; border-bottom-color: #111; }
+  .va-nav-btn.step-label { color: #6d28d9; background: #ede9fe; border-radius: 6px 6px 0 0; margin: 0 2px; border-bottom: 2px solid transparent; font-size: 9px; cursor: default; padding: 8px 10px 10px; }
+  .va-nav-sep { color: #e0e0e0; font-size: 14px; line-height: 38px; }
+
+  /* content */
+  .va-body { padding: 24px 28px; }
+
+  /* conversion context */
+  .va-conv { display: flex; align-items: center; gap: 10px; background: #fafafa; border: 1px solid #f0f0f0; border-radius: 8px; padding: 10px 14px; margin-bottom: 20px; font-size: 12px; color: #666; }
+  .va-conv-rate { font-weight: 700; color: #111; font-size: 15px; }
+  .va-conv-sep { color: #ddd; }
+
+  /* section toggle */
+  .va-toggle { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .va-toggle-title { font-size: 16px; font-weight: 700; color: #111; }
+  .va-toggle-pills { display: flex; background: #f5f5f5; border-radius: 8px; padding: 3px; gap: 2px; }
+  .va-toggle-pill { padding: 5px 14px; font-size: 11px; font-weight: 600; border-radius: 6px; border: none; cursor: pointer; background: none; color: #888; transition: all .15s; letter-spacing: 0.03em; }
+  .va-toggle-pill.active { background: #fff; color: #111; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+  /* questions view */
+  .va-questions { display: flex; flex-direction: column; gap: 2px; }
+  .va-q { display: flex; align-items: flex-start; gap: 14px; padding: 12px 0; border-bottom: 1px solid #f5f5f5; }
+  .va-q:last-child { border-bottom: none; }
+  .va-status { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+  .va-status.yes { background: #22c55e; }
+  .va-status.part { background: #f59e0b; }
+  .va-status.no { background: #ef4444; }
+  .va-status.future { background: #d1d5db; }
+  .va-q-text { flex: 1; }
+  .va-q-main { font-size: 13px; font-weight: 500; color: #111; line-height: 1.5; }
+  .va-q-note { font-size: 11.5px; color: #999; margin-top: 3px; line-height: 1.5; }
+  .va-q-note code { font-family: 'SF Mono', monospace; font-size: 11px; background: #f5f5f5; padding: 1px 5px; border-radius: 3px; color: #555; }
+  .va-q-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px; margin-right: 6px; flex-shrink: 0; margin-top: 1px; }
+  .va-q-tag.yes { background: #f0fdf4; color: #15803d; }
+  .va-q-tag.part { background: #fffbeb; color: #b45309; }
+  .va-q-tag.no { background: #fef2f2; color: #dc2626; }
+
+  /* implementation view */
+  .va-impl { display: none; }
+  .va-impl-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .va-impl-table th { text-align: left; padding: 8px 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #bbb; border-bottom: 2px solid #f0f0f0; }
+  .va-impl-table td { padding: 10px 12px; border-bottom: 1px solid #f7f7f7; vertical-align: top; }
+  .va-impl-table tr:last-child td { border-bottom: none; }
+  .va-impl-table tr.missing td { background: #fef9f9; }
+  .va-event { font-weight: 600; color: #111; font-size: 12px; }
+  .va-event.miss { color: #ef4444; }
+  .va-vol { font-size: 12px; color: #666; font-variant-numeric: tabular-nums; }
+  .va-badge { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px; white-space: nowrap; }
+  .va-badge.ok { background: #f0fdf4; color: #15803d; }
+  .va-badge.warn { background: #fffbeb; color: #b45309; }
+  .va-badge.miss { background: #fef2f2; color: #dc2626; }
+  .va-prop { display: inline-block; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin: 2px 2px 2px 0; font-family: 'SF Mono', monospace; }
+  .va-prop.ok { background: #f5f5f5; color: #555; }
+  .va-prop.miss { background: #fef2f2; color: #dc2626; }
+  .va-prop.warn { background: #fffbeb; color: #b45309; }
+  .va-action { font-size: 11px; color: #666; line-height: 1.5; }
+  .va-action code { font-family: 'SF Mono', monospace; font-size: 10px; background: #f5f5f5; padding: 1px 5px; border-radius: 3px; color: #555; }
+
+
+  /* ═══════════════════════════════════
+     VARIANT B — Indigo Sidebar Style
+  ═══════════════════════════════════ */
+
+  .vb { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); display: flex; min-height: 500px; }
+
+  .vb-nav { width: 200px; flex-shrink: 0; background: #18181b; padding: 20px 0; display: flex; flex-direction: column; }
+  .vb-brand { padding: 0 18px 20px; font-size: 11px; font-weight: 700; color: #52525b; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid #27272a; margin-bottom: 12px; }
+  .vb-section { padding: 4px 0; }
+  .vb-section-label { padding: 6px 18px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #52525b; }
+  .vb-nav-btn { display: block; width: 100%; text-align: left; padding: 7px 18px; font-size: 12px; font-weight: 500; color: #a1a1aa; background: none; border: none; cursor: pointer; border-radius: 0; transition: all .1s; }
+  .vb-nav-btn:hover { background: #27272a; color: #e4e4e7; }
+  .vb-nav-btn.active { background: #3f3f46; color: #fff; font-weight: 600; }
+  .vb-nav-btn .dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; margin-right: 8px; background: #52525b; vertical-align: middle; margin-top: -1px; }
+  .vb-nav-btn.active .dot { background: #a78bfa; }
+
+  .vb-body { flex: 1; padding: 28px 32px; overflow: auto; }
+  .vb-step-tag { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #7c3aed; background: #ede9fe; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; }
+  .vb-title { font-size: 20px; font-weight: 700; color: #111; margin-bottom: 4px; }
+  .vb-subtitle { font-size: 12px; color: #999; margin-bottom: 20px; }
+
+  .vb-conv { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .vb-conv-item { background: #fafafa; border: 1px solid #f0f0f0; border-radius: 10px; padding: 12px 16px; min-width: 120px; }
+  .vb-conv-rate { font-size: 22px; font-weight: 700; color: #111; line-height: 1; }
+  .vb-conv-rate.na { font-size: 16px; color: #bbb; }
+  .vb-conv-label { font-size: 10px; color: #999; margin-top: 4px; }
+
+  .vb-toggle { display: flex; gap: 4px; background: #f5f5f5; border-radius: 8px; padding: 3px; width: fit-content; margin-bottom: 20px; }
+  .vb-toggle-btn { padding: 5px 16px; font-size: 11px; font-weight: 600; border-radius: 6px; border: none; cursor: pointer; background: none; color: #888; }
+  .vb-toggle-btn.active { background: #fff; color: #111; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+  .vb-q { display: grid; grid-template-columns: auto 1fr; gap: 14px 16px; padding: 13px 0; border-bottom: 1px solid #f5f5f5; align-items: start; }
+  .vb-q:last-child { border-bottom: none; }
+  .vb-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .vb-dot.yes { background: #22c55e; }
+  .vb-dot.part { background: #f59e0b; }
+  .vb-dot.no { background: #e5e7eb; border: 1.5px solid #d1d5db; }
+  .vb-q-main { font-size: 13px; font-weight: 500; color: #111; line-height: 1.5; }
+  .vb-q-note { font-size: 11.5px; color: #9ca3af; margin-top: 3px; line-height: 1.5; }
+
+  /* ═══════════════════════════════════
+     VARIANT C — Two-col docs style
+  ═══════════════════════════════════ */
+  .vc { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .vc-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-bottom: 1px solid #f0f0f0; }
+  .vc-brand { font-size: 12px; font-weight: 700; color: #111; }
+  .vc-nav { display: flex; gap: 2px; }
+  .vc-nav-btn { padding: 6px 14px; font-size: 11px; font-weight: 600; color: #999; background: none; border: none; border-radius: 6px; cursor: pointer; }
+  .vc-nav-btn:hover { background: #f5f5f5; color: #555; }
+  .vc-nav-btn.active { background: #111; color: #fff; }
+  .vc-nav-step { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #7c3aed; background: #ede9fe; border-radius: 20px; padding: 6px 12px; margin: 0 2px; border: none; cursor: default; }
+
+  .vc-body { display: grid; grid-template-columns: 1fr 1fr; }
+  .vc-col { padding: 24px; }
+  .vc-col:first-child { border-right: 1px solid #f0f0f0; }
+  .vc-col-header { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #bbb; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
+  .vc-col-header span { font-weight: 400; color: #ddd; text-transform: none; letter-spacing: 0; font-size: 11px; }
+
+  .vc-q { padding: 11px 0; border-bottom: 1px solid #f7f7f7; display: flex; gap: 12px; }
+  .vc-q:last-child { border-bottom: none; }
+  .vc-q-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .vc-q-dot.yes { background: #22c55e; }
+  .vc-q-dot.part { background: #f59e0b; }
+  .vc-q-dot.no { background: #e5e7eb; }
+  .vc-q-text { font-size: 12.5px; color: #222; line-height: 1.5; font-weight: 500; }
+  .vc-q-note { font-size: 11px; color: #aaa; margin-top: 2px; line-height: 1.5; }
+
+  .vc-event { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid #f7f7f7; }
+  .vc-event:last-child { border-bottom: none; }
+  .vc-event-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .vc-event-dot.ok { background: #22c55e; }
+  .vc-event-dot.warn { background: #f59e0b; }
+  .vc-event-dot.miss { background: #ef4444; }
+  .vc-event-name { font-size: 12px; font-weight: 600; color: #111; font-family: 'SF Mono', monospace; }
+  .vc-event-vol { font-size: 11px; color: #bbb; }
+  .vc-event-action { font-size: 11px; color: #ef4444; margin-top: 2px; line-height: 1.5; }
+  .vc-event-ok { font-size: 11px; color: #aaa; margin-top: 2px; }
+  .vc-props { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+  .vc-prop { font-size: 10px; padding: 1px 6px; border-radius: 3px; font-family: 'SF Mono', monospace; }
+  .vc-prop.ok { background: #f5f5f5; color: #666; }
+  .vc-prop.miss { background: #fef2f2; color: #dc2626; }
+
+  .vc-conv-bar { display: flex; gap: 0; background: #fafafa; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; padding: 12px 24px; overflow-x: auto; }
+  .vc-conv-item { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .vc-conv-num { font-size: 18px; font-weight: 700; color: #111; }
+  .vc-conv-num.na { color: #ccc; font-size: 14px; }
+  .vc-conv-lbl { font-size: 10px; color: #999; }
+  .vc-conv-arrow { color: #ddd; font-size: 18px; margin: 0 6px; }
+  .vc-conv-pct { font-size: 12px; font-weight: 700; color: #7c3aed; background: #ede9fe; padding: 3px 8px; border-radius: 20px; }
+  .vc-conv-pct.na { color: #ccc; background: #f5f5f5; font-weight: 400; }
+
+  @media (max-width: 700px) { .vc-body { grid-template-columns: 1fr; } .vb { flex-direction: column; } .vb-nav { width: 100%; } }
+</style>
+</head>
+<body>
+
+<div class="page-label">Design Exploration — Analytics Master</div>
+
+<!-- ═══════════════════════════════════ VARIANT A ═══════════════════════════════════ -->
+<div class="variant-label">Variant A — Minimal tabs with inline toggle</div>
+<div class="variant-desc">Tab nav with AARRR labels · Questions / Implementation toggle · Dot status indicators</div>
+<div class="variant-wrap">
+  <div class="va">
+
+    <div class="va-header">
+      <div class="va-brand">Sexy Streamers — Analytics</div>
+      <div class="va-nav">
+        <button class="va-nav-btn step-label">Acquisition</button>
+        <button class="va-nav-btn">Traffic</button>
+        <span class="va-nav-sep">&nbsp;&nbsp;</span>
+        <button class="va-nav-btn step-label">Activation</button>
+        <button class="va-nav-btn active">Auth</button>
+        <button class="va-nav-btn">Discovery</button>
+        <button class="va-nav-btn">Streams</button>
+        <span class="va-nav-sep">&nbsp;&nbsp;</span>
+        <button class="va-nav-btn step-label">Revenue</button>
+        <button class="va-nav-btn">Tokens</button>
+        <button class="va-nav-btn">Monetization</button>
+        <span class="va-nav-sep">&nbsp;&nbsp;</span>
+        <button class="va-nav-btn step-label">Retention</button>
+        <button class="va-nav-btn">Returning</button>
+      </div>
+    </div>
+
+    <div class="va-body">
+
+      <div class="va-conv">
+        <div><span class="va-conv-rate">27%</span><div style="font-size:10px;color:#999;margin-top:2px;">started → completed</div></div>
+        <div class="va-conv-sep" style="color:#e0e0e0;font-size:20px;line-height:40px;">·</div>
+        <div><span class="va-conv-rate" style="color:#bbb;font-size:16px;">—</span><div style="font-size:10px;color:#999;margin-top:2px;">visit → registration rate</div></div>
+        <div class="va-conv-sep" style="color:#e0e0e0;font-size:20px;line-height:40px;">·</div>
+        <div style="font-size:11px;color:#bbb;line-height:1.4;">Outbound: Registration → First tip unknown<br>until user_id fix</div>
+      </div>
+
+      <div class="va-toggle">
+        <div class="va-toggle-title">Activation — Auth</div>
+        <div class="va-toggle-pills">
+          <button class="va-toggle-pill active" onclick="switchTab(this,'va-q-view','va-i-view')">Questions</button>
+          <button class="va-toggle-pill" onclick="switchTab(this,'va-i-view','va-q-view')">Implementation</button>
+        </div>
+      </div>
+
+      <div id="va-q-view" class="va-questions">
+        <div class="va-q">
+          <div class="va-status yes"></div>
+          <div class="va-q-text">
+            <div class="va-q-main">How many streamers who start registration actually complete it?</div>
+            <div class="va-q-note">540 started → 145 completed = 27% conversion. 174 failed (32%), 377 submitted (70%).</div>
+          </div>
+          <div class="va-q-tag yes">✓ Yes</div>
+        </div>
+        <div class="va-q">
+          <div class="va-status yes"></div>
+          <div class="va-q-text">
+            <div class="va-q-main">What is the visit → registration conversion rate?</div>
+            <div class="va-q-note">Calculable in total using Amplitude session count. Channel breakdown needs utm_source on Registration Completed.</div>
+          </div>
+          <div class="va-q-tag part">⚠ Part</div>
+        </div>
+        <div class="va-q">
+          <div class="va-status no"></div>
+          <div class="va-q-text">
+            <div class="va-q-main">Why does registration fail — what is the actual error?</div>
+            <div class="va-q-note">174 failures, all logged as <code>validation_failed</code>. Dev needs specific values: email_already_exists, password_too_weak, etc.</div>
+          </div>
+          <div class="va-q-tag no">✗ No</div>
+        </div>
+        <div class="va-q">
+          <div class="va-status yes"></div>
+          <div class="va-q-text">
+            <div class="va-q-main">Why do logins fail?</div>
+            <div class="va-q-note">95 failures: 75× invalid_login_credentials + 20× invalid_login_credentials_as_model (members using streamer login).</div>
+          </div>
+          <div class="va-q-tag yes">✓ Yes</div>
+        </div>
+        <div class="va-q">
+          <div class="va-status no"></div>
+          <div class="va-q-text">
+            <div class="va-q-main">Did the user verify their email after registering?</div>
+            <div class="va-q-note">No Email Verified event — 9 resent but we can't tell who actually verified.</div>
+          </div>
+          <div class="va-q-tag no">✗ No</div>
+        </div>
+      </div>
+
+      <div id="va-i-view" class="va-impl">
+        <table class="va-impl-table">
+          <thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td class="va-event">Registration Started</td><td class="va-vol">540</td><td><span class="va-badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
+            <tr><td class="va-event">Registration Completed</td><td class="va-vol">145</td><td><span class="va-badge ok">In Plan</span></td><td><span class="va-prop ok">username</span><span class="va-prop miss">user_id ❌</span><span class="va-prop miss">utm_source ❌</span></td><td class="va-action">Add <code>user_id</code>, <code>utm_source</code></td></tr>
+            <tr><td class="va-event">Registration Failed</td><td class="va-vol">174</td><td><span class="va-badge warn">Schema issue</span></td><td><span class="va-prop warn">error_type ⚠</span></td><td class="va-action">Fix error_type — send specific values</td></tr>
+            <tr class="missing"><td class="va-event miss">Email Verified</td><td class="va-vol">—</td><td><span class="va-badge miss">Missing</span></td><td>—</td><td class="va-action">Implement: fire on email click</td></tr>
+            <tr><td class="va-event">Login Completed</td><td class="va-vol">261</td><td><span class="va-badge ok">In Plan</span></td><td><span class="va-prop ok">username</span><span class="va-prop ok">token_balance</span><span class="va-prop miss">user_id ❌</span></td><td class="va-action">Fix <code>user_id</code> (gp: prefix)</td></tr>
+            <tr><td class="va-event">Login Failed</td><td class="va-vol">95</td><td><span class="va-badge ok">In Plan</span></td><td><span class="va-prop ok">error_type</span></td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════ VARIANT B ═══════════════════════════════════ -->
+<div class="variant-label">Variant B — Dark sidebar</div>
+<div class="variant-desc">Dark left nav · KPI conversion cards at top · Clean content area · Questions / Implementation toggle</div>
+<div class="variant-wrap">
+  <div class="vb">
+
+    <div class="vb-nav">
+      <div class="vb-brand">Streamers Analytics</div>
+      <div class="vb-section">
+        <div class="vb-section-label">Members</div>
+        <button class="vb-nav-btn"><span class="dot"></span>Traffic</button>
+        <button class="vb-nav-btn active"><span class="dot"></span>Auth</button>
+        <button class="vb-nav-btn"><span class="dot"></span>Discovery</button>
+        <button class="vb-nav-btn"><span class="dot"></span>Streams</button>
+        <button class="vb-nav-btn"><span class="dot"></span>Tokens</button>
+        <button class="vb-nav-btn"><span class="dot"></span>Monetization</button>
+        <button class="vb-nav-btn"><span class="dot"></span>Returning</button>
+      </div>
+      <div class="vb-section" style="margin-top:16px;border-top:1px solid #27272a;padding-top:12px;opacity:0.4;">
+        <div class="vb-section-label">Streamers</div>
+        <button class="vb-nav-btn"><span class="dot"></span>Auth</button>
+        <button class="vb-nav-btn"><span class="dot"></span>Performance</button>
+        <button class="vb-nav-btn"><span class="dot"></span>KYC</button>
+        <button class="vb-nav-btn"><span class="dot"></span>Account</button>
+        <button class="vb-nav-btn"><span class="dot"></span>Stream Prep</button>
+        <button class="vb-nav-btn"><span class="dot"></span>Finance</button>
+      </div>
+    </div>
+
+    <div class="vb-body">
+      <div class="vb-step-tag">Activation</div>
+      <div class="vb-title">Member Auth</div>
+      <div class="vb-subtitle">Registration, login, email verification — the entry point for all members.</div>
+
+      <div class="vb-conv">
+        <div class="vb-conv-item">
+          <div class="vb-conv-rate">145</div>
+          <div class="vb-conv-label">Registrations / 30d</div>
+        </div>
+        <div class="vb-conv-item">
+          <div class="vb-conv-rate">27%</div>
+          <div class="vb-conv-label">Started → completed</div>
+        </div>
+        <div class="vb-conv-item">
+          <div class="vb-conv-rate">261</div>
+          <div class="vb-conv-label">Logins / 30d</div>
+        </div>
+        <div class="vb-conv-item">
+          <div class="vb-conv-rate na">—</div>
+          <div class="vb-conv-label">Visit → reg rate (blocked)</div>
+        </div>
+      </div>
+
+      <div class="vb-toggle">
+        <button class="vb-toggle-btn active" onclick="switchTab(this,'vb-q-view','vb-i-view')">Questions</button>
+        <button class="vb-toggle-btn" onclick="switchTab(this,'vb-i-view','vb-q-view')">Implementation</button>
+      </div>
+
+      <div id="vb-q-view">
+        <div class="vb-q">
+          <div class="vb-dot yes"></div>
+          <div><div class="vb-q-main">How many members who start registration actually complete it?</div><div class="vb-q-note">540 started → 145 completed = 27%. 174 failed, 377 submitted.</div></div>
+        </div>
+        <div class="vb-q">
+          <div class="vb-dot part"></div>
+          <div><div class="vb-q-main">What is the visit → registration conversion rate?</div><div class="vb-q-note">Total calculable via Amplitude sessions. Channel breakdown needs utm_source on Registration Completed.</div></div>
+        </div>
+        <div class="vb-q">
+          <div class="vb-dot no"></div>
+          <div><div class="vb-q-main">Why does registration fail — what is the actual error?</div><div class="vb-q-note">174 failures all logged as generic validation_failed — need specific error values.</div></div>
+        </div>
+        <div class="vb-q">
+          <div class="vb-dot yes"></div>
+          <div><div class="vb-q-main">Why do logins fail?</div><div class="vb-q-note">95 failures: 75× invalid_login_credentials + 20× invalid_login_credentials_as_model.</div></div>
+        </div>
+        <div class="vb-q">
+          <div class="vb-dot no"></div>
+          <div><div class="vb-q-main">Did the user verify their email after registering?</div><div class="vb-q-note">Email Verified event missing — 9 resent but can't confirm who actually verified.</div></div>
+        </div>
+      </div>
+
+      <div id="vb-i-view" style="display:none;">
+        <table class="va-impl-table">
+          <thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td class="va-event">Registration Started</td><td class="va-vol">540</td><td><span class="va-badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
+            <tr><td class="va-event">Registration Completed</td><td class="va-vol">145</td><td><span class="va-badge ok">In Plan</span></td><td><span class="va-prop ok">username</span><span class="va-prop miss">user_id ❌</span><span class="va-prop miss">utm_source ❌</span></td><td class="va-action">Add user_id, utm_source</td></tr>
+            <tr><td class="va-event">Registration Failed</td><td class="va-vol">174</td><td><span class="va-badge warn">Schema issue</span></td><td><span class="va-prop warn">error_type ⚠</span></td><td class="va-action">Fix error_type values</td></tr>
+            <tr class="missing"><td class="va-event miss">Email Verified</td><td class="va-vol">—</td><td><span class="va-badge miss">Missing</span></td><td>—</td><td class="va-action">Implement event</td></tr>
+            <tr><td class="va-event">Login Completed</td><td class="va-vol">261</td><td><span class="va-badge ok">In Plan</span></td><td><span class="va-prop ok">username</span><span class="va-prop ok">token_balance</span><span class="va-prop miss">user_id ❌</span></td><td class="va-action">Fix user_id (gp: prefix)</td></tr>
+            <tr><td class="va-event">Login Failed</td><td class="va-vol">95</td><td><span class="va-badge ok">In Plan</span></td><td><span class="va-prop ok">error_type</span></td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════ VARIANT C ═══════════════════════════════════ -->
+<div class="variant-label">Variant C — Two column (questions left, implementation right)</div>
+<div class="variant-desc">Always shows both views side by side · Conversion rate bar at top · Top nav with AARRR steps</div>
+<div class="variant-wrap">
+  <div class="vc">
+
+    <div class="vc-header">
+      <div class="vc-brand">Sexy Streamers Analytics</div>
+      <div class="vc-nav">
+        <span class="vc-nav-step">Acquisition</span>
+        <button class="vc-nav-btn">Traffic</button>
+        <span class="vc-nav-step">Activation</span>
+        <button class="vc-nav-btn active">Auth</button>
+        <button class="vc-nav-btn">Discovery</button>
+        <button class="vc-nav-btn">Streams</button>
+        <span class="vc-nav-step">Revenue</span>
+        <button class="vc-nav-btn">Tokens</button>
+        <button class="vc-nav-btn">Tips</button>
+        <span class="vc-nav-step">Retention</span>
+        <button class="vc-nav-btn">Returning</button>
+      </div>
+    </div>
+
+    <div class="vc-conv-bar">
+      <div class="vc-conv-item">
+        <div><div class="vc-conv-num">540</div><div class="vc-conv-lbl">Started</div></div>
+        <div class="vc-conv-arrow">→</div>
+        <div class="vc-conv-pct">27%</div>
+        <div class="vc-conv-arrow">→</div>
+        <div><div class="vc-conv-num">145</div><div class="vc-conv-lbl">Registered</div></div>
+      </div>
+      <div style="width:1px;background:#eee;margin:0 20px;"></div>
+      <div class="vc-conv-item">
+        <div><div class="vc-conv-num">337</div><div class="vc-conv-lbl">Login attempts</div></div>
+        <div class="vc-conv-arrow">→</div>
+        <div class="vc-conv-pct">77%</div>
+        <div class="vc-conv-arrow">→</div>
+        <div><div class="vc-conv-num">261</div><div class="vc-conv-lbl">Logged in</div></div>
+      </div>
+      <div style="width:1px;background:#eee;margin:0 20px;"></div>
+      <div class="vc-conv-item">
+        <div><div class="vc-conv-num na">—</div><div class="vc-conv-lbl">Sessions</div></div>
+        <div class="vc-conv-arrow">→</div>
+        <div class="vc-conv-pct na">?%</div>
+        <div class="vc-conv-arrow">→</div>
+        <div><div class="vc-conv-num">145</div><div class="vc-conv-lbl">Registered</div></div>
+      </div>
+    </div>
+
+    <div class="vc-body">
+      <div class="vc-col">
+        <div class="vc-col-header">Business Questions <span>What we want to know</span></div>
+        <div class="vc-q"><div class="vc-q-dot yes"></div><div><div class="vc-q-text">How many members who start registration actually complete it?</div><div class="vc-q-note">540 started → 145 completed = 27%. 174 failed (32%).</div></div></div>
+        <div class="vc-q"><div class="vc-q-dot part"></div><div><div class="vc-q-text">What is the visit → registration conversion rate?</div><div class="vc-q-note">Total rate calculable. Channel breakdown blocked — needs utm_source on Registration Completed.</div></div></div>
+        <div class="vc-q"><div class="vc-q-dot part"></div><div><div class="vc-q-text">Which marketing channel brings the most registrations?</div><div class="vc-q-note">UTM captured as user property (gp:initial_utm_source) — segmentable in Amplitude today.</div></div></div>
+        <div class="vc-q"><div class="vc-q-dot no"></div><div><div class="vc-q-text">Why does registration fail — what is the actual error?</div><div class="vc-q-note">174 failures, all generic validation_failed. Useless until dev sends specific values.</div></div></div>
+        <div class="vc-q"><div class="vc-q-dot yes"></div><div><div class="vc-q-text">Why do logins fail?</div><div class="vc-q-note">75× invalid credentials + 20× members using streamer login. Specific and actionable.</div></div></div>
+        <div class="vc-q"><div class="vc-q-dot no"></div><div><div class="vc-q-text">Did the user verify their email after registering?</div><div class="vc-q-note">Email Verified event missing — 9 resent but can't confirm who verified.</div></div></div>
+      </div>
+      <div class="vc-col">
+        <div class="vc-col-header">Implementation <span>Events, properties, actions</span></div>
+        <div class="vc-event"><div class="vc-event-dot ok"></div><div><div class="vc-event-name">Registration Started <span class="vc-event-vol">540</span></div><div class="vc-event-ok">No properties needed</div></div></div>
+        <div class="vc-event"><div class="vc-event-dot warn"></div><div><div class="vc-event-name">Registration Completed <span class="vc-event-vol">145</span></div><div class="vc-props"><span class="vc-prop ok">username</span><span class="vc-prop miss">user_id ❌</span><span class="vc-prop miss">utm_source ❌</span></div><div class="vc-event-action">Add user_id (fix gp: prefix) + utm_source</div></div></div>
+        <div class="vc-event"><div class="vc-event-dot warn"></div><div><div class="vc-event-name">Registration Failed <span class="vc-event-vol">174</span></div><div class="vc-props"><span class="vc-prop miss">error_type ⚠ generic</span></div><div class="vc-event-action">Fix error_type — send specific values</div></div></div>
+        <div class="vc-event"><div class="vc-event-dot miss"></div><div><div class="vc-event-name">Email Verified <span class="vc-event-vol">—</span></div><div class="vc-event-action">Implement — fire when user clicks verification link</div></div></div>
+        <div class="vc-event"><div class="vc-event-dot ok"></div><div><div class="vc-event-name">Login Submitted <span class="vc-event-vol">337</span></div><div class="vc-event-ok">No action needed</div></div></div>
+        <div class="vc-event"><div class="vc-event-dot warn"></div><div><div class="vc-event-name">Login Completed <span class="vc-event-vol">261</span></div><div class="vc-props"><span class="vc-prop ok">username</span><span class="vc-prop ok">token_balance</span><span class="vc-prop miss">user_id ❌</span></div><div class="vc-event-action">Fix user_id (gp: prefix bug)</div></div></div>
+        <div class="vc-event"><div class="vc-event-dot ok"></div><div><div class="vc-event-name">Login Failed <span class="vc-event-vol">95</span></div><div class="vc-props"><span class="vc-prop ok">error_type</span></div><div class="vc-event-ok">No action needed</div></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div style="height:60px;"></div>
+
+<script>
+function switchTab(btn, showId, hideId) {
+  document.getElementById(showId).style.display = '';
+  document.getElementById(hideId).style.display = 'none';
+  const siblings = btn.parentElement.querySelectorAll('button');
+  siblings.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

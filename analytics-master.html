@@ -519,9 +519,10 @@
 
   <div class="section">
     <div class="section-header">
-      <div class="section-title">Streamer Auth</div>
+      <div class="section-title">Activation — Streamer Auth</div>
       <div class="section-desc">Streamer registration, login, email verification, logout</div>
     </div>
+    <div class="funnel-conv">⬇ <strong>Activation funnel:</strong> 52 started registration → 15 completed (<strong>29%</strong>). 24 failed (46%). Key blocker: no Onboarding Completed event to confirm a streamer went all the way through to going live.</div>
     <div class="goals">
       <div class="goals-title">What we want to learn</div>
       <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">Streamer registration funnel — how many start, drop off, complete vs fail?</div><div class="goal-note">52 started → 31 submitted (60%) → 15 completed (29%) + 24 failed (46%). Worse funnel than member registration.</div></div></div>
@@ -538,7 +539,7 @@
         <tbody>
           <tr><td class="event-name">Streamer Registration Started</td><td class="vol">52</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props">—</td><td></td></tr>
           <tr><td class="event-name">Streamer Registration Submitted</td><td class="vol">31</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props">—</td><td></td></tr>
-          <tr><td class="event-name">Streamer Registration Completed</td><td class="vol">15</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_id</span> <span class="prop">username</span></td><td></td></tr>
+          <tr><td class="event-name">Streamer Registration Completed</td><td class="vol">15</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">username</span> <span class="prop miss">streamer_id ❌</span></td><td class="note warn">Dev: add <code>streamer_id</code> — needed to track all activity per streamer.</td></tr>
           <tr><td class="event-name">Streamer Registration Failed</td><td class="vol alert">24 ⚠️</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop warn">error_type ⚠️</span></td><td class="note err">⚠️ All 24 failures logged as generic <code>validation_failed</code> — Dev: send specific error values</td></tr>
           <tr><td class="event-name">Streamer Email Verification Resent</td><td class="vol">2</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props">—</td><td></td></tr>
           <tr><td class="event-name missing">Streamer Email Verified</td><td class="vol zero">—</td><td><span class="badge miss">❌ Missing</span></td><td class="props">—</td><td class="note err">Implement: fire when streamer clicks verification link</td></tr>
