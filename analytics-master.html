@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Master — Sexy Streamers</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f4f6f9; color: #1e293b; font-size: 14px; }
+
+  /* HEADER */
+  header { background: #fff; border-bottom: 1px solid #e2e8f0; padding: 16px 28px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+  header h1 { font-size: 17px; font-weight: 700; color: #0f172a; }
+  header .subtitle { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+  .summary-bar { display: flex; gap: 10px; flex-wrap: wrap; }
+  .stat { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px 14px; text-align: center; }
+  .stat .val { font-size: 20px; font-weight: 700; line-height: 1.2; }
+  .stat .lbl { font-size: 10px; color: #94a3b8; margin-top: 1px; }
+  .stat.green .val { color: #16a34a; }
+  .stat.red .val { color: #dc2626; }
+  .stat.yellow .val { color: #d97706; }
+  .stat.gray .val { color: #64748b; }
+
+  /* TAB NAV */
+  .tab-nav { border-top: 1px solid #f1f5f9; }
+  .tab-row { display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
+  .tab-row::-webkit-scrollbar { display: none; }
+  .tab-row.top { border-bottom: 1px solid #e2e8f0; }
+  .tab-row.top .tab-btn { text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; font-weight: 700; }
+  .tab-row.secondary { background: #f8fafc; border-top: 1px solid #e2e8f0; }
+  .tab-row-label { padding: 6px 14px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #94a3b8; display: flex; align-items: center; border-right: 1px solid #e2e8f0; flex-shrink: 0; }
+  .tab-btn { flex-shrink: 0; padding: 8px 16px; font-size: 12px; font-weight: 500; color: #64748b; background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: color .15s, border-color .15s; display: flex; align-items: center; gap: 5px; }
+  .tab-btn:hover { color: #334155; }
+  .tab-btn.active { color: #4f46e5; border-bottom-color: #4f46e5; font-weight: 600; }
+  .tab-row.secondary .tab-btn { padding: 6px 14px; font-size: 11.5px; }
+  .tab-row.secondary .tab-btn.active { color: #0891b2; border-bottom-color: #0891b2; }
+  .tab-btn .rdot { width: 6px; height: 6px; background: #7c3aed; border-radius: 50%; flex-shrink: 0; }
+  .tab-btn .done-check { color: #16a34a; font-size: 11px; font-weight: 800; flex-shrink: 0; line-height: 1; }
+  .tab-group-label { padding: 2px 10px !important; font-size: 9px !important; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #6d28d9 !important; background: #ede9fe; border-radius: 20px; margin: auto 4px; display: flex; align-items: center; flex-shrink: 0; cursor: default; user-select: none; border: none; line-height: 1.4; opacity: 1 !important; }
+  .tab-row .tab-btn.aarrr-tab { padding: 2px 10px !important; font-size: 9px !important; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #6d28d9; background: #ede9fe; border-radius: 20px; margin: auto 2px; border-bottom: none !important; line-height: 1.4; text-decoration: underline; text-decoration-color: #a78bfa; text-underline-offset: 3px; }
+  .tab-row .tab-btn.aarrr-tab:hover { background: #ddd6fe; color: #5b21b6; }
+  .tab-row .tab-btn.aarrr-tab.active { background: #ddd6fe; color: #5b21b6; text-decoration: none; }
+  .tab-row .tab-btn.aarrr-tab.dimmed { color: #94a3b8 !important; background: #f1f5f9; text-decoration-color: #cbd5e1; }
+  .funnel-steps { display: flex; flex-direction: column; gap: 6px; }
+  .funnel-step { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 24px; }
+  .funnel-step-head { display: flex; align-items: flex-start; gap: 14px; }
+  .funnel-badge { width: 38px; height: 38px; border-radius: 50%; background: #ede9fe; color: #6d28d9; font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .funnel-step-title { font-size: 15px; font-weight: 700; color: #0f172a; }
+  .funnel-step-title.link { cursor: pointer; }
+  .funnel-step-title.link:hover { text-decoration: underline; }
+  .funnel-step-desc { font-size: 12px; color: #64748b; margin-top: 3px; }
+  .funnel-nums { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 14px; padding-top: 12px; border-top: 1px solid #f1f5f9; }
+  .funnel-num .n { font-size: 22px; font-weight: 700; color: #0f172a; line-height: 1.1; }
+  .funnel-num .l { font-size: 10px; color: #94a3b8; margin-top: 2px; }
+  .funnel-num .n.warn { color: #d97706; }
+  .funnel-num .n.miss { color: #94a3b8; }
+  .funnel-conv { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 7px 14px; font-size: 11.5px; color: #475569; margin-top: 12px; }
+  .funnel-conv strong { color: #0f172a; }
+  .funnel-subtabs { margin-top: 10px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .funnel-subtabs-lbl { font-size: 10px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .funnel-subtab { font-size: 11px; color: #4f46e5; background: #eef2ff; border-radius: 4px; padding: 3px 10px; border: none; cursor: pointer; font-family: inherit; }
+  .funnel-subtab:hover { background: #e0e7ff; }
+  .funnel-arrow { text-align: center; color: #c7d2fe; font-size: 20px; line-height: 1; padding: 2px 0; }
+  .funnel-conv-arrow { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 0; }
+  .funnel-conv-arrow .arr { color: #c7d2fe; font-size: 18px; line-height: 1.2; }
+  .funnel-conv-arrow .rate { font-size: 12px; font-weight: 600; background: #fff; border: 1.5px solid #c7d2fe; border-radius: 8px; padding: 6px 16px; color: #4f46e5; text-align: center; }
+  .funnel-conv-arrow .rate.blocked { color: #94a3b8; border-color: #e2e8f0; border-style: dashed; font-weight: 400; }
+  .funnel-kpi { display: flex; gap: 24px; margin: 12px 0 4px; padding-top: 10px; border-top: 1px solid #f1f5f9; flex-wrap: wrap; }
+  .funnel-kpi-item .k { font-size: 22px; font-weight: 700; color: #0f172a; line-height: 1.1; }
+  .funnel-kpi-item .k.unknown { color: #94a3b8; font-size: 16px; font-weight: 500; }
+  .funnel-kpi-item .k.warn { color: #d97706; }
+  .funnel-kpi-item .l { font-size: 10px; color: #94a3b8; margin-top: 3px; }
+  .funnel-step.future { border-style: dashed; background: #fafafa; }
+  .funnel-step.future .funnel-badge { background: #f1f5f9; color: #94a3b8; }
+  .aarrr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1000px; margin: 0 auto; }
+  .aarrr-col-header { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #e2e8f0; }
+  .aarrr-col-header span { font-size: 11px; font-weight: 400; color: #94a3b8; margin-left: 6px; }
+  @media (max-width: 900px) { .aarrr-grid { grid-template-columns: 1fr; } }
+
+  /* CONTENT */
+  main { padding: 20px 28px; max-width: 1400px; margin: 0 auto; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ALERTS */
+  .finding-alert { background: #fef2f2; border: 1px solid #fca5a5; border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: 12px; color: #991b1b; line-height: 1.5; }
+  .finding-alert strong { color: #dc2626; }
+  .finding-warn { background: #fefce8; border: 1px solid #fde047; border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: 12px; color: #854d0e; line-height: 1.5; }
+  .finding-warn strong { color: #a16207; }
+  .finding-info { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: 12px; color: #1e40af; line-height: 1.5; }
+  .finding-ok { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: 12px; color: #14532d; line-height: 1.5; }
+
+  /* SECTION CARD */
+  .section { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 20px; overflow: hidden; }
+  .section-header { padding: 14px 20px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .section-title { font-size: 14px; font-weight: 700; color: #0f172a; }
+  .section-desc { font-size: 12px; color: #94a3b8; }
+  .ramon-badge { background: #ede9fe; border: 1px solid #7c3aed; color: #6d28d9; font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 600; }
+
+  /* LEGEND */
+  .legend { display: flex; flex-direction: column; gap: 5px; padding: 10px 20px; border-bottom: 1px solid #f1f5f9; background: #fafbfc; font-size: 11px; color: #64748b; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+
+  /* GOALS */
+  .goals { padding: 14px 20px; border-bottom: 1px solid #f1f5f9; background: #fafbfc; }
+  .goals-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #94a3b8; margin-bottom: 8px; }
+  .goal-item { display: flex; align-items: flex-start; gap: 10px; padding: 5px 0; border-bottom: 1px solid #f1f5f9; }
+  .goal-item:last-child { border-bottom: none; }
+  .goal-item.sub { padding-left: 28px; border-left: 3px solid #e2e8f0; margin-left: 10px; }
+  .goal-q { flex: 1; font-size: 12.5px; color: #334155; line-height: 1.45; }
+  .goal-q .ramon-q { font-size: 10px; background: #ede9fe; border: 1px solid #c4b5fd; color: #6d28d9; padding: 1px 6px; border-radius: 3px; font-weight: 600; margin-right: 5px; vertical-align: middle; }
+  .goal-note { font-size: 11px; color: #94a3b8; margin-top: 3px; line-height: 1.5; font-style: italic; }
+  .gs { display: inline-flex; align-items: center; gap: 3px; padding: 2px 9px; border-radius: 20px; font-size: 10px; font-weight: 700; white-space: nowrap; min-width: 64px; justify-content: center; flex-shrink: 0; }
+  .gs.yes  { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+  .gs.no   { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
+  .gs.part { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+  .gs.future { background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; }
+  .ga { display: inline-flex; align-items: center; padding: 2px 7px; border-radius: 20px; font-size: 10px; font-weight: 600; white-space: nowrap; min-width: 48px; justify-content: center; flex-shrink: 0; background: #f1f5f9; color: #94a3b8; border: 1px solid #e2e8f0; }
+  .ga.yes { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+  .ga.no  { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
+  .goals-col-labels { display: flex; align-items: center; gap: 10px; padding: 0 0 6px; }
+  .gcl { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #cbd5e1; text-align: center; }
+  .gcl-amp { min-width: 64px; }
+  .gcl-admin { min-width: 48px; }
+  .gcl-should { min-width: 48px; }
+
+  /* EVENTS TABLE */
+  .events-wrap { padding: 0; }
+  .events-subtitle { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #94a3b8; padding: 10px 20px 6px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: #f8fafc; color: #94a3b8; font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; padding: 7px 14px; text-align: left; border-bottom: 1px solid #e2e8f0; border-top: 1px solid #e2e8f0; white-space: nowrap; }
+  td { padding: 8px 14px; border-bottom: 1px solid #f8fafc; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafbfc; }
+
+  .event-name { font-weight: 600; color: #0f172a; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11.5px; }
+  .event-name.deprecated { text-decoration: line-through; color: #94a3b8; }
+  .event-name.missing { color: #dc2626; }
+
+  .badge { display: inline-flex; align-items: center; gap: 3px; padding: 2px 7px; border-radius: 5px; font-size: 10px; font-weight: 600; white-space: nowrap; }
+  .badge.ok         { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+  .badge.miss       { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
+  .badge.warn       { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+  .badge.gray       { background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
+  .badge.unverified { background: #f8fafc; color: #64748b; border: 1px solid #cbd5e1; }
+
+  .vol       { font-weight: 700; color: #6366f1; font-size: 13px; white-space: nowrap; }
+  .vol.zero  { color: #cbd5e1; font-weight: 400; font-size: 13px; }
+  .vol.alert { color: #dc2626; font-weight: 700; }
+
+  .props { font-size: 11px; line-height: 1.9; }
+  .prop { display: inline-block; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 3px; padding: 1px 5px; margin: 1px; color: #475569; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 10.5px; }
+  .prop.miss  { background: #fee2e2; border-color: #fecaca; color: #dc2626; }
+  .prop.warn  { background: #fef3c7; border-color: #fde68a; color: #b45309; }
+  .prop.extra { background: #eff6ff; border-color: #bfdbfe; color: #2563eb; }
+
+  .note { font-size: 11px; color: #64748b; line-height: 1.5; }
+  .note.warn { color: #b45309; }
+  .note.err  { color: #dc2626; }
+  .note.ok   { color: #15803d; }
+
+  /* MISSING FROM SPEC */
+  .missing-section { margin: 0 20px 16px; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px; padding: 12px 16px; }
+  .missing-section h3 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #c2410c; margin-bottom: 8px; }
+  .missing-item { display: flex; align-items: flex-start; gap: 8px; padding: 4px 0; font-size: 12px; color: #334155; border-bottom: 1px solid #fed7aa; line-height: 1.5; }
+  .missing-item:last-child { border-bottom: none; }
+  .mi-name { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 10.5px; background: #fff7ed; border: 1px solid #fed7aa; padding: 1px 5px; border-radius: 3px; color: #c2410c; white-space: nowrap; flex-shrink: 0; }
+
+  /* OVERVIEW */
+  .user-props-section { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px; }
+  .user-props-section h2 { font-size: 12px; font-weight: 700; color: #1d4ed8; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .cleanup-card { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 18px 20px; }
+  .cleanup-card h2 { font-size: 12px; font-weight: 700; color: #15803d; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; background: #f1f5f9; padding: 1px 5px; border-radius: 3px; color: #be185d; }
+
+  @media (max-width: 768px) { main { padding: 14px; } header { padding: 12px 16px; } .tab-btn { padding: 7px 12px; font-size: 11px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div>
+      <h1>Sexy Streamers — Growth Analytics</h1>
+      <div class="subtitle">AARRR framework · Volumes verified live from Amplitude · Last 30 days · Updated 2026-04-28</div>
+    </div>
+  </div>
+  <nav class="tab-nav" id="tabNav">
+    <div class="tab-row top">
+      <button class="tab-btn active" data-tab="overview">AARRR Overview</button>
+    </div>
+    <div class="tab-row secondary">
+      <span class="tab-row-label">Members</span>
+      <button class="tab-group-label" disabled>Acquisition</button>
+      <button class="tab-btn" data-tab="acquisition">Traffic</button>
+      <button class="tab-group-label" disabled>Activation</button>
+      <button class="tab-btn" data-tab="member-auth">Auth</button>
+      <button class="tab-btn" data-tab="discovery">Discovery</button>
+      <button class="tab-btn" data-tab="stream-viewing"><span class="rdot"></span>Streams</button>
+      <button class="tab-group-label" disabled>Revenue</button>
+      <button class="tab-btn" data-tab="token-purchase"><span class="rdot"></span>Tokens</button>
+      <button class="tab-btn" data-tab="tipping"><span class="rdot"></span>Monetization</button>
+      <button class="tab-group-label" disabled>Retention</button>
+      <button class="tab-btn" data-tab="retention">Returning</button>
+      <button class="tab-group-label" disabled style="color:#94a3b8 !important; background:#f1f5f9;">Referral</button>
+    </div>
+    <div class="tab-row secondary" style="opacity:0.35;">
+      <span class="tab-row-label">Streamers</span>
+      <button class="tab-btn" data-tab="streamer-auth">Auth</button>
+      <button class="tab-btn" data-tab="streamer-performance"><span class="rdot"></span>Performance</button>
+      <button class="tab-btn" data-tab="kyc">KYC</button>
+      <button class="tab-btn" data-tab="account">Account</button>
+      <button class="tab-btn" data-tab="shows">Stream Prep</button>
+      <button class="tab-btn" data-tab="finance">Finance</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+<!-- ═══════════════ OVERVIEW ═══════════════ -->
+<div class="tab-panel active" id="tab-overview">
+
+  <div class="finding-info" style="max-width:1000px;margin:0 auto 20px;">This page explains the funnel structure and the conversion rates we care about between each step. Conversion rates shown between steps are real where tracking is in place — gaps marked with <strong>—</strong> are blocked by missing tracking (primarily the user_id fix). For live numbers, use the Amplitude dashboards.</div>
+
+  <div class="aarrr-grid">
+
+    <!-- MEMBERS -->
+    <div>
+      <div class="aarrr-col-header">Members <span>— how members find, activate, pay, and return</span></div>
+      <div class="funnel-steps">
+
+        <div class="funnel-step">
+          <div class="funnel-step-head">
+            <div class="funnel-badge">A</div>
+            <div>
+              <div class="funnel-step-title link" onclick="goToTab('acquisition')">Acquisition</div>
+              <div class="funnel-step-desc">Members find the site through streamers' own social audiences (primary), direct traffic, or future paid campaigns.</div>
+            </div>
+          </div>
+          <div class="funnel-kpi">
+            <div class="funnel-kpi-item"><div class="k unknown">See Amplitude</div><div class="l">Sessions / 30d</div></div>
+            <div class="funnel-kpi-item"><div class="k unknown">See Amplitude</div><div class="l">Unique visitors / 30d</div></div>
+          </div>
+          <div class="funnel-subtabs"><span class="funnel-subtabs-lbl">Detail:</span><button class="funnel-subtab" onclick="goToTab('acquisition')">Traffic</button></div>
+        </div>
+
+        <div class="funnel-conv-arrow">
+          <div class="arr">↓</div>
+          <div class="rate blocked">Visit → Registration: <strong>—</strong> &nbsp;|&nbsp; Session count available in Amplitude but not yet pulled. 145 registrations / 30d is the output.</div>
+        </div>
+
+        <div class="funnel-step">
+          <div class="funnel-step-head">
+            <div class="funnel-badge">A</div>
+            <div>
+              <div class="funnel-step-title link" onclick="goToTab('member-auth')">Activation</div>
+              <div class="funnel-step-desc">Register → join first live stream.</div>
+            </div>
+          </div>
+          <div class="funnel-kpi">
+            <div class="funnel-kpi-item"><div class="k">145</div><div class="l">Registrations / 30d</div></div>
+            <div class="funnel-kpi-item"><div class="k">1,020</div><div class="l">Stream joins / 30d</div></div>
+          </div>
+          <div class="funnel-subtabs"><span class="funnel-subtabs-lbl">Detail:</span><button class="funnel-subtab" onclick="goToTab('member-auth')">Auth</button><button class="funnel-subtab" onclick="goToTab('discovery')">Discovery</button><button class="funnel-subtab" onclick="goToTab('stream-viewing')">Streams</button></div>
+        </div>
+
+        <div class="funnel-conv-arrow">
+          <div class="arr">↓</div>
+          <div class="rate">~11% of viewers tip &nbsp;·&nbsp; ~17% click casino &nbsp;·&nbsp; ~1.2% outclick→FTD</div>
+        </div>
+
+        <div class="funnel-step">
+          <div class="funnel-step-head">
+            <div class="funnel-badge">R</div>
+            <div>
+              <div class="funnel-step-title link" onclick="goToTab('token-purchase')">Revenue</div>
+              <div class="funnel-step-desc">Tips from token purchases + FTDs from casino outclicks. Both happen during live streams.</div>
+            </div>
+          </div>
+          <div class="funnel-kpi">
+            <div class="funnel-kpi-item"><div class="k">111</div><div class="l">Tips sent / 30d</div></div>
+            <div class="funnel-kpi-item"><div class="k">169</div><div class="l">Casino outclicks / 30d</div></div>
+            <div class="funnel-kpi-item"><div class="k warn">2 ⚠️</div><div class="l">FTDs / 30d — verify real</div></div>
+          </div>
+          <div class="funnel-subtabs"><span class="funnel-subtabs-lbl">Detail:</span><button class="funnel-subtab" onclick="goToTab('token-purchase')">Tokens</button><button class="funnel-subtab" onclick="goToTab('tipping')">Monetization</button></div>
+        </div>
+
+        <div class="funnel-conv-arrow">
+          <div class="arr">↓</div>
+          <div class="rate blocked">D7 / D30 return rate: <strong>—</strong> &nbsp;|&nbsp; Needs user_id fix to track the same member returning</div>
+        </div>
+
+        <div class="funnel-step">
+          <div class="funnel-step-head">
+            <div class="funnel-badge">R</div>
+            <div>
+              <div class="funnel-step-title link" onclick="goToTab('retention')">Retention</div>
+              <div class="funnel-step-desc">Retained members come back to watch more streams. Streamer personality is the primary driver.</div>
+            </div>
+          </div>
+          <div class="funnel-kpi">
+            <div class="funnel-kpi-item"><div class="k">261</div><div class="l">Logins / 30d</div></div>
+            <div class="funnel-kpi-item"><div class="k unknown">See Amplitude</div><div class="l">DAU / WAU</div></div>
+          </div>
+          <div class="funnel-subtabs"><span class="funnel-subtabs-lbl">Detail:</span><button class="funnel-subtab" onclick="goToTab('retention')">Returning</button></div>
+        </div>
+
+        <div class="funnel-arrow">↓</div>
+
+        <div class="funnel-step future">
+          <div class="funnel-step-head">
+            <div class="funnel-badge">R</div>
+            <div>
+              <div class="funnel-step-title">Referral</div>
+              <div class="funnel-step-desc" style="color:#94a3b8;">Possibly in the future.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- STREAMERS -->
+    <div style="opacity:0.35;pointer-events:none;">
+      <div class="aarrr-col-header">Streamers <span>— coming soon</span></div>
+      <div class="funnel-steps">
+
+        <div class="funnel-step future">
+          <div class="funnel-step-head">
+            <div class="funnel-badge">A</div>
+            <div>
+              <div class="funnel-step-title">Acquisition</div>
+              <div class="funnel-step-desc">Streamers are recruited at conferences and via outreach. Primarily tracked in Attio (CRM), not Amplitude. To be defined.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="funnel-arrow">↓</div>
+
+        <div class="funnel-step future">
+          <div class="funnel-step-head">
+            <div class="funnel-badge">A</div>
+            <div>
+              <div class="funnel-step-title">Activation</div>
+              <div class="funnel-step-desc">A streamer is activated when they complete registration, pass KYC, set up their profile, and go live for the first time.</div>
+            </div>
+          </div>
+          <div class="funnel-subtabs"><span class="funnel-subtabs-lbl">Detail:</span><button class="funnel-subtab" onclick="goToTab('streamer-auth')">Auth</button><button class="funnel-subtab" onclick="goToTab('kyc')">KYC</button><button class="funnel-subtab" onclick="goToTab('account')">Account</button><button class="funnel-subtab" onclick="goToTab('shows')">Stream Prep</button></div>
+        </div>
+
+        <div class="funnel-arrow">↓</div>
+
+        <div class="funnel-step future">
+          <div class="funnel-step-head">
+            <div class="funnel-badge">R</div>
+            <div>
+              <div class="funnel-step-title">Revenue</div>
+              <div class="funnel-step-desc">Streamers earn from tips received during their streams and withdraw their balance. Revenue per streamer shows who drives the most value.</div>
+            </div>
+          </div>
+          <div class="funnel-subtabs"><span class="funnel-subtabs-lbl">Detail:</span><button class="funnel-subtab" onclick="goToTab('streamer-performance')">Performance</button><button class="funnel-subtab" onclick="goToTab('finance')">Finance</button></div>
+        </div>
+
+        <div class="funnel-arrow">↓</div>
+
+        <div class="funnel-step future">
+          <div class="funnel-step-head">
+            <div class="funnel-badge">R</div>
+            <div>
+              <div class="funnel-step-title">Retention</div>
+              <div class="funnel-step-desc">Retained streamers keep going live regularly. How often does each streamer stream — and are they growing or dropping off?</div>
+            </div>
+          </div>
+          <div class="funnel-subtabs"><span class="funnel-subtabs-lbl">Detail:</span><button class="funnel-subtab" onclick="goToTab('streamer-performance')">Performance</button></div>
+        </div>
+
+        <div class="funnel-arrow">↓</div>
+
+        <div class="funnel-step future">
+          <div class="funnel-step-head">
+            <div class="funnel-badge">R</div>
+            <div>
+              <div class="funnel-step-title">Referral <span style="font-size:11px;font-weight:400;color:#94a3b8;">— Future</span></div>
+              <div class="funnel-step-desc">Streamers refer other streamers. Not defined yet.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ═══════════════ MEMBER AUTH ═══════════════ -->
+<div class="tab-panel" id="tab-member-auth">
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Activation — Member Auth</div>
+      <div class="section-desc">Registration, login, email verification, password reset, logout. Conversion rate from this step: Registration Completed → First Stream Join (Activation proof).</div>
+    </div>
+
+    <div class="funnel-conv">⬇ <strong>Activation → Revenue:</strong> Registration → First tip: ⚠️ unknown (needs user_id fix) · Registration → FTD: ⚠️ unknown (needs user_id fix). Within auth funnel: 540 started → 145 completed = <strong>27%</strong> registration completion rate.</div>
+    <div class="legend">
+      <div class="legend-item"><span class="badge ok">✅ In Tracking Plan</span> — event fires and is formally defined in Amplitude Data (Tracking Plan)</div>
+      <div class="legend-item"><span class="badge warn">⚠️ Schema issue</span> — event fires and is in the Tracking Plan, but has a property naming error or wrong type that needs a dev fix</div>
+      <div class="legend-item"><span class="badge miss">❌ Missing</span> — event is not in Amplitude at all — not implemented</div>
+    </div>
+
+    <div class="goals">
+      <div class="goals-title">What we want to learn</div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">What is the visit → registration conversion rate?</div><div class="goal-note">Total rate is calculable (sessions from Amplitude ÷ 145 registrations). Can't break down by channel or streamer until utm_source and referrer_streamer_id are added to Registration Completed.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">How many members who start registration actually complete it?</div><div class="goal-note">540 started → 145 completed = 27% conversion. 174 failed (32%), 377 submitted (70%).</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">What is the login success rate — how many submitted logins go through?</div><div class="goal-note">337 submitted → 261 completed = 77% completion. 95 failed (28%).</div></div></div>
+      <div class="goal-item sub"><span class="gs no">❌ No</span><div><div class="goal-q">↳ Did the user verify their email after registering?</div><div class="goal-note">No "Email Verified" event — needs to be added. 9 resent emails but we can't tell who actually verified.</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">Why does registration fail — what is the actual error?</div><div class="goal-note">174 failures, all logged as <code>validation_failed</code>. Useless — could be email taken, bad password, anything. Dev needs specific values.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">Why do logins fail?</div><div class="goal-note">95 failures: 75× <code>invalid_login_credentials</code> + 20× <code>invalid_login_credentials_as_model</code> (members using streamer login). Specific and actionable.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">Which marketing channel / UTM source brought this user?</div><div class="goal-note">UTM is captured automatically as user properties (gp:initial_utm_source, gp:utm_source etc.) — registrations can be segmented by channel in Amplitude today. Not perfect until utm_source is also added as an event property on Registration Completed.</div></div></div>
+    </div>
+
+    <div class="events-wrap">
+      <div class="events-subtitle">Events &amp; Properties — all volumes last 30 days</div>
+      <table>
+        <thead><tr><th>Event</th><th>30d Vol</th><th>Status</th><th>Properties (verified)</th><th>Action needed</th></tr></thead>
+        <tbody>
+          <tr><td class="event-name">Registration Started</td><td class="vol">540</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props">—</td><td></td></tr>
+          <tr><td class="event-name">Registration Field Completed</td><td class="vol">630</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">field</span></td><td></td></tr>
+          <tr><td class="event-name">Age Verification Checked</td><td class="vol">193</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props">—</td><td></td></tr>
+          <tr><td class="event-name">Registration Submitted</td><td class="vol">377</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props">—</td><td></td></tr>
+          <tr><td class="event-name">Registration Completed</td><td class="vol">145</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">username</span> <span class="prop miss">user_id ❌</span> <span class="prop miss">utm_source ❌</span></td><td class="note warn">Dev: add <code>user_id</code> (fix gp: prefix). Add <code>utm_source</code> — links new member to acquisition campaign.</td></tr>
+          <tr><td class="event-name">Registration Failed</td><td class="vol alert">174 ⚠️</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop warn">error_type ⚠️</span></td><td class="note err">⚠️ All 174 failures logged as generic <code>validation_failed</code> — Dev must send specific values: <code>email_already_exists</code>, <code>password_too_weak</code>, <code>username_taken</code></td></tr>
+          <tr><td class="event-name">Email Verification Resent</td><td class="vol">9</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props">—</td><td></td></tr>
+          <tr><td class="event-name missing">Email Verified</td><td class="vol zero">—</td><td><span class="badge miss">❌ Missing</span></td><td class="props">—</td><td class="note err">Implement: fire when user clicks verification link</td></tr>
+          <tr><td class="event-name">Login Submitted</td><td class="vol">337</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props">—</td><td></td></tr>
+          <tr><td class="event-name">Login Completed</td><td class="vol">261</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">username</span> <span class="prop">token_balance</span> <span class="prop miss">user_id ❌</span> <span class="prop miss">is_first_login ❌</span></td><td class="note warn">Dev: add <code>user_id</code> (fix gp: prefix). Add <code>is_first_login</code> — separates first-session from returning users.</td></tr>
+          <tr><td class="event-name">Login Failed</td><td class="vol">95</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">error_type</span></td><td></td></tr>
+          <tr><td class="event-name">Password Reset Requested</td><td class="vol">6</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props">—</td><td></td></tr>
+          <tr><td class="event-name">Password Reset Completed</td><td class="vol">7</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">user_id</span></td><td></td></tr>
+          <tr><td class="event-name">Logout</td><td class="vol">55</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props">—</td><td></td></tr>
+          <tr><td class="event-name deprecated">User LoggedIn</td><td class="vol alert">2,639 🗑️</td><td><span class="badge miss">⚠️ Remove</span></td><td class="props">—</td><td class="note err">⚠️ Fires on every page load (not on login) — polluting all event counts. Dev: remove from code immediately.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════ ACQUISITION ═══════════════ -->
+<div class="tab-panel" id="tab-acquisition">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">A — Acquisition</div>
+      <div class="section-desc">How many people visit the site — where do they come from — and which streamers drive the most traffic?</div>
+    </div>
+    <div class="funnel-conv">⬇ <strong>Acquisition → Activation:</strong> Visit → Registration rate is calculable (Amplitude sessions ÷ 145 registrations). Channel and streamer breakdown blocked until utm_source + referrer_streamer_id are added to Registration Completed.</div>
+    <div class="finding-ok">Amplitude captures UTM data, referrer, device type, and country automatically as user properties — traffic attribution is available without custom events. UTM properties: <code>gp:utm_source</code>, <code>gp:initial_utm_source</code>, <code>gp:referring_domain</code>, <code>gp:referrer</code> + major click IDs (fbclid, gclid, ttclid…). Device: <code>device_type</code>. Geo: <code>country</code>, <code>region</code>, <code>city</code>.</div>
+    <div class="goals">
+      <div class="goals-title">What we want to learn</div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">How many sessions and unique visitors does the site get per day and week?</div><div class="goal-note">Amplitude's SDK tracks sessions reliably as a core feature. Session count and unique visitor count are available natively — no custom event needed.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">Where does the traffic come from — which channels and sources send visitors to the site?</div><div class="goal-note">Captured automatically as user properties: gp:utm_source, gp:initial_utm_source, gp:referring_domain, gp:referrer, plus all major ad click IDs. Fully available in Amplitude — no dev work needed.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">Which traffic channel converts visitors to registrations at the highest rate?</div><div class="goal-note">Answerable in Amplitude by segmenting Registration Completed by gp:initial_utm_source user property. Not perfect (utm_source not on the event itself) but workable. Adding utm_source as an event property on Registration Completed would make this cleaner and more reliable.</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">Which streamer's audience drives the most traffic — and which converts to registrations at the highest rate?</div><div class="goal-note">Primary traffic source at launch is streamers' own social audiences. Need a referral parameter (e.g. ?ref=streamer_id) captured at landing and set as a user property or passed through to Registration Completed. Without it we can't attribute visits or sign-ups to individual streamers.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">What is the split between mobile and desktop visitors?</div><div class="goal-note">Available via Amplitude's native device_type property and gp:device_type user property. Key for understanding experience — mobile vs desktop behaviour differs significantly on a streaming platform.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">Which countries does our traffic come from?</div><div class="goal-note">Amplitude captures country, region, and city natively. Relevant for understanding active markets and for compliance with geo-restrictions.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">What share of visitors are new vs returning — are people coming back before registering?</div><div class="goal-note">Amplitude can identify new vs returning sessions. Reliable for overall split, but tracking the same unregistered person across multiple sessions requires user_id fix.</div></div></div>
+    </div>
+    <div class="events-wrap">
+      <div class="events-subtitle">Events &amp; Properties — all volumes last 30 days</div>
+      <table>
+        <thead><tr><th>Event / Property</th><th>30d Vol</th><th>Status</th><th>Properties (verified)</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="event-name">Sessions (Amplitude native)</td><td class="vol">—</td><td><span class="badge ok">✅ Available</span></td><td class="props"><span class="prop">session_id</span> <span class="prop">session_duration</span> <span class="prop">device_type</span> <span class="prop">country</span> <span class="prop">region</span></td><td class="note">Amplitude tracks sessions automatically. Use as traffic volume denominator in all funnel charts.</td></tr>
+          <tr><td class="event-name">UTM &amp; Referrer (user properties)</td><td class="vol">—</td><td><span class="badge ok">✅ Available</span></td><td class="props"><span class="prop">gp:utm_source</span> <span class="prop">gp:initial_utm_source</span> <span class="prop">gp:referring_domain</span> <span class="prop">gp:referrer</span> <span class="prop">gp:initial_fbclid</span> <span class="prop">gp:initial_gclid</span></td><td class="note">Captured automatically via Amplitude SDK. Usable as filter/segment in any Amplitude chart — no event property needed.</td></tr>
+          <tr><td class="event-name">Registration Completed</td><td class="vol">145</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">username</span> <span class="prop miss">user_id ❌</span> <span class="prop miss">utm_source ❌</span> <span class="prop miss">referrer_streamer_id ❌</span></td><td class="note warn">Dev: add utm_source as event property (improves channel attribution), add referrer_streamer_id (streamer-driven traffic attribution), fix user_id (gp: prefix).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ RETENTION ═══════════════ -->
+<div class="tab-panel" id="tab-retention">
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">R — Retention</div>
+      <div class="section-desc">Are members coming back — and how often?</div>
+    </div>
+    <div class="funnel-conv">⬇ <strong>Revenue → Retention:</strong> Do paying members (tippers / depositors) return more than free viewers? ⚠️ Unknown until user_id fix — can't link tips to the same person returning. DAU/WAU available today via Amplitude native sessions.</div>
+    <div class="goals">
+      <div class="goals-title">What we want to learn</div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">What % of members come back the next day (D1), within 7 days (D7), and within 30 days (D30) after registering?</div><div class="goal-note">D1 is the strongest leading indicator of long-term retention. D7 and D30 are the core cohort retention rates. All three need user_id fix to link a registration to future sessions for the same person.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">How sticky is the platform — how many days per week does the average active member visit?</div><div class="goal-note">WAU/DAU ratio measures habit formation. Amplitude sessions give DAU and WAU natively. A ratio of 3–4 means users come 3–4 days per week on average.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">How many daily and weekly active members do we have?</div><div class="goal-note">Amplitude tracks sessions natively so DAU/WAU counts are available. Login Completed (261/30d) gives a lower-bound but undercounts members who stay logged in between visits.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">Are members from specific marketing channels more retained than others?</div><div class="goal-note">Answerable today by segmenting retention cohorts by gp:initial_utm_source user property. Tells us which acquisition channels bring the most loyal members — not just the most registrations.</div></div></div>
+    </div>
+    <div class="events-wrap">
+      <div class="events-subtitle">Events &amp; Properties — all volumes last 30 days</div>
+      <table>
+        <thead><tr><th>Event</th><th>30d Vol</th><th>Status</th><th>Properties (verified)</th><th>Action needed</th></tr></thead>
+        <tbody>
+          <tr><td class="event-name">Sessions (Amplitude native)</td><td class="vol">—</td><td><span class="badge ok">✅ Available</span></td><td class="props"><span class="prop">session_id</span> <span class="prop">session_duration</span> <span class="prop">device_type</span> <span class="prop">country</span></td><td class="note">Use for DAU/WAU counts and stickiness ratio. No custom event needed.</td></tr>
+          <tr><td class="event-name">Registration Completed</td><td class="vol">145</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">username</span> <span class="prop miss">user_id ❌</span> <span class="prop miss">utm_source ❌</span></td><td class="note warn">Dev: fix user_id (gp: prefix bug) — needed to link registrations to future sessions for retention cohorts. Add utm_source — needed to compare retention by acquisition channel.</td></tr>
+          <tr><td class="event-name">Login Completed</td><td class="vol">261</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">username</span> <span class="prop">token_balance</span> <span class="prop miss">user_id ❌</span></td><td class="note warn">Dev: fix user_id (gp: prefix bug) — needed to identify the same returning member across sessions. token_balance ✅ number.</td></tr>
+          <tr><td class="event-name">Logout</td><td class="vol">55</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props">—</td><td class="note">No custom properties — only Amplitude autocapture (page URL etc.). No action needed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STREAMER AUTH ═══════════════ -->
+<div class="tab-panel" id="tab-streamer-auth">
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Streamer Auth</div>
+      <div class="section-desc">Streamer registration, login, email verification, logout</div>
+    </div>
+    <div class="goals">
+      <div class="goals-title">What we want to learn</div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">Streamer registration funnel — how many start, drop off, complete vs fail?</div><div class="goal-note">52 started → 31 submitted (60%) → 15 completed (29%) + 24 failed (46%). Worse funnel than member registration.</div></div></div>
+      <div class="goal-item sub"><span class="gs no">❌ No</span><div><div class="goal-q">↳ Did the streamer verify their email?</div><div class="goal-note">No "Streamer Email Verified" event — same gap as member. Only 2 resent emails tracked.</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">Why does streamer registration fail?</div><div class="goal-note">24 failures, all <code>validation_failed</code> — useless. Dev needs specific error values.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">Why do streamer logins fail?</div><div class="goal-note">36 failures: 34× <code>invalid_login_credentials</code> · 2× <code>email_not_confirmed</code>. Specific and actionable.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">How many streamers complete full onboarding after registering?</div><div class="goal-note">Individual account setup events exist but no single "Onboarding Completed" event to measure overall completion rate.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">How often do streamers log in — are they active on the platform?</div><div class="goal-note">70 logins in 30d from ~15 registered streamers — averages well but needs user_id fix for per-streamer breakdown.</div></div></div>
+    </div>
+    <div class="events-wrap">
+      <div class="events-subtitle">Events &amp; Properties — all volumes last 30 days</div>
+      <table>
+        <thead><tr><th>Event</th><th>30d Vol</th><th>Status</th><th>Properties (verified)</th><th>Action needed</th></tr></thead>
+        <tbody>
+          <tr><td class="event-name">Streamer Registration Started</td><td class="vol">52</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props">—</td><td></td></tr>
+          <tr><td class="event-name">Streamer Registration Submitted</td><td class="vol">31</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props">—</td><td></td></tr>
+          <tr><td class="event-name">Streamer Registration Completed</td><td class="vol">15</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_id</span> <span class="prop">username</span></td><td></td></tr>
+          <tr><td class="event-name">Streamer Registration Failed</td><td class="vol alert">24 ⚠️</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop warn">error_type ⚠️</span></td><td class="note err">⚠️ All 24 failures logged as generic <code>validation_failed</code> — Dev: send specific error values</td></tr>
+          <tr><td class="event-name">Streamer Email Verification Resent</td><td class="vol">2</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props">—</td><td></td></tr>
+          <tr><td class="event-name missing">Streamer Email Verified</td><td class="vol zero">—</td><td><span class="badge miss">❌ Missing</span></td><td class="props">—</td><td class="note err">Implement: fire when streamer clicks verification link</td></tr>
+          <tr><td class="event-name">Streamer Login Submitted</td><td class="vol">103</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props">—</td><td></td></tr>
+          <tr><td class="event-name">Streamer Login Completed</td><td class="vol">70</td><td><span class="badge warn">⚠️ Schema issue</span></td><td class="props"><span class="prop">username</span> <span class="prop warn">token_balance ⚠️</span> <span class="prop miss">streamer_id ❌</span></td><td class="note warn">Dev: rename <code>token_balance</code> → <code>total_balance</code>. Add <code>streamer_id</code>.</td></tr>
+          <tr><td class="event-name">Streamer Login Failed</td><td class="vol">36</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">error_type</span></td><td></td></tr>
+          <tr><td class="event-name">Streamer Logout</td><td class="vol">29</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props">—</td><td></td></tr>
+          <tr><td class="event-name missing">Onboarding Completed</td><td class="vol zero">—</td><td><span class="badge miss">❌ Missing</span></td><td class="props">—</td><td class="note err">Implement: single event when streamer finishes all onboarding steps (profile, gallery, consent, verification). Needed to measure overall onboarding completion rate.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STREAMER PERFORMANCE ═══════════════ -->
+<div class="tab-panel" id="tab-streamer-performance">
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Streamer Performance</div>
+      <span class="ramon-badge">★ R</span>
+      <div class="section-desc">Per-streamer aggregate view — who's performing, how often, and how much do they earn?</div>
+    </div>
+    <div class="goals">
+      <div class="goals-title">What we want to learn</div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">How many streams has each streamer done, and how many are active?</div><div class="goal-note">40 Stream Started events in 30d across ~15 registered streamers. streamer_id on all stream events ✅ — per-streamer stream count available in Amplitude.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q"><span class="ramon-q">★ R</span> Average viewers per streamer — who draws the biggest audience?</div><div class="goal-note">unique_viewer_count on Stream Ended ✅ — group by streamer_id to rank by average viewers.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">How many tokens has each streamer earned in tips across all their streams?</div><div class="goal-note">total_tips_received on Stream Ended ✅ — sum across all stream sessions per streamer_id.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">Which streamers earn the most tips and what's the average tip amount per streamer?</div><div class="goal-note">Tip Sent + streamer_id + amount ✅ — 111 tips in 30d. Group by streamer_id in Amplitude to rank and average.</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">How much have streamers earned in tips in dollar value?</div><div class="goal-note">total_tips_usd not tracked. Need to add amount_usd on Tip Sent + total_tips_usd on Stream Ended.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">Which streamers generate the most casino outclicks?</div><div class="goal-note">streamer_id on Casino Outclick ✅ — 169 outclicks in 30d. Group by streamer_id in Amplitude.</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q"><span class="ramon-q">★ R</span> Which streamers generate the most FTDs?</div><div class="goal-note">streamer_id missing from FTD Completed — can't link FTDs to the streamer who was live. Only 2 FTD events total.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">Which time slots perform best — when do streamers get most viewers?</div><div class="goal-note">Derivable from timestamps on Stream Started + unique_viewer_count on Stream Ended — no dedicated property needed, can chart in Amplitude by hour of day.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">Do streamers who stream more earn more tips?</div><div class="goal-note">Correlatable from existing data — stream count vs total_tips_received per streamer_id. Needs Amplitude scatter or table chart.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">What % of Go Live clicks result in a stream actually starting — and are any streams starting without the button click?</div><div class="goal-note">34 clicked → 40 started. Ratio >100% means 6 streams started without the button click — investigate if there's a second launch path not tracked.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">Which streamers are most messaged by members?</div><div class="goal-note">203 conversations opened in 30d. streamer_id on Conversation Opened ✅ — group by streamer_id in Amplitude.</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">Which streamer has the best viewer-to-tipper conversion rate?</div><div class="goal-note">Needs stream_id on Tip Sent to count unique tippers per stream per streamer. Currently can't link tips to the specific stream session.</div></div></div>
+    </div>
+    <div class="events-wrap">
+      <div class="events-subtitle">Events &amp; Properties — same events as Streams tab, viewed per-streamer</div>
+      <table>
+        <thead><tr><th>Event</th><th>30d Vol</th><th>Status</th><th>Properties (verified)</th><th>Action needed</th></tr></thead>
+        <tbody>
+          <tr><td class="event-name">Stream Started</td><td class="vol">40</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_id</span> <span class="prop">streamer_name</span></td><td></td></tr>
+          <tr><td class="event-name">Stream Ended</td><td class="vol">51</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_id</span> <span class="prop">streamer_name</span> <span class="prop">duration_seconds</span> <span class="prop">total_tips_received</span> <span class="prop">unique_viewer_count</span> <span class="prop miss">total_tips_usd ❌</span></td><td class="note warn">Dev: add <code>total_tips_usd</code> — dollar value of all tips in the stream session.</td></tr>
+          <tr><td class="event-name">Casino Outclick</td><td class="vol">169</td><td><span class="badge warn">⚠️ Schema issue</span></td><td class="props"><span class="prop">streamer_id</span> <span class="prop">casino_name</span></td><td class="note warn">Dev: rename <code>partner</code> → <code>operator_id</code>.</td></tr>
+          <tr><td class="event-name">FTD Completed</td><td class="vol alert">2 ⚠️</td><td><span class="badge warn">⚠️ Schema issue</span></td><td class="props"><span class="prop miss">streamer_id ❌</span> <span class="prop miss">user_id ❌</span></td><td class="note warn">Dev: add <code>streamer_id</code> + <code>user_id</code> + <code>transaction_id</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TOKEN PURCHASE ═══════════════ -->
+<div class="tab-panel" id="tab-token-purchase">
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Revenue — Token Purchase</div>
+      <span class="ramon-badge">★ R</span>
+    </div>
+    <div class="funnel-conv">⬇ <strong>Token Purchase funnel:</strong> 24 started → 14 submitted (<strong>58%</strong>) → 7 completed (<strong>29%</strong> of starters) + 6 failed. ⚠️ Registration → First purchase rate: unknown until user_id fix.</div>
+    <div class="goals">
+      <div class="goals-title">What we want to learn</div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">Full purchase funnel: Started → Package Selected → Submitted → Completed / Failed?</div><div class="goal-note">24 started → 104 package selections → 14 submitted → 7 completed + 6 failed. All funnel events fire.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">What % of members who start a token purchase actually complete it?</div><div class="goal-note">24 started → 7 completed = 29% purchase completion. Funnel across all 5 events in Amplitude.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">Which token packages are most popular?</div><div class="goal-note">70 tokens ($10): 78 selections · 175 ($25): 12 · 350 ($50): 6 · 700 ($100): 4 · 1050 ($150): 2 · 1400 ($200): 2</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">Where do members initiate a purchase — during a stream or browsing?</div><div class="goal-note">browse: 13 · liveshow: 11 — nearly split. Via <code>source</code> on Token Purchase Started.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q"><span class="ramon-q">★ R</span> Why do purchases fail?</div><div class="goal-note">All 6 failures: Session time limit expired — 3DS payment timeout. Via <code>failure_reason</code> on Token Purchase Failed.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">How many times on average have users bought tokens?</div><div class="goal-note">7 completions / 6 unique buyers → avg 1.17x per buyer in 30d. Most buyers purchased only once.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q"><span class="ramon-q">★ R</span> How many tried to buy and never got an outcome?</div><div class="goal-note">Measurable via funnel chart in Amplitude across the 5 purchase events — shows exact drop-off at each step.</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">What is the average order value and total token revenue?</div><div class="goal-note"><code>token_amount</code> and <code>price_usd</code> are strings — numeric aggregation blocked until types are fixed.</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">Which streams trigger token purchases?</div><div class="goal-note">No <code>stream_id</code> on any token purchase event.</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">Is this a first purchase or repeat?</div><div class="goal-note">No <code>is_first_purchase</code> property on Token Purchase Completed.</div></div></div>
+    </div>
+    <div class="events-wrap">
+      <div class="events-subtitle">Events &amp; Properties — all volumes last 30 days</div>
+      <table>
+        <thead><tr><th>Event</th><th>30d Vol</th><th>Status</th><th>Properties (verified)</th><th>Action needed</th></tr></thead>
+        <tbody>
+          <tr><td class="event-name">Token Purchase Started</td><td class="vol">24</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">source</span> <span class="prop">current_balance</span> <span class="prop miss">stream_id ❌</span></td><td class="note warn">Dev: add <code>stream_id</code> when source is liveshow — links purchase to the stream that triggered it.</td></tr>
+          <tr><td class="event-name">Token Package Selected</td><td class="vol">104</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop warn">token_amount (string)</span> <span class="prop warn">price_usd (string)</span> <span class="prop miss">stream_id ❌</span></td><td class="note warn">Dev: change <code>token_amount</code> and <code>price_usd</code> to number type. Add <code>stream_id</code>.</td></tr>
+          <tr><td class="event-name">Token Purchase Submitted</td><td class="vol">14</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop warn">token_amount (string)</span> <span class="prop warn">price_usd (string)</span> <span class="prop miss">stream_id ❌</span></td><td class="note warn">Dev: change <code>token_amount</code> and <code>price_usd</code> to number type. Add <code>stream_id</code>.</td></tr>
+          <tr><td class="event-name">Token Purchase Completed</td><td class="vol">7</td><td><span class="badge warn">⚠️ Schema issue</span></td><td class="props"><span class="prop warn">token_amount (string)</span> <span class="prop warn">price_usd (string)</span> <span class="prop">new_balance</span> <span class="prop miss">stream_id ❌</span> <span class="prop miss">is_first_purchase ❌</span></td><td class="note warn">Dev: change amounts to number type. Add <code>stream_id</code>. Add <code>is_first_purchase</code> — distinguishes new buyers from repeat.</td></tr>
+          <tr><td class="event-name">Token Purchase Failed</td><td class="vol">6</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">failure_reason</span> <span class="prop extra">order_id +</span> <span class="prop miss">stream_id ❌</span></td><td class="note warn">Dev: add <code>stream_id</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STREAM ENGAGEMENT ═══════════════ -->
+<div class="tab-panel" id="tab-stream-viewing">
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Activation — Stream Engagement</div>
+      <span class="ramon-badge">★ R</span>
+    </div>
+    <div class="funnel-conv">⬇ <strong>Stream Engagement → Revenue:</strong> 1,020 joins → 431 tip panel opens (<strong>42%</strong>) → 111 tips sent (<strong>11%</strong> of viewers tip) · 169 casino outclicks (<strong>17%</strong> of viewers click) → 2 FTDs (<strong>1.2%</strong> outclick→FTD).</div>
+    <div class="goals">
+      <div class="goals-title">What we want to learn</div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q"><span class="ramon-q">★ R</span> How many viewers does each stream get, and what is the average across all streams?</div><div class="goal-note">Stream Ended → unique_viewer_count ✅ — 51 streams in 30d. Per-stream and average both answerable.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">How long does each stream run, and how long do viewers actually stay — on average?</div><div class="goal-note">Stream duration: duration_seconds on Stream Ended ✅. Viewer session: 568 of 1,020 joins have Stream Left (56%) — the other 44% close the browser so duration is unavailable for them.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">What % of viewers follow the streamer during a stream?</div><div class="goal-note">118 follows / 1,020 joins = ~12% overall follow rate. Per-stream breakdown needs stream_id on Performer Followed.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">What % of viewers send a message during a stream?</div><div class="goal-note">34 messages / 1,020 joins = ~3% overall message rate. Per-stream breakdown needs stream_id on Message Sent.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">At what point do viewers drop off — do they leave early or stay till the end?</div><div class="goal-note">duration_seconds on Stream Left gives drop-off timing for 56% of viewers. The other 44% close the browser — no exit event, so drop-off point unknown for them.</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">How many messages are sent per stream on average?</div><div class="goal-note">No stream_id on Conversation Opened or Message Sent — can't link messages to the stream they happened in.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q"><span class="ramon-q">★ R</span> What device are viewers on — mobile or desktop?</div><div class="goal-note">Amplitude's native device_type property is available on every event — no user_id fix needed for aggregate device breakdown. Per-user device history needs user_id fix.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">Do viewers watch in horizontal or vertical?</div><div class="goal-note">Screen Orientation Changed fires (52 events) but only captures rotations, not starting orientation. Need orientation property on Stream Joined.</div></div></div>
+    </div>
+    <div class="events-wrap">
+      <div class="events-subtitle">Events &amp; Properties — all volumes last 30 days</div>
+      <table>
+        <thead><tr><th>Event</th><th>30d Vol</th><th>Status</th><th>Properties (verified)</th><th>Action needed</th></tr></thead>
+        <tbody>
+          <tr><td class="event-name">Stream Started</td><td class="vol">40</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_id</span> <span class="prop">streamer_name</span></td><td></td></tr>
+          <tr><td class="event-name">Stream Ended</td><td class="vol">51</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_id</span> <span class="prop">streamer_name</span> <span class="prop">duration_seconds</span> <span class="prop">total_tips_received</span> <span class="prop">unique_viewer_count</span></td><td></td></tr>
+          <tr><td class="event-name">Stream Joined</td><td class="vol">1,020</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">stream_id</span> <span class="prop">streamer_name</span> <span class="prop">streamer_id</span> <span class="prop miss">orientation ❌</span></td><td class="note warn">Dev: add orientation (horizontal/vertical) at join time</td></tr>
+          <tr><td class="event-name">Stream Left</td><td class="vol">568</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">stream_id</span> <span class="prop">streamer_name</span> <span class="prop">streamer_id</span> <span class="prop">duration_seconds</span></td><td class="note">Only 56% of viewers trigger this — 44% close the browser instead</td></tr>
+          <tr><td class="event-name">Screen Orientation Changed</td><td class="vol">52</td><td><span class="badge gray">⚠️ Undocumented</span></td><td class="props">—</td><td class="note warn">Captures rotations only — not starting orientation. Keep or remove? If keep: add orientation to Stream Joined instead.</td></tr>
+          <tr><td class="event-name">Performer Followed</td><td class="vol">118</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_name</span> <span class="prop">streamer_id</span> <span class="prop">action</span> <span class="prop miss">stream_id ❌</span></td><td class="note warn">Dev: add stream_id — needed for per-stream follow rate</td></tr>
+          <tr><td class="event-name">Conversation Opened</td><td class="vol">203</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">performer_name</span> <span class="prop">streamer_id</span> <span class="prop miss">stream_id ❌</span></td><td class="note warn">Dev: add stream_id — needed for messages per stream</td></tr>
+          <tr><td class="event-name">Message Sent</td><td class="vol">34</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">performer_name</span> <span class="prop">streamer_id</span> <span class="prop">message_length</span> <span class="prop miss">stream_id ❌</span></td><td class="note warn">Dev: add stream_id — needed for messages per stream</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STREAM MONETIZATION ═══════════════ -->
+<div class="tab-panel" id="tab-tipping">
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Revenue — Tipping</div>
+    </div>
+    <div class="funnel-conv">⬇ <strong>Tipping funnel:</strong> 1,020 stream joins → 431 tip panel opens (<strong>42%</strong>) → 111 tips sent (<strong>26%</strong> panel→tip, <strong>11%</strong> of all viewers). ⚠️ Registration → First tip rate: unknown until user_id fix.</div>
+    <div class="goals">
+      <div class="goals-title">What we want to learn</div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">What % of viewers tip — and of those who open the tip panel, how many follow through?</div><div class="goal-note">1,020 joins → 431 panel opens (42%) → 111 tips sent (26% panel conversion, ~11% of all viewers tip). Per-stream breakdown needs stream_id on Tip Sent.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">Does tipping happen more in liveshow or messaging context?</div><div class="goal-note">Liveshow: 373 opens (87%) · Messaging: 58 opens (13%). Liveshow dominates.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">Do members prefer preset tips or custom amounts?</div><div class="goal-note">tip_type property ✅ — verified present.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">How much does each stream earn in tips — total and average tip value?</div><div class="goal-note">total_tips_received on Stream Ended ✅ (tokens). Dollar value blocked — no total_tips_usd. Average tip per stream needs stream_id on Tip Sent.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">Which spin wheel actions are triggered most often, and what are the most popular tip amounts?</div><div class="goal-note">StreamSpecial Triggered fires 52 times in 30d with special_name and cost — may be the spin wheel. Pending dev confirmation. Once confirmed: query in Amplitude to rank by popularity and cost.</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">How many wheel spins happen per stream on average?</div><div class="goal-note">Needs stream_id on StreamSpecial Triggered — currently can't group spins by stream session.</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">Which streamers have the spin wheel enabled, and how does it affect their tip earnings?</div><div class="goal-note">No event for enabling/disabling the wheel. Dev: add a "Spin Wheel Enabled" event with streamer_id when the streamer activates it.</div></div></div>
+      <div class="goal-item"><span class="gs future">🔜 Future</span><div><div class="goal-q">When VIP room launches — how many members enter, at what price, and for how long?</div><div class="goal-note">Feature not built yet. When it launches: add VIP Room Entered / Exited events with stream_id, streamer_id, price_tokens, duration_seconds.</div></div></div>
+    </div>
+    <div class="events-wrap">
+      <div class="events-subtitle">Events &amp; Properties — all volumes last 30 days</div>
+      <table>
+        <thead><tr><th>Event</th><th>30d Vol</th><th>Status</th><th>Properties (verified)</th><th>Action needed</th></tr></thead>
+        <tbody>
+          <tr><td class="event-name">Tip Panel Opened</td><td class="vol">431</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">context</span> <span class="prop">streamer_name</span> <span class="prop">streamer_id</span> <span class="prop miss">stream_id ❌</span></td><td class="note warn">Dev: add stream_id — needed for per-stream panel open→tip conversion rate.</td></tr>
+          <tr><td class="event-name">Tip Sent</td><td class="vol">111</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">amount</span> <span class="prop">tip_type</span> <span class="prop">streamer_name</span> <span class="prop">streamer_id</span> <span class="prop">remaining_balance</span> <span class="prop">context</span> <span class="prop miss">stream_id ❌</span> <span class="prop miss">amount_usd ❌</span></td><td class="note warn">Dev: add stream_id (tips per stream) + amount_usd (dollar value of tips)</td></tr>
+          <tr><td class="event-name">StreamSpecial Triggered</td><td class="vol">52</td><td><span class="badge gray">⚠️ Undocumented</span></td><td class="props"><span class="prop">special_name</span> <span class="prop">cost</span> <span class="prop">streamer_name</span> <span class="prop">streamer_id</span> <span class="prop miss">stream_id ❌</span></td><td class="note warn">Dev: what does this event track? Name is unclear. May be the spin wheel — confirm what special_name values look like before adding requirements. Add stream_id.</td></tr>
+          <tr><td class="event-name missing">Spin Wheel Enabled</td><td class="vol zero">—</td><td><span class="badge miss">❌ Missing</span></td><td class="props">—</td><td class="note err">Implement: fire when streamer enables the spin wheel. Properties: streamer_id, stream_id.</td></tr>
+          <tr><td class="event-name missing">Spin Wheel Action Triggered</td><td class="vol zero">—</td><td><span class="badge miss">❌ Missing</span></td><td class="props">—</td><td class="note err">Implement: fire when a viewer triggers a spin wheel action. Properties: streamer_id, stream_id, action_name, cost_tokens, amount_usd, member_id.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Revenue — Casino &amp; FTD</div>
+      <span class="ramon-badge">★ R</span>
+    </div>
+    <div class="funnel-conv">⬇ <strong>Casino funnel:</strong> 1,020 viewers → 169 outclicks (<strong>17%</strong>) → 2 FTDs (<strong>1.2%</strong> outclick→FTD, <strong>0.2%</strong> viewers→FTD). ⚠️ Per-stream and per-user breakdown blocked until stream_id + user_id added to FTD Completed.</div>
+    <div class="goals">
+      <div class="goals-title">What we want to learn</div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">Which casinos get the most outclicks and FTDs — and what is the conversion rate per casino?</div><div class="goal-note">Only BetMode.io so far — 169 outclicks, 2 FTDs = 1.2% conversion. Will be meaningful once more casino partners are added. Per-casino FTD count blocked until user_id is added to FTD Completed.</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">Which streams generate the most outclicks and FTDs — and what is the conversion rate per stream?</div><div class="goal-note">Needs stream_id on Casino Outclick + FTD Completed to group outclicks and FTDs by stream session.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q"><span class="ramon-q">★ R</span> What are the three casino conversion rates — viewers→outclicks, viewers→FTDs, and outclicks→FTDs — overall and per stream?</div><div class="goal-note">Overall: viewers→outclicks: 169/1,020 = ~17% · outclicks→FTDs: 2/169 = ~1.2% · viewers→FTDs: 2/1,020 = ~0.2%. Per-stream breakdown needs stream_id on Casino Outclick + FTD Completed. Casino Outclick already has member_id ✅ so per-user linkage is possible once user_id is added to FTD Completed.</div></div></div>
+      <div class="goal-item"><span class="gs future">🔜 Future</span><div><div class="goal-q">When the affiliate page launches — which deals get the most outclicks and FTDs, and what are the three conversion rates: page views→outclicks, page views→FTDs, and outclicks→FTDs?</div><div class="goal-note">Page not built yet. When live: track page views + Casino Outclick with source=affiliate_page. Same three conversion rates as streams but for page views instead of stream viewers.</div></div></div>
+    </div>
+    <div class="events-wrap">
+      <div class="events-subtitle">Events &amp; Properties — all volumes last 30 days</div>
+      <table>
+        <thead><tr><th>Event</th><th>30d Vol</th><th>Status</th><th>Properties (verified)</th><th>Action needed</th></tr></thead>
+        <tbody>
+          <tr><td class="event-name">Casino Outclick</td><td class="vol">169</td><td><span class="badge warn">⚠️ Schema issue</span></td><td class="props"><span class="prop">casino_name</span> <span class="prop miss">operator_id ❌</span> <span class="prop">affiliate_link</span> <span class="prop">bonus_offer</span> <span class="prop">cta_text</span> <span class="prop">source</span> <span class="prop">streamer_id</span> <span class="prop miss">stream_id ❌</span> <span class="prop extra">partner +</span> <span class="prop">member_id</span></td><td class="note warn">Dev: rename <code>partner</code> → <code>operator_id</code>. Add <code>stream_id</code>. Note: member_id is useful — once user_id is added to FTD Completed, outclicks can be linked to deposits per user.</td></tr>
+          <tr><td class="event-name">FTD Completed</td><td class="vol alert">2 ⚠️</td><td><span class="badge warn">⚠️ Schema issue</span></td><td class="props"><span class="prop miss">user_id ❌</span> <span class="prop miss">streamer_id ❌</span> <span class="prop miss">stream_id ❌</span> <span class="prop miss">transaction_id ❌</span> <span class="prop">member_username</span> <span class="prop">operator_name</span> <span class="prop">operator_id</span> <span class="prop">affiliate_link</span> <span class="prop">amount</span> <span class="prop">currency</span></td><td class="note warn">Dev: add <code>user_id</code>, <code>streamer_id</code>, <code>stream_id</code>, <code>transaction_id</code>. ⚠️ Only 2 events in 30d — verify with dev that postbacks are working and these are real transactions, not test data.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ REFERRAL ═══════════════ -->
+<div class="tab-panel" id="tab-referral">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">R — Referral</div>
+      <div class="section-desc">Possibly in the future.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PERFORMER DISCOVERY ═══════════════ -->
+<div class="tab-panel" id="tab-discovery">
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Activation — Performer Discovery</div>
+    </div>
+    <div class="funnel-conv">⬇ <strong>Discovery → Stream Join:</strong> 936 profile views + 3,387 filter actions → 1,020 stream joins / 30d. Can't link filter → join per session until last_filter_used is added to Stream Joined.</div>
+    <div class="goals">
+      <div class="goals-title">What we want to learn</div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">Which filters do members use most?</div><div class="goal-note">3,387 filter events — all (2,298) · liveNow (619) · upcomingShows (467). But Favorites, VIP Room, New, Trending are not appearing — may not be tracking.</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">Which filter leads to the most stream joins?</div><div class="goal-note">Every stream join comes through discovery — but there's no direct link between Performer Filter Applied and Stream Joined. Needs a session_id or referrer property on Stream Joined to connect the two events.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">Which performers get the most profile views?</div><div class="goal-note">Performer Profile Viewed: 936 in 30d. streamer_id on each event ✅</div></div></div>
+      <div class="goal-item"><span class="gs future">🔜 Future</span><div><div class="goal-q">Expand discovery tracking — search usage, profile scroll depth, preview plays, and more.</div><div class="goal-note">Starting with the basics (filter + profile view). More discovery events to be added as the product evolves.</div></div></div>
+    </div>
+    <div class="events-wrap">
+      <div class="events-subtitle">Events &amp; Properties — all volumes last 30 days</div>
+      <table>
+        <thead><tr><th>Event</th><th>30d Vol</th><th>Status</th><th>Properties (verified)</th><th>Action needed</th></tr></thead>
+        <tbody>
+          <tr><td class="event-name">Performer Filter Applied</td><td class="vol">3,387</td><td><span class="badge warn">⚠️ Schema issue</span></td><td class="props"><span class="prop warn">filter ⚠️</span></td><td class="note warn">Dev: standardise filter values to snake_case (<code>live_now</code>, <code>upcoming_shows</code>). Investigate missing values: favorites, vip_room, new, trending not appearing.</td></tr>
+          <tr><td class="event-name">Stream Joined</td><td class="vol">1,020</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">stream_id</span> <span class="prop">streamer_id</span> <span class="prop">streamer_name</span> <span class="prop miss">last_filter_used ❌</span></td><td class="note warn">Dev: add <code>last_filter_used</code> — the filter active when the member joined. Needed to link discovery filter to stream join.</td></tr>
+          <tr><td class="event-name">Performer Profile Viewed</td><td class="vol">936</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">performer_name</span> <span class="prop">streamer_id</span></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STREAMER SHOWS ═══════════════ -->
+<div class="tab-panel" id="tab-shows">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Streamer — Shows &amp; Templates</div>
+    </div>
+    <div class="goals">
+      <div class="goals-title">What we want to learn</div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">How many shows are scheduled vs cancelled?</div><div class="goal-note">8 scheduled, 2 cancelled in 30d. Low volume — streamers are not using shows heavily yet.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">How actively do streamers manage tip templates?</div><div class="goal-note">Created: 1 · Edited: 5 · Deleted: missing from Amplitude (marked implemented in ClickUp)</div></div></div>
+    </div>
+    <div class="events-wrap">
+      <div class="events-subtitle">Events &amp; Properties — all volumes last 30 days</div>
+      <table>
+        <thead><tr><th>Event</th><th>30d Vol</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
+        <tbody>
+          <tr><td class="event-name">Show Scheduled</td><td class="vol">8</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_id</span> <span class="prop">show_date</span></td><td></td></tr>
+          <tr><td class="event-name">Show Cancelled</td><td class="vol">2</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_id</span> <span class="prop">show_id</span></td><td></td></tr>
+          <tr><td class="event-name missing">Show Deleted</td><td class="vol zero">—</td><td><span class="badge miss">❌ Missing</span></td><td class="props">—</td><td class="note err">Implement — marked done in ClickUp but missing from Amplitude</td></tr>
+          <tr><td class="event-name">Tip Template Created</td><td class="vol">1</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_id</span> <span class="prop">action_count</span></td><td></td></tr>
+          <tr><td class="event-name">Tip Template Edited</td><td class="vol">5</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_id</span></td><td></td></tr>
+          <tr><td class="event-name missing">Tip Template Deleted</td><td class="vol zero">—</td><td><span class="badge miss">❌ Missing</span></td><td class="props">—</td><td class="note err">Implement — marked done in ClickUp but missing from Amplitude</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STREAMER FINANCE ═══════════════ -->
+<div class="tab-panel" id="tab-finance">
+  <div class="finding-info">
+    ℹ️ All finance events are pending implementation. No data available yet.
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Streamer — Finance</div>
+      <div class="section-desc">All pending — not yet implemented</div>
+    </div>
+    <div class="goals">
+      <div class="goals-title">What we want to learn</div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">How often do streamers request withdrawals and in what amounts?</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">Which payment method do streamers prefer — IBAN, Paxum, or Cosmo?</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">How do streamers price their VIP rooms?</div></div></div>
+    </div>
+    <div class="events-wrap">
+      <div class="events-subtitle">Events &amp; Properties</div>
+      <table>
+        <thead><tr><th>Event</th><th>30d Vol</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
+        <tbody>
+          <tr><td class="event-name">Withdrawal Requested</td><td class="vol zero">—</td><td><span class="badge gray">⏳ Pending</span></td><td class="props"><span class="prop">streamer_id</span> <span class="prop">amount</span> <span class="prop">currency</span></td><td></td></tr>
+          <tr><td class="event-name">Withdrawal Completed</td><td class="vol zero">—</td><td><span class="badge gray">⏳ Pending</span></td><td class="props"><span class="prop">streamer_id</span> <span class="prop">amount</span> <span class="prop">currency</span></td><td></td></tr>
+          <tr><td class="event-name">Bank Details Saved</td><td class="vol zero">—</td><td><span class="badge gray">⏳ Pending</span></td><td class="props"><span class="prop">streamer_id</span> <span class="prop">method</span></td><td></td></tr>
+          <tr><td class="event-name">VIP Room Price Set</td><td class="vol zero">—</td><td><span class="badge gray">⏳ Pending</span></td><td class="props"><span class="prop">streamer_id</span> <span class="prop">price_tokens</span> <span class="prop">price_usd</span></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STREAMER ACCOUNT ═══════════════ -->
+<div class="tab-panel" id="tab-account">
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Streamer — Account Setup &amp; Messaging</div>
+    </div>
+    <div class="goals">
+      <div class="goals-title">What we want to learn</div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">How many streamers complete identity verification?</div><div class="goal-note">8 submitted → 6 verified in 30d. 2 submitted but not yet verified.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">What profile fields do streamers update most?</div><div class="goal-note">Top fields updated: age (5) · breast_size (4) · hair_color (4) · body_type (3) · and 7 more. Physical attributes dominate.</div></div></div>
+      <div class="goal-item"><span class="gs yes">✅ Yes</span><div><div class="goal-q">What type of media do streamers upload to their gallery?</div><div class="goal-note">17 uploads, all images. No video uploads yet.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">How actively do streamers message members?</div><div class="goal-note">35 conversations opened, only 5 messages sent (14% send rate). Low engagement from streamer side.</div></div></div>
+      <div class="goal-item"><span class="gs part">⚠️ Part</span><div><div class="goal-q">How often do streamers use their referral link?</div><div class="goal-note">Referral Link Copied missing from Amplitude — marked implemented in ClickUp</div></div></div>
+    </div>
+    <div class="events-wrap">
+      <div class="events-subtitle">Events &amp; Properties — all volumes last 30 days</div>
+      <table>
+        <thead><tr><th>Event</th><th>30d Vol</th><th>Status</th><th>Properties (verified)</th><th>Action needed</th></tr></thead>
+        <tbody>
+          <tr><td class="event-name">Identity Verification Submitted</td><td class="vol">8</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_id</span></td><td></td></tr>
+          <tr><td class="event-name">Identity Verified</td><td class="vol">6</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_id</span></td><td></td></tr>
+          <tr><td class="event-name">Consent Form Viewed</td><td class="vol">15</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_id</span></td><td></td></tr>
+          <tr><td class="event-name">Terms Viewed</td><td class="vol">3</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_id</span></td><td></td></tr>
+          <tr><td class="event-name">Streamer Profile Updated</td><td class="vol">6</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_id</span> <span class="prop">fields_updated</span></td><td></td></tr>
+          <tr><td class="event-name">Gallery Media Uploaded</td><td class="vol">17</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">streamer_id</span> <span class="prop">media_type</span></td><td></td></tr>
+          <tr><td class="event-name missing">Referral Link Copied</td><td class="vol zero">—</td><td><span class="badge miss">❌ Missing</span></td><td class="props">—</td><td class="note err">Implement — marked done in ClickUp but missing from Amplitude</td></tr>
+          <tr><td class="event-name">Streamer Conversation Opened</td><td class="vol">35</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">member_name</span> <span class="prop">member_id</span></td><td></td></tr>
+          <tr><td class="event-name">Streamer Message Sent</td><td class="vol">5</td><td><span class="badge ok">✅ In Tracking Plan</span></td><td class="props"><span class="prop">member_name</span> <span class="prop">member_id</span> <span class="prop">message_length</span></td><td></td></tr>
+          <tr><td class="event-name missing">Chat Disabled</td><td class="vol zero">—</td><td><span class="badge miss">❌ Missing</span></td><td class="props">—</td><td class="note err">Implement — marked done in ClickUp but missing from Amplitude</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ KYC ═══════════════ -->
+<div class="tab-panel" id="tab-kyc">
+  <div class="finding-info">
+    ℹ️ KYC is pending KYROS integration — no events implemented or firing yet.
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">KYC — Members</div>
+      <div class="section-desc">Pending KYROS integration — nothing tracking yet</div>
+    </div>
+    <div class="goals">
+      <div class="goals-title">What we want to learn</div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">What is the KYC completion rate and where do users drop off?</div><div class="goal-note">All events pending KYROS integration</div></div></div>
+      <div class="goal-item"><span class="gs no">❌ No</span><div><div class="goal-q">Why do KYC submissions fail?</div><div class="goal-note">KYC Failed event not yet implemented</div></div></div>
+    </div>
+    <div class="events-wrap">
+      <table>
+        <thead><tr><th>Event</th><th>30d Vol</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
+        <tbody>
+          <tr><td class="event-name">KYC Started</td><td class="vol zero">—</td><td><span class="badge gray">⏳ Pending</span></td><td class="props">—</td><td></td></tr>
+          <tr><td class="event-name">KYC Step Completed</td><td class="vol zero">—</td><td><span class="badge gray">⏳ Pending</span></td><td class="props"><span class="prop">step_name</span> <span class="prop">step_number</span></td><td></td></tr>
+          <tr><td class="event-name">KYC Completed</td><td class="vol zero">—</td><td><span class="badge gray">⏳ Pending</span></td><td class="props"><span class="prop">user_id</span></td><td></td></tr>
+          <tr><td class="event-name">KYC Failed</td><td class="vol zero">—</td><td><span class="badge gray">⏳ Pending</span></td><td class="props"><span class="prop">user_id</span> <span class="prop">failure_reason</span></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+</main>
+
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  function goToTab(tabId) {
+    tabs.forEach(t => t.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    const btn = document.querySelector('.tab-btn[data-tab="' + tabId + '"]');
+    if (btn) btn.classList.add('active');
+    const panel = document.getElementById('tab-' + tabId);
+    if (panel) panel.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // Add In Admin + Should be in Admin columns to every goal item
+  document.querySelectorAll('.goals-title').forEach(title => {
+    const labels = document.createElement('div');
+    labels.className = 'goals-col-labels';
+    labels.innerHTML = '<span class="gcl gcl-amp">Amplitude</span><span class="gcl gcl-admin">In Admin</span><span class="gcl gcl-should">Should be</span>';
+    title.after(labels);
+  });
+
+  document.querySelectorAll('.goal-item').forEach(item => {
+    const gs = item.querySelector('.gs');
+    if (!gs) return;
+    const inAdmin = document.createElement('span');
+    inAdmin.className = 'ga';
+    inAdmin.textContent = '—';
+    const shouldBe = document.createElement('span');
+    shouldBe.className = 'ga';
+    shouldBe.textContent = '—';
+    gs.insertAdjacentElement('afterend', shouldBe);
+    gs.insertAdjacentElement('afterend', inAdmin);
+  });
+</script>
+</body>
+</html>
