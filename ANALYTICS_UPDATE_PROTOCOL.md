@@ -152,18 +152,32 @@ When a dev fix is confirmed shipped (e.g. user_id fixed, property type corrected
 
 Every event row in the HTML shows a small badge — `client` (blue) or `server` (green).
 
-### Server-side events (fired from backend, not the browser):
+These are **verified from Amplitude** by querying the `[Amplitude] Platform` property on each event. Do not guess — always check platform before labelling a new event.
+
+### Server-side events (platform = "server" in Amplitude):
 | Event | Why server-side |
 |---|---|
+| Registration Completed | Server validates account creation |
+| Login Completed | Server authenticates credentials |
+| Stream Started | Streaming server confirms stream is live |
+| Stream Ended | Streaming server confirms stream closed |
+| Casino Outclick | Backend handles the redirect/tracking |
+| Token Purchase Completed | Payment processor callback confirms success |
+| Token Purchase Failed | Payment processor callback confirms failure |
+| Streamer Registration Completed | Server validates streamer account |
+| Streamer Login Completed | Server authenticates streamer |
 | FTD Completed | Postback from casino affiliate network |
 | KYC Started / Step Completed / Completed / Failed | KYROS webhook integration |
 | Identity Verified | Server confirmation from KYC provider |
 | Withdrawal Requested / Completed | Finance backend |
 | Bank Details Saved | Finance backend |
 
-### Everything else is client-side (fired from browser JavaScript).
+### Client-side events (platform = "Web" in Amplitude):
+All user interactions fired from the browser: Registration Started/Submitted/Failed, Login Submitted/Failed, Logout, Token Purchase Started/Package Selected/Submitted, Tip Panel Opened, Tip Sent, Stream Joined, Stream Left, StreamSpecial Triggered, Go Live Clicked, Performer Filter Applied, Performer Profile Viewed, Performer Followed, Conversation Opened, Message Sent, Show Scheduled, Streamer Profile Updated, Gallery Media Uploaded, Consent Form Viewed, Terms Viewed, and all other click/view/open events.
 
-When dev ships a new event, ask: *does the trigger happen in the browser (button click, page load, user action) or on the server (webhook, database write, external callback)?* Server events must use the Amplitude HTTP API or a server-side SDK, not the browser SDK.
+**The pattern:** *user clicks/views/opens something* = client. *server confirms an outcome* = server.
+
+When dev ships a new event, verify in Amplitude: query `[Amplitude] Platform` group-by on the event. Do not label it without checking.
 
 ---
 
