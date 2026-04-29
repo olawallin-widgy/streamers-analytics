@@ -222,6 +222,8 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
 .astep.ref .astep-tab:hover { background: none; color: #ddd; }
 .vf-bar.ref { background: #fafafa; border-left: 3px solid #e0e0e0; opacity: 0.6; }
 .vf-lbl.ref { color: #bbb; }
+.astep-tab .done-check { color: #22c55e; font-size: 8px; vertical-align: super; margin-left: 2px; }
+.astep-tab .rdot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #7c3aed; vertical-align: middle; margin-left: 3px; margin-bottom: 1px; }
 </style>
 </head>
 <body>
@@ -232,7 +234,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
 <div class="topbar">
   <div>
     <div class="topbar-logo">Sexy Streamers — Analytics</div>
-    <div class="topbar-meta">AARRR framework · Amplitude project 100043044 · Last updated 2026-04-28</div>
+    <div class="topbar-meta">AARRR framework · Amplitude project 100043044 · Last updated 2026-04-29</div>
   </div>
 </div>
 
@@ -294,21 +296,21 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
   <div class="astep act lit" id="step-s-act">
     <div class="astep-top"><div class="astep-num">②</div><div class="astep-label">Activation</div></div>
     <div class="astep-tabs">
-      <button class="astep-tab on" onclick="go('s-auth')">Registration</button>
-      <button class="astep-tab" onclick="go('s-prelive')">Engagement</button>
+      <button class="astep-tab on" onclick="go('s-auth')">Registration<span class="done-check">✓</span></button>
+      <button class="astep-tab" onclick="go('s-prelive')">Engagement<span class="done-check">✓</span></button>
     </div>
   </div>
   <div class="astep rev" id="step-s-rev">
     <div class="astep-top"><div class="astep-num">③</div><div class="astep-label">Revenue</div></div>
     <div class="astep-tabs">
-      <button class="astep-tab" onclick="go('s-perf')">Performance</button>
+      <button class="astep-tab" onclick="go('s-perf')">Performance<span class="done-check">✓</span></button>
       <button class="astep-tab" onclick="go('s-finance')">Finance</button>
     </div>
   </div>
   <div class="astep ret" id="step-s-ret">
     <div class="astep-top"><div class="astep-num">④</div><div class="astep-label">Retention</div></div>
     <div class="astep-tabs">
-      <button class="astep-tab" onclick="go('s-ret')">Retention</button>
+      <button class="astep-tab" onclick="go('s-ret')">Retention<span class="done-check">✓</span></button>
     </div>
   </div>
   <div class="astep ref">
@@ -462,7 +464,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
         <tr><td class="en">Login Completed <span class="ev-src s">server</span></td><td class="vol">261</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop ok">token_balance</span><span class="prop miss">user_id ❌</span><span class="prop miss">is_first_login ❌</span></td><td class="act-warn">Fix user_id (gp: prefix). Add is_first_login.</td></tr>
         <tr><td class="en">Login Failed <span class="ev-src c">client</span></td><td class="vol">95</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">error_type</span></td><td>—</td></tr>
         <tr><td class="en">Password Reset Requested <span class="ev-src c">client</span></td><td class="vol">6</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
-        <tr><td class="en">Password Reset Completed <span class="ev-src c">client</span></td><td class="vol">7</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">user_id</span></td><td>—</td></tr>
+        <tr><td class="en">Password Reset Completed <span class="ev-src c">client</span></td><td class="vol">7</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
         <tr><td class="en">Logout <span class="ev-src c">client</span></td><td class="vol">55</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
         <tr><td class="en dep">User LoggedIn <span class="ev-src c">client</span></td><td class="vol w">2,639 🗑</td><td><span class="badge dep">Remove</span></td><td>—</td><td class="act-err">Fires on every page load, not on login. Remove from code immediately.</td></tr>
       </tbody></table>
@@ -553,9 +555,9 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
         <tr><td class="en">Performer Followed <span class="ev-src c">client</span></td><td class="vol">118</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">action</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id — needed for per-stream follow rate.</td></tr>
-        <tr><td class="en">Conversation Opened <span class="ev-src c">client</span></td><td class="vol">203</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id.</td></tr>
-        <tr><td class="en">Message Sent <span class="ev-src c">client</span></td><td class="vol">34</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">message_length</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id.</td></tr>
-        <tr><td class="en">StreamSpecial Triggered <span class="ev-src c">client</span></td><td class="vol">52</td><td><span class="badge pend">Undocumented</span></td><td><span class="prop ok">special_name</span><span class="prop ok">cost</span><span class="prop ok">streamer_id</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Likely spin wheel — dev must confirm. Add stream_id.</td></tr>
+        <tr><td class="en">Conversation Opened <span class="ev-src c">client</span></td><td class="vol">203</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop extra">performer_name +</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id.</td></tr>
+        <tr><td class="en">Message Sent <span class="ev-src c">client</span></td><td class="vol">34</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">message_length</span><span class="prop extra">performer_name +</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id.</td></tr>
+        <tr><td class="en">StreamSpecial Triggered <span class="ev-src c">client</span></td><td class="vol">52</td><td><span class="badge pend">Undocumented</span></td><td><span class="prop ok">special_name</span><span class="prop ok">cost</span><span class="prop ok">streamer_id</span><span class="prop extra">streamer_name +</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Likely spin wheel — dev must confirm. Add stream_id.</td></tr>
       </tbody></table>
     </div>
     <div class="ev-sec"><div class="ev-sec-hd">Device &amp; Orientation</div>
@@ -645,9 +647,9 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="ev-sec"><div class="ev-sec-hd">Tipping events</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Tip Panel Opened <span class="ev-src c">client</span></td><td class="vol">431</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">context</span><span class="prop ok">streamer_id</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id.</td></tr>
+        <tr><td class="en">Tip Panel Opened <span class="ev-src c">client</span></td><td class="vol">431</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">context</span><span class="prop ok">streamer_id</span><span class="prop extra">streamer_name +</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id.</td></tr>
         <tr><td class="en">Tip Sent <span class="ev-src c">client</span></td><td class="vol">111</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">amount</span><span class="prop ok">tip_type</span><span class="prop ok">streamer_id</span><span class="prop ok">remaining_balance</span><span class="prop ok">context</span><span class="prop miss">stream_id ❌</span><span class="prop miss">amount_usd ❌</span></td><td class="act-warn">Add stream_id + amount_usd.</td></tr>
-        <tr><td class="en">StreamSpecial Triggered <span class="ev-src c">client</span></td><td class="vol">52</td><td><span class="badge pend">Undocumented</span></td><td><span class="prop ok">special_name</span><span class="prop ok">cost</span><span class="prop ok">streamer_id</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Clarify: is this the spin wheel? Confirm special_name values. Add stream_id.</td></tr>
+        <tr><td class="en">StreamSpecial Triggered <span class="ev-src c">client</span></td><td class="vol">52</td><td><span class="badge pend">Undocumented</span></td><td><span class="prop ok">special_name</span><span class="prop ok">cost</span><span class="prop ok">streamer_id</span><span class="prop extra">streamer_name +</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Clarify: is this the spin wheel? Confirm special_name values. Add stream_id.</td></tr>
         <tr><td class="en miss">Spin Wheel Enabled <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — fire when streamer enables the spin wheel. Props: streamer_id, stream_id.</td></tr>
         <tr><td class="en miss">Spin Wheel Action Triggered <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — viewer triggers action. Props: streamer_id, stream_id, action_name, cost_tokens, amount_usd, member_id.</td></tr>
         <tr><td class="en">Stream Ended <span class="ev-src s">server</span></td><td class="vol">51</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">total_tips_received</span><span class="prop ok">duration_seconds</span><span class="prop warn">unique_viewer_count ⚠</span><span class="prop miss">total_tips_usd ❌</span></td><td class="act-warn">Add total_tips_usd. Add unique_viewer_count to schema (fires but isInSchema: false). Also in Streamer Performance.</td></tr>
@@ -850,7 +852,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
         <tr><td class="en">Go Live Clicked <span class="ev-src c">client</span></td><td class="vol">34</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>—</td></tr>
         <tr><td class="en">Stream Started <span class="ev-src s">server</span></td><td class="vol">40</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>—</td></tr>
         <tr><td class="en">Stream Ended <span class="ev-src s">server</span></td><td class="vol">51</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">duration_seconds</span><span class="prop ok">total_tips_received</span><span class="prop warn">unique_viewer_count ⚠</span><span class="prop miss">total_tips_usd ❌</span></td><td class="act-warn">Add total_tips_usd. Add unique_viewer_count to schema (fires but isInSchema: false, type: any).</td></tr>
-        <tr><td class="en">Tip Panel Opened <span class="ev-src c">client</span></td><td class="vol">431</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">context</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id. Also in Stream Monetization.</td></tr>
+        <tr><td class="en">Tip Panel Opened <span class="ev-src c">client</span></td><td class="vol">431</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">context</span><span class="prop extra">streamer_name +</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id. Also in Stream Monetization.</td></tr>
         <tr><td class="en">Tip Sent <span class="ev-src c">client</span></td><td class="vol">111</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">amount</span><span class="prop ok">tip_type</span><span class="prop ok">remaining_balance</span><span class="prop miss">stream_id ❌</span><span class="prop miss">amount_usd ❌</span></td><td class="act-warn">Add stream_id + amount_usd. Also in Stream Monetization.</td></tr>
         <tr><td class="en">Casino Outclick <span class="ev-src s">server</span></td><td class="vol">169</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">casino_name</span><span class="prop extra">partner +</span></td><td class="act-warn">Rename partner → operator_id. Also in Stream Monetization.</td></tr>
         <tr><td class="en">FTD Completed <span class="ev-src s">server</span></td><td class="vol w">2 ⚠</td><td><span class="badge warn">Issue</span></td><td><span class="prop miss">streamer_id ❌</span><span class="prop miss">user_id ❌</span><span class="prop miss">transaction_id ❌</span></td><td class="act-err">Add streamer_id + user_id + transaction_id. Also in Stream Monetization.</td></tr>
