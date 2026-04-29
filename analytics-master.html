@@ -199,6 +199,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
 .vf-lbl.rev { color: #16a34a; }
 .vf-lbl.ret { color: #0891b2; }
 .vf-name { font-size: 12px; font-weight: 600; color: #333; }
+.vf-stat { font-size: 10px; color: #888; margin-left: auto; text-align: right; }
 .vf-detail { font-size: 11px; color: #aaa; }
 .vf-num { text-align: right; flex-shrink: 0; }
 .vf-n { font-size: 22px; font-weight: 800; color: #111; line-height: 1; }
@@ -333,45 +334,49 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <div class="funnel-label">Members</div>
       <div class="vfunnel">
         <div class="vf-step">
-          <div class="vf-bar acq"><div class="vf-lbl acq">① Acquisition</div><div class="vf-name">Visitors to the site</div></div>
-          <div class="vf-conv blocked"><span>visitor → sign-up</span></div>
+          <div class="vf-bar acq"><div class="vf-lbl acq">① Acquisition</div><div class="vf-name">Visitors to the site</div><div class="vf-stat">Not tracked yet</div></div>
+          <div class="vf-conv blocked"><span>visitor → sign-up rate unknown</span></div>
         </div>
         <div class="vf-step">
-          <div class="vf-bar act"><div class="vf-lbl act">② Activation</div><div class="vf-name">Completed registrations</div></div>
-          <div class="vf-conv blocked"><span>registered → tips / outclicks / FTDs</span></div>
+          <div class="vf-bar act"><div class="vf-lbl act">② Activation</div><div class="vf-name">Completed registrations</div><div class="vf-stat">540 started → 145 registered (27%)</div></div>
+          <div class="vf-conv blocked"><span>registered → paying member</span></div>
         </div>
         <div class="vf-step">
-          <div class="vf-bar rev"><div class="vf-lbl rev">③ Revenue</div><div class="vf-name">Token purchases, tips & casino</div></div>
+          <div class="vf-bar rev"><div class="vf-lbl rev">③ Revenue</div><div class="vf-name">Token purchases · tips · casino</div><div class="vf-stat">7 purchases · 111 tips · 169 outclicks · 2 FTDs</div></div>
           <div class="vf-conv blocked"><span>payer → returning visitor</span></div>
         </div>
         <div class="vf-step">
-          <div class="vf-bar ret"><div class="vf-lbl ret">④ Retention</div><div class="vf-name">Payers who return</div></div>
+          <div class="vf-bar ret"><div class="vf-lbl ret">④ Retention</div><div class="vf-name">Payers who return</div><div class="vf-stat">Gap — needs user_id fix</div></div>
           <div class="vf-conv blocked"><span></span></div>
         </div>
         <div class="vf-step">
-          <div class="vf-bar ref"><div class="vf-lbl ref">⑤ Referral</div><div class="vf-name">Referred sign-ups</div></div>
+          <div class="vf-bar ref"><div class="vf-lbl ref">⑤ Referral</div><div class="vf-name">Referred sign-ups</div><div class="vf-stat">Not tracked</div></div>
         </div>
       </div>
     </div>
 
     <!-- STREAMERS FUNNEL -->
-    <div style="flex:1; min-width:0; opacity:0.45;">
+    <div style="flex:1; min-width:0;">
       <div class="funnel-label">Streamers</div>
       <div class="vfunnel">
         <div class="vf-step">
-          <div class="vf-bar acq"><div class="vf-lbl acq">① Acquisition</div><div class="vf-name">Streamers who sign up</div></div>
-          <div class="vf-conv blocked"><span>applicant → approved streamer</span></div>
+          <div class="vf-bar acq"><div class="vf-lbl acq">① Acquisition</div><div class="vf-name">Streamer marketing / traffic</div><div class="vf-stat">Not tracked yet</div></div>
+          <div class="vf-conv blocked"><span>applicant → registered streamer</span></div>
         </div>
         <div class="vf-step">
-          <div class="vf-bar act"><div class="vf-lbl act">② Activation</div><div class="vf-name">Completed KYC and went live</div></div>
-          <div class="vf-conv blocked"><span>approved → first stream</span></div>
+          <div class="vf-bar act"><div class="vf-lbl act">② Activation</div><div class="vf-name">Registration + KYC + first stream</div><div class="vf-stat">52 started → 15 registered (29%) → 40 streams</div></div>
+          <div class="vf-conv blocked"><span>registered → first stream</span></div>
         </div>
         <div class="vf-step">
-          <div class="vf-bar rev"><div class="vf-lbl rev">③ Revenue</div><div class="vf-name">Streams run</div></div>
-          <div class="vf-conv blocked"><span>active → recurring earner</span></div>
+          <div class="vf-bar rev"><div class="vf-lbl rev">③ Revenue</div><div class="vf-name">Tips · outclicks · FTDs · payouts</div><div class="vf-stat">111 tips · 169 outclicks · 2 FTDs · payouts pending</div></div>
+          <div class="vf-conv blocked"><span>active → recurring streamer</span></div>
         </div>
         <div class="vf-step">
-          <div class="vf-bar ret"><div class="vf-lbl ret">④ Retention</div><div class="vf-name">Streamers who keep streaming</div></div>
+          <div class="vf-bar ret"><div class="vf-lbl ret">④ Retention</div><div class="vf-name">Streamers who keep streaming</div><div class="vf-stat">Not tracked yet</div></div>
+          <div class="vf-conv blocked"><span></span></div>
+        </div>
+        <div class="vf-step">
+          <div class="vf-bar ref"><div class="vf-lbl ref">⑤ Referral</div><div class="vf-name">Referral link sharing</div><div class="vf-stat">Event missing from Amplitude</div></div>
         </div>
       </div>
     </div>
