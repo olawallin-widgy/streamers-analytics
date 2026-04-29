@@ -216,8 +216,10 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
 .vf-conv span { font-size: 12px; font-weight: 700; white-space: nowrap; padding: 6px 16px; border: 1.5px solid currentColor; letter-spacing: .01em; }
 .vf-conv.ok { color: #7c3aed; }
 .vf-conv.ok span { background: #f5f3ff; }
-.vf-conv.blocked { color: #bbb; }
-.vf-conv.blocked span { background: #f9f9f9; }
+.vf-conv.blocked { color: #64748b; }
+.vf-conv.blocked span { background: #f1f5f9; border-style: dashed; }
+.vf-conv.blocked::before { opacity: .3; }
+.vf-conv.blocked::after { opacity: .5; }
 
 /* ── QUESTION LEGEND ── */
 .q-legend { display: flex; align-items: center; gap: 18px; padding: 9px 16px; background: #fafafa; border-bottom: 1px solid #eee; margin-bottom: 12px; }
