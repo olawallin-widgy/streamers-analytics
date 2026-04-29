@@ -305,10 +305,10 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <button class="astep-tab" onclick="go('s-finance')">Finance</button>
     </div>
   </div>
-  <div class="astep ref">
+  <div class="astep ret" id="step-s-ret">
     <div class="astep-top"><div class="astep-num">④</div><div class="astep-label">Retention</div></div>
     <div class="astep-tabs">
-      <button class="astep-tab">Not tracked</button>
+      <button class="astep-tab" onclick="go('s-ret')">Retention</button>
     </div>
   </div>
   <div class="astep ref">
@@ -856,6 +856,48 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
   </div>
 </div>
 
+<!-- ═══ STREAMER RETENTION ═══ -->
+<div class="panel" id="p-s-ret">
+  <div class="toggle-row">
+    <div><div class="panel-title">Retention — Streamers</div><div class="panel-sub">Earners who come back, cohort retention, stickiness, churn</div></div>
+    <div class="toggle-pills">
+      <button class="tpill on" onclick="tgl(this,'srtq','srti')">Business Questions</button>
+      <button class="tpill" onclick="tgl(this,'srti','srtq')">Implementation</button>
+    </div>
+  </div>
+  <div id="srtq">
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Earner Retention</span></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Of streamers who earned tips in their last stream, what % come back to stream again within 7 and 30 days?</div><div class="qnote">The core streamer retention metric — mirrors "payers who return" on the member side. Tip Sent + streamer_id ✓, Stream Started + streamer_id ✓ — both answerable today.</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Do earners retain better than non-earners — do tips incentivise streamers to return?</div><div class="qnote">Compare return rate: streamers who received at least one tip in a session vs those who didn't. Group Stream Started by streamer_id, cross-reference with Tip Sent.</div></div><div class="qtag yes">Yes</div></div>
+    </div>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Cohort Retention</span></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Of streamers who went live last month, what % came back and streamed again within 30 days?</div><div class="qnote">Base streaming return rate — not limited to earners. Stream Started + streamer_id ✓ — group by streamer_id, check for a second Stream Started event within 30 days of the first.</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">What % of new streamers (first stream in last 30 days) stream again within 7 days?</div><div class="qnote">Early retention signal — most predictive of long-term activity. Stream Started + streamer_id ✓ — identify first-time streamers and check for a second stream within 7 days.</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">Of all registered streamers, what % are still active at 30, 60, and 90 days?</div><div class="qnote">Needs streamer_id on Streamer Registration Completed to anchor the cohort start date. Stream Started + streamer_id ✓ for the return events.</div></div><div class="qtag part">Partial</div></div>
+    </div>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Stickiness &amp; Churn</span></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How many times per month does the average active streamer go live?</div><div class="qnote">~3 streams/streamer in 30d currently. Stream Started + streamer_id ✓ — group by streamer_id and count per month.</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Which streamers have gone inactive — no stream in 30+ days?</div><div class="qnote">Stream Started + streamer_id ✓ — filter for streamers with last Stream Started older than 30 days. Key churn signal.</div></div><div class="qtag yes">Yes</div></div>
+    </div>
+  </div>
+  <div id="srti" style="display:none">
+    <div class="ev-sec"><div class="ev-sec-hd">Earner Retention</div>
+      <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
+      <tbody>
+        <tr><td class="en">Tip Sent <span class="ev-src c">client</span></td><td class="vol">111</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">amount</span><span class="prop extra">streamer_name +</span><span class="prop extra">tip_type +</span><span class="prop extra">remaining_balance +</span><span class="prop extra">context +</span><span class="prop miss">stream_id ❌</span><span class="prop miss">amount_usd ❌</span></td><td class="act-warn">Add stream_id + amount_usd. Needed to identify which streamers earned in a session and link back to a stream. Also in Stream Monetization + Performance.</td></tr>
+        <tr><td class="en">Stream Started <span class="ev-src s">server</span></td><td class="vol">40</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>Use as the "came back" signal — check for a Stream Started by the same streamer_id after their earning session.</td></tr>
+      </tbody></table>
+    </div>
+    <div class="ev-sec"><div class="ev-sec-hd">Cohort, Stickiness &amp; Churn</div>
+      <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
+      <tbody>
+        <tr><td class="en">Streamer Registration Completed <span class="ev-src s">server</span></td><td class="vol">15</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop miss">streamer_id ❌</span></td><td class="act-warn">Add streamer_id — anchors the cohort start date. Without it, can't link registration to future Stream Started events. Also in Registration + Performance.</td></tr>
+        <tr><td class="en">Stream Started <span class="ev-src s">server</span></td><td class="vol">40</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>Covers all cohort + stickiness + churn questions — group by streamer_id, count per month (avg ~3), find last event date for inactivity detection.</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ STREAMER FINANCE ═══ -->
 <div class="panel" id="p-s-finance">
   <div class="toggle-row">
@@ -900,7 +942,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
 </div><!-- /shell -->
 
 <script>
-const PANELS = ['overview','traffic','auth','discovery','streams','tokens','tips','retention','s-auth','s-prelive','s-perf','s-finance'];
+const PANELS = ['overview','traffic','auth','discovery','streams','tokens','tips','retention','s-auth','s-prelive','s-ret','s-perf','s-finance'];
 const M_TABS = ['overview','traffic','auth','discovery','streams','tokens','tips','retention'];
 const S_TABS = ['s-auth','s-kyc','s-account','s-shows','s-perf','s-finance'];
 
@@ -919,7 +961,7 @@ function go(id) {
   document.getElementById('ov-btn').classList.remove('on');
   document.querySelectorAll('.astep-tab').forEach(t => t.classList.remove('on'));
   document.querySelectorAll('.astep-tab').forEach(t => { if(t.getAttribute('onclick') && t.getAttribute('onclick').includes("'"+id+"'")) t.classList.add('on'); });
-  const stepMap = { traffic:'acq', auth:'act', discovery:'act', streams:'act', tokens:'rev', tips:'rev', retention:'ret', 's-auth':'s-act', 's-prelive':'s-act', 's-perf':'s-rev', 's-finance':'s-rev' };
+  const stepMap = { traffic:'acq', auth:'act', discovery:'act', streams:'act', tokens:'rev', tips:'rev', retention:'ret', 's-auth':'s-act', 's-prelive':'s-act', 's-ret':'s-ret', 's-perf':'s-rev', 's-finance':'s-rev' };
   document.querySelectorAll('.astep').forEach(s => s.classList.remove('lit'));
   const stepId = stepMap[id];
   if (stepId) { const s = document.getElementById('step-'+stepId); if(s) s.classList.add('lit'); }
