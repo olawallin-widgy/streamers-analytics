@@ -1230,6 +1230,9 @@ function goOverview() {
   document.querySelectorAll('.astep').forEach(s => s.classList.remove('lit'));
   document.getElementById('ov-btn').classList.add('on');
   document.getElementById('sh-btn').classList.remove('on');
+  document.getElementById('strip-m').style.display = 'none';
+  document.getElementById('strip-s').style.display = 'none';
+  document.querySelectorAll('.audience-btn').forEach(b => b.classList.remove('on'));
 }
 
 function stkTab(a) {
@@ -1274,7 +1277,8 @@ function setAudience(a) {
   event.target.classList.add('on');
   document.getElementById('strip-m').style.display = a === 'm' ? 'flex' : 'none';
   document.getElementById('strip-s').style.display = a === 's' ? 'flex' : 'none';
-  if (a === 'm') go('overview');
+  document.getElementById('ov-btn').classList.remove('on');
+  if (a === 'm') go('auth');
   else go('s-auth');
 }
 
