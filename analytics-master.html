@@ -325,7 +325,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
 <!-- ═══ OVERVIEW ═══ -->
 <div class="panel on" id="p-overview">
   <div class="toggle-row">
-    <div><div class="panel-title">AARRR Overview</div><div class="panel-sub">Members + Streamers funnel · last 30 days</div></div>
+    <div><div class="panel-title">AARRR Overview</div><div class="panel-sub">Members + Streamers — tracking plan coverage</div></div>
   </div>
   <div style="display:flex; gap:24px; align-items:flex-start;">
 
@@ -334,19 +334,19 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <div class="funnel-label">Members</div>
       <div class="vfunnel">
         <div class="vf-step">
-          <div class="vf-bar acq"><div class="vf-lbl acq">① Acquisition</div><div class="vf-name">Visitors to the site</div><div class="vf-stat">Not tracked yet</div></div>
-          <div class="vf-conv blocked"><span>visitor → sign-up rate unknown</span></div>
+          <div class="vf-bar acq"><div class="vf-lbl acq">① Acquisition</div><div class="vf-name">Visitors to the site</div><div class="vf-stat">Not tracked — no traffic events</div></div>
+          <div class="vf-conv blocked"><span>visitor → registered member</span></div>
         </div>
         <div class="vf-step">
-          <div class="vf-bar act"><div class="vf-lbl act">② Activation</div><div class="vf-name">Completed registrations</div><div class="vf-stat">540 started → 145 registered (27%)</div></div>
+          <div class="vf-bar act"><div class="vf-lbl act">② Activation</div><div class="vf-name">Completed registrations</div><div class="vf-stat">Registration funnel tracked · user_id missing</div></div>
           <div class="vf-conv blocked"><span>registered → paying member</span></div>
         </div>
         <div class="vf-step">
-          <div class="vf-bar rev"><div class="vf-lbl rev">③ Revenue</div><div class="vf-name">Token purchases · tips · casino</div><div class="vf-stat">7 purchases · 111 tips · 169 outclicks · 2 FTDs</div></div>
-          <div class="vf-conv blocked"><span>payer → returning visitor</span></div>
+          <div class="vf-bar rev"><div class="vf-lbl rev">③ Revenue</div><div class="vf-name">Token purchases · tips · casino outclicks · FTDs</div><div class="vf-stat">All revenue events tracked · some property issues</div></div>
+          <div class="vf-conv blocked"><span>payer → returning member</span></div>
         </div>
         <div class="vf-step">
-          <div class="vf-bar ret"><div class="vf-lbl ret">④ Retention</div><div class="vf-name">Payers who return</div><div class="vf-stat">Gap — needs user_id fix</div></div>
+          <div class="vf-bar ret"><div class="vf-lbl ret">④ Retention</div><div class="vf-name">Payers who return</div><div class="vf-stat">Partial — needs user_id fix to link sessions</div></div>
           <div class="vf-conv blocked"><span></span></div>
         </div>
         <div class="vf-step">
@@ -360,23 +360,23 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <div class="funnel-label">Streamers</div>
       <div class="vfunnel">
         <div class="vf-step">
-          <div class="vf-bar acq"><div class="vf-lbl acq">① Acquisition</div><div class="vf-name">Streamer marketing / traffic</div><div class="vf-stat">Not tracked yet</div></div>
+          <div class="vf-bar acq"><div class="vf-lbl acq">① Acquisition</div><div class="vf-name">Streamer marketing / traffic</div><div class="vf-stat">Not tracked — no traffic events</div></div>
           <div class="vf-conv blocked"><span>applicant → registered streamer</span></div>
         </div>
         <div class="vf-step">
-          <div class="vf-bar act"><div class="vf-lbl act">② Activation</div><div class="vf-name">Registration + identity verification + first stream</div><div class="vf-stat">52 started → 15 registered (29%) → 6 identity verified → 40 streams</div></div>
+          <div class="vf-bar act"><div class="vf-lbl act">② Activation</div><div class="vf-name">Registration + identity verification + first stream</div><div class="vf-stat">Registration + identity events tracked · wizard step drop-off blind</div></div>
           <div class="vf-conv blocked"><span>first stream → earning</span></div>
         </div>
         <div class="vf-step">
-          <div class="vf-bar rev"><div class="vf-lbl rev">③ Revenue</div><div class="vf-name">Tips · outclicks · FTDs · payouts</div><div class="vf-stat">111 tips · 169 outclicks · 2 FTDs · payouts pending</div></div>
+          <div class="vf-bar rev"><div class="vf-lbl rev">③ Revenue</div><div class="vf-name">Tips · outclicks · FTDs · payouts</div><div class="vf-stat">Tips + outclicks tracked · FTD missing streamer_id · payouts pending</div></div>
           <div class="vf-conv blocked"><span>earning → recurring streamer</span></div>
         </div>
         <div class="vf-step">
-          <div class="vf-bar ret"><div class="vf-lbl ret">④ Retention</div><div class="vf-name">Earners + cohort return rate · churn</div><div class="vf-stat">~3 streams/streamer/30d · earner return rate tracked · monthly churn tracked</div></div>
+          <div class="vf-bar ret"><div class="vf-lbl ret">④ Retention</div><div class="vf-name">Earner return rate · cohort · churn</div><div class="vf-stat">Return rate + churn tracked · earner retention partial</div></div>
           <div class="vf-conv blocked"><span></span></div>
         </div>
         <div class="vf-step">
-          <div class="vf-bar ref"><div class="vf-lbl ref">⑤ Referral</div><div class="vf-name">Referral link sharing</div><div class="vf-stat">Event missing from Amplitude</div></div>
+          <div class="vf-bar ref"><div class="vf-lbl ref">⑤ Referral</div><div class="vf-name">Referral link sharing</div><div class="vf-stat">Referral Link Copied event missing</div></div>
         </div>
       </div>
     </div>
