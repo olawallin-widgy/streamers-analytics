@@ -957,323 +957,68 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
 
 <!-- STAKEHOLDER INPUT PANEL -->
 <div class="panel" id="p-stakeholder">
-  <div style="padding: 20px 24px 8px;">
-    <h2 style="font-size:16px;font-weight:700;margin:0 0 4px;">Stakeholder Input</h2>
-    <p style="font-size:12px;color:#6b7280;margin:0 0 12px;">29 questions from Ramon (CEO) and Fredrik (Owner) grouped by AARRR stage. <span class="stk-src r">★ R</span> = Ramon &nbsp;<span class="stk-src f">F</span> = Fredrik</p>
-
-    <!-- AUDIENCE SWITCHER -->
-    <div style="display:flex;gap:0;margin-bottom:18px;">
-      <button class="stk-tab on" id="stk-btn-m" onclick="stkTab('m')">Members AARRR</button>
-      <button class="stk-tab" id="stk-btn-s" onclick="stkTab('s')">Streamers AARRR</button>
+  <div class="toggle-row">
+    <div><div class="panel-title">Stakeholder Input</div><div class="panel-sub">29 questions from Ramon (CEO) and Fredrik (Owner) — grouped by AARRR stage</div></div>
+    <div class="toggle-pills">
+      <button class="tpill on" id="stk-btn-m" onclick="stkTab('m')">Members</button>
+      <button class="tpill" id="stk-btn-s" onclick="stkTab('s')">Streamers</button>
     </div>
+  </div>
 
-    <!-- LEGEND -->
-    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;font-size:11px;align-items:center;">
-      <span><span class="stk-badge new">New</span> Not in dashboard yet</span>
-      <span><span class="stk-badge existing">Existing</span> Already covered</span>
-      <span style="color:#16a34a;font-weight:600;">✅ Yes</span> <span style="color:#6b7280;">Trackable now</span>
-      <span style="color:#d97706;font-weight:600;">⚠️ Partial</span> <span style="color:#6b7280;">Needs property/event fix</span>
-      <span style="color:#ef4444;font-weight:600;">❌ Gap</span> <span style="color:#6b7280;">Not tracked at all</span>
+  <div id="stk-m">
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">① Acquisition</span><span class="sec-hd-count">1 question</span></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain"><span class="stk-src f">F</span> Which countries does our traffic come from?</div><div class="qnote">Amplitude captures country, region and city natively. Already in Traffic tab.</div></div><div class="qtag yes">Yes</div></div>
     </div>
-
-    <!-- placeholder removed -->
-
-    <!-- MEMBERS AARRR -->
-    <div id="stk-m">
-    <table class="impl-tbl" style="margin-bottom:28px;table-layout:fixed;width:100%;">
-      <colgroup>
-        <col style="width:4%"><col style="width:34%"><col style="width:12%"><col style="width:7%"><col style="width:9%"><col>
-      </colgroup>
-      <thead><tr>
-        <th></th><th>Question</th><th>Tab</th><th>New?</th><th>Tracking</th><th>Notes</th>
-      </tr></thead>
-      <tbody>
-        <tr style="background:#eff6ff;"><td colspan="6" style="font-size:11px;font-weight:700;color:#1e40af;padding:6px 8px;letter-spacing:0.05em;">① ACQUISITION</td></tr>
-        <tr>
-          <td><span class="stk-src f">F</span></td>
-          <td>Which countries does our traffic come from?</td>
-          <td><span class="tab-lbl">Traffic</span></td>
-          <td><span class="stk-badge existing">Existing</span></td>
-          <td><span class="gs yes">✅ Yes</span></td>
-          <td>Amplitude captures country, region and city natively. Already in Traffic tab.</td>
-        </tr>
-
-        <tr style="background:#f0fdf4;"><td colspan="6" style="font-size:11px;font-weight:700;color:#166534;padding:6px 8px;letter-spacing:0.05em;">② ACTIVATION</td></tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Who has the most streamer fans selected on our platform?</td>
-          <td><span class="tab-lbl">Discovery</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs part">⚠️ Partial</span></td>
-          <td>Performer Followed fires (118/mo). Missing <span class="prop miss">streamer_id ❌</span> to group follows per streamer.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src f">F</span></td>
-          <td>Which countries prefer which type of streamers — so we know what to push where?</td>
-          <td><span class="tab-lbl">Discovery</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs no">❌ Gap</span></td>
-          <td>No streamer category property on Performer Profile Viewed or Stream Joined. Needs a genre/category property.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Viewer and session duration differences between Lounge (Casino) and VIP (Adult) streams.</td>
-          <td><span class="tab-lbl">Streams</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs no">❌ Gap</span></td>
-          <td>No stream_type (Lounge/VIP) on Stream Joined or Stream Ended. Needs new property.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>What VIP streams had the most viewers and what was the token entry price?</td>
-          <td><span class="tab-lbl">Streams</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs no">❌ Gap</span></td>
-          <td>Needs entry_token_price + stream_type on Stream Joined. Neither is tracked.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>How many members and tokens spent on Tip Bar vs Poll vs Spin Wheel vs direct Tips?</td>
-          <td><span class="tab-lbl">Streams</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs no">❌ Gap</span></td>
-          <td>Spin Wheel, Poll and Tip Bar events all missing. Direct tips via Tip Sent ✓ but no gamification breakdown.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src f">F</span></td>
-          <td>What is the average token amount spent on Spin Wheel — find the pricing sweetspot?</td>
-          <td><span class="tab-lbl">Streams</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs no">❌ Gap</span></td>
-          <td>Spin Wheel Action Triggered not implemented. Need event with token_amount property.</td>
-        </tr>
-
-        <tr style="background:#fffbeb;"><td colspan="6" style="font-size:11px;font-weight:700;color:#92400e;padding:6px 8px;letter-spacing:0.05em;">③ REVENUE</td></tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Which CTA (overlay, chat link, banner) leads to the highest deposit?</td>
-          <td><span class="tab-lbl">Tips &amp; Casino</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs part">⚠️ Partial</span></td>
-          <td>Casino Outclick has <span class="prop ok">source</span> (liveshow/browse). FTD Completed <span class="prop miss">missing source ❌</span> — can't close the loop.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Count of First-Time Deposits generated per specific streamer session.</td>
-          <td><span class="tab-lbl">Tips &amp; Casino</span></td>
-          <td><span class="stk-badge existing">Existing</span></td>
-          <td><span class="gs part">⚠️ Partial</span></td>
-          <td>FTD Completed fires (2/mo). Missing <span class="prop miss">streamer_id ❌</span> and <span class="prop miss">stream_id ❌</span> to attribute per streamer.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src f">F</span></td>
-          <td>Which countries have highest avg revenue per user or highest % buying tokens?</td>
-          <td><span class="tab-lbl">Tokens</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs part">⚠️ Partial</span></td>
-          <td>Token Purchase Completed fires. Country is native. token_amount stored as <span class="prop warn">string not number ⚠</span> — breaks revenue aggregation.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src f">F</span></td>
-          <td>StreamSpecial pricing sweetspot (e.g. "show boobs" at 70 vs 100 tokens) + which Betmode banner (freespins / deposit bonus / VIP) gets most clicks?</td>
-          <td><span class="tab-lbl">Tips &amp; Casino</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs part">⚠️ Partial</span></td>
-          <td>StreamSpecial Triggered fires (52/mo). Missing <span class="prop miss">token_price ❌</span> and <span class="prop miss">special_type ❌</span>. Casino Outclick needs banner_variant for A/B.</td>
-        </tr>
-
-        <tr style="background:#fef2f2;"><td colspan="6" style="font-size:11px;font-weight:700;color:#991b1b;padding:6px 8px;letter-spacing:0.05em;">④ RETENTION</td></tr>
-        <tr>
-          <td><span class="stk-src f">F</span></td>
-          <td>Which emails and social posts bring users back? (weekly emails, daily social posts)</td>
-          <td><span class="tab-lbl">Retention</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs part">⚠️ Partial</span></td>
-          <td>UTM tracking needed. <span class="prop miss">utm_source ❌</span> missing on Registration Completed. Email provider integration not set up.</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">② Activation</span><span class="sec-hd-count">6 questions</span></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Who has the most streamer fans selected on our platform?</div><div class="qnote">Tab: Discovery — Performer Followed fires (118/mo). Missing <code>streamer_id</code> on the event to group follows per streamer.</div></div><div class="qtag part">Partial</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain"><span class="stk-src f">F</span> Which countries prefer which type of streamers — so we know what to push where?</div><div class="qnote">Tab: Discovery — No streamer category/type property on Performer Profile Viewed or Stream Joined. Needs a genre/category property.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Viewer and session duration differences between Lounge (Casino) and VIP (Adult) streams.</div><div class="qnote">Tab: Streams — No stream_type (Lounge/VIP) on Stream Joined or Stream Ended. Needs new property.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> What VIP streams had the most viewers and what was the token entry price?</div><div class="qnote">Tab: Streams — Needs entry_token_price + stream_type on Stream Joined. Neither is tracked.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> How many members and tokens spent on Tip Bar vs Poll vs Spin Wheel vs direct Tips?</div><div class="qnote">Tab: Streams — Spin Wheel, Poll and Tip Bar events all missing. Direct tips via Tip Sent ✓ but no gamification breakdown.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain"><span class="stk-src f">F</span> What is the average token amount spent on Spin Wheel — find the pricing sweetspot?</div><div class="qnote">Tab: Streams — Spin Wheel Action Triggered not implemented. Need event with token_amount property.</div></div><div class="qtag no">Gap</div></div>
     </div>
-
-    <!-- STREAMERS AARRR -->
-    <div id="stk-s" style="display:none;">
-    <table class="impl-tbl" style="margin-bottom:28px;table-layout:fixed;width:100%;">
-      <colgroup>
-        <col style="width:4%"><col style="width:34%"><col style="width:12%"><col style="width:7%"><col style="width:9%"><col>
-      </colgroup>
-      <thead><tr>
-        <th></th><th>Question</th><th>Tab</th><th>New?</th><th>Tracking</th><th>Notes</th>
-      </tr></thead>
-      <tbody>
-        <tr style="background:#f0fdf4;"><td colspan="6" style="font-size:11px;font-weight:700;color:#166534;padding:6px 8px;letter-spacing:0.05em;">② ACTIVATION — Registration</td></tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Which specific registration field or document upload step triggers the highest exit rate?</td>
-          <td><span class="tab-lbl">Registration</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs part">⚠️ Partial</span></td>
-          <td>KYC events pending (KYROS). Need KYC Step Completed with step_name property.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Which hours/days yield the highest volume of completed registrations?</td>
-          <td><span class="tab-lbl">Registration</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs yes">✅ Yes</span></td>
-          <td>Streamer Registration Completed fires. Time-of-day breakdown is Amplitude native.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>What are the demographics of our streamers? (country breakdown)</td>
-          <td><span class="tab-lbl">Registration</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs yes">✅ Yes</span></td>
-          <td>Amplitude captures country natively. Segment by Streamer Registration Completed.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Where do streamers drop off most? (Email verification vs. KYC vs. Profile setup)</td>
-          <td><span class="tab-lbl">Registration</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs part">⚠️ Partial</span></td>
-          <td>Missing: Streamer Email Verified event, KYC events (pending), profile step event. Funnel is incomplete.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Are registration completion rates significantly lower on mobile web vs. desktop?</td>
-          <td><span class="tab-lbl">Registration</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs yes">✅ Yes</span></td>
-          <td>Amplitude captures device type natively. Segment Registration Completed by device.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Which country has the highest ratio of Rejected vs. Approved KYC?</td>
-          <td><span class="tab-lbl">Registration</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs no">❌ Gap</span></td>
-          <td>KYC events pending (KYROS). Needs KYC Completed/Failed with country + outcome property.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Collection of device type, webcam info, and browser streamers use.</td>
-          <td><span class="tab-lbl">Registration</span></td>
-          <td><span class="stk-badge existing">Existing</span></td>
-          <td><span class="gs yes">✅ Yes</span></td>
-          <td>Amplitude captures device + browser natively. Webcam model would need custom property on Stream Started.</td>
-        </tr>
-
-        <tr style="background:#f0fdf4;"><td colspan="6" style="font-size:11px;font-weight:700;color:#166534;padding:6px 8px;letter-spacing:0.05em;">② ACTIVATION — Engagement</td></tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Average count of profile photos and click-through rates for specific photo types.</td>
-          <td><span class="tab-lbl">Engagement</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs no">❌ Gap</span></td>
-          <td>Gallery Media Uploaded ✓ (17/mo). No photo CTR event. Needs new profile photo click event + photo_type property.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>How many streamers set a schedule but fail to go live ("No-Show Rate")?</td>
-          <td><span class="tab-lbl">Engagement</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs part">⚠️ Partial</span></td>
-          <td>Show Scheduled ✓ (8/mo) + Stream Started ✓. No-show = Scheduled with no matching Stream Started. Missing Show Deleted to exclude cancelled shows.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Do streamers with &gt;5 profile photos have longer retention or higher engagement?</td>
-          <td><span class="tab-lbl">Engagement</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs part">⚠️ Partial</span></td>
-          <td>Gallery Media Uploaded ✓ but <span class="prop miss">total_media_count ❌</span> missing. Retention analysis needs streamer_id on Registration Completed first.</td>
-        </tr>
-
-        <tr style="background:#fffbeb;"><td colspan="6" style="font-size:11px;font-weight:700;color:#92400e;padding:6px 8px;letter-spacing:0.05em;">③ REVENUE — Performance</td></tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>How long between account approval and first Stream Started event (Time-to-Live)?</td>
-          <td><span class="tab-lbl">Performance</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs part">⚠️ Partial</span></td>
-          <td>Stream Started has streamer_id ✓. Registration Completed <span class="prop miss">missing streamer_id ❌</span> — can't link the two events.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Average FPS and Bitrate per stream session.</td>
-          <td><span class="tab-lbl">Performance</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs no">❌ Gap</span></td>
-          <td>FPS and Bitrate not in any event. Needs new properties on Stream Started or Stream Ended.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Percentage of streamers performing a VIP stream immediately after a Lounge stream.</td>
-          <td><span class="tab-lbl">Performance</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs no">❌ Gap</span></td>
-          <td>Needs stream_type property on Stream Started. Not currently tracked.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Count of First-Time Deposits generated per specific streamer session.</td>
-          <td><span class="tab-lbl">Performance</span></td>
-          <td><span class="stk-badge existing">Existing</span></td>
-          <td><span class="gs part">⚠️ Partial</span></td>
-          <td>FTD Completed fires (2/mo). Missing <span class="prop miss">streamer_id ❌</span> and <span class="prop miss">stream_id ❌</span> to attribute per session.</td>
-        </tr>
-
-        <tr style="background:#fdf4ff;"><td colspan="6" style="font-size:11px;font-weight:700;color:#7e22ce;padding:6px 8px;letter-spacing:0.05em;">③ REVENUE — Finance</td></tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Breakdown of revenue by type: Tips/Tokens, 10% Referral, Guaranteed streams, 5% Casino Rev Share.</td>
-          <td><span class="tab-lbl">Finance</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs no">❌ Gap</span></td>
-          <td>All Finance events pending. Referral income, guaranteed streams and casino rev share not tracked in any event.</td>
-        </tr>
-
-        <tr style="background:#fef2f2;"><td colspan="6" style="font-size:11px;font-weight:700;color:#991b1b;padding:6px 8px;letter-spacing:0.05em;">④ RETENTION</td></tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Which streamers have had no Stream Started events in 14+ days?</td>
-          <td><span class="tab-lbl">Retention</span></td>
-          <td><span class="stk-badge existing">Existing</span></td>
-          <td><span class="gs part">⚠️ Partial</span></td>
-          <td>Stream Started has streamer_id ✓. Can build cohort. Registration Completed <span class="prop miss">missing streamer_id ❌</span> limits total cohort size.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Lifetime average revenue generated per streamer for churned streamers.</td>
-          <td><span class="tab-lbl">Retention</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs no">❌ Gap</span></td>
-          <td>All withdrawal/payout events pending. No per-streamer revenue tracking yet.</td>
-        </tr>
-        <tr>
-          <td><span class="stk-src r">★ R</span></td>
-          <td>Technical failure rate (crashes/low FPS) in the 3 sessions preceding inactivity.</td>
-          <td><span class="tab-lbl">Retention</span></td>
-          <td><span class="stk-badge new">New</span></td>
-          <td><span class="gs no">❌ Gap</span></td>
-          <td>No technical quality metrics tracked. Prerequisite: FPS/Bitrate tracking (see Performance above).</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">③ Revenue</span><span class="sec-hd-count">4 questions</span></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Which CTA (overlay, chat link, banner) leads to the highest deposit?</div><div class="qnote">Tab: Tips &amp; Casino — Casino Outclick has <code>source</code> (liveshow/browse). FTD Completed missing <code>source</code> — can't close the loop.</div></div><div class="qtag part">Partial</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Count of First-Time Deposits generated per specific streamer session.</div><div class="qnote">Tab: Tips &amp; Casino — FTD Completed fires (2/mo). Missing <code>streamer_id</code> and <code>stream_id</code> to attribute per streamer.</div></div><div class="qtag part">Partial</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src f">F</span> Which countries have highest avg revenue per user or highest % buying tokens?</div><div class="qnote">Tab: Tokens — Token Purchase Completed fires. Country is native. <code>token_amount</code> stored as string not number — breaks revenue aggregation.</div></div><div class="qtag part">Partial</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src f">F</span> StreamSpecial pricing sweetspot + which Betmode banner (freespins / deposit bonus / VIP) gets most clicks?</div><div class="qnote">Tab: Tips &amp; Casino — StreamSpecial Triggered fires (52/mo). Missing <code>token_price</code> and <code>special_type</code>. Casino Outclick needs banner_variant for A/B.</div></div><div class="qtag part">Partial</div></div>
     </div>
-
-    <!-- SUMMARY -->
-    <div style="display:flex;gap:24px;flex-wrap:wrap;padding:14px 0 4px;border-top:1px solid #f0f0f0;font-size:12px;">
-      <div><span style="font-weight:700;color:#111;">29</span> <span style="color:#6b7280;">total questions</span></div>
-      <div><span style="font-weight:700;color:#16a34a;">7</span> <span style="color:#6b7280;">trackable now ✅</span></div>
-      <div><span style="font-weight:700;color:#d97706;">11</span> <span style="color:#6b7280;">partial ⚠️</span></div>
-      <div><span style="font-weight:700;color:#ef4444;">11</span> <span style="color:#6b7280;">gap ❌</span></div>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">④ Retention</span><span class="sec-hd-count">1 question</span></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src f">F</span> Which emails and social posts bring users back?</div><div class="qnote">Tab: Retention — UTM tracking needed. <code>utm_source</code> missing on Registration Completed. Email provider integration not set up.</div></div><div class="qtag part">Partial</div></div>
     </div>
+  </div>
 
-
+  <div id="stk-s" style="display:none;">
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">② Activation — Registration</span><span class="sec-hd-count">7 questions</span></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Which specific registration field or document upload step triggers the highest exit rate?</div><div class="qnote">KYC events pending (KYROS). Need KYC Step Completed with step_name property.</div></div><div class="qtag part">Partial</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Which hours/days yield the highest volume of completed registrations?</div><div class="qnote">Streamer Registration Completed fires. Time-of-day breakdown is Amplitude native.</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> What are the demographics of our streamers? (country breakdown)</div><div class="qnote">Amplitude captures country natively. Segment by Streamer Registration Completed.</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Where do streamers drop off most? (Email verification vs. KYC vs. Profile setup)</div><div class="qnote">Missing: Streamer Email Verified event, KYC events (pending), profile step event. Funnel is incomplete.</div></div><div class="qtag part">Partial</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Are registration completion rates significantly lower on mobile vs. desktop?</div><div class="qnote">Amplitude captures device type natively. Segment Registration Completed by device.</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Which country has the highest ratio of Rejected vs. Approved KYC?</div><div class="qnote">KYC events pending (KYROS). Needs KYC Completed/Failed with country + outcome.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Collection of device type, webcam info, and browser streamers use.</div><div class="qnote">Amplitude captures device + browser natively. Webcam model would need a custom property on Stream Started.</div></div><div class="qtag yes">Yes</div></div>
+    </div>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">② Activation — Engagement</span><span class="sec-hd-count">3 questions</span></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Average count of profile photos and click-through rates for specific photo types.</div><div class="qnote">Gallery Media Uploaded ✓ (17/mo). No photo CTR event exists. Needs new profile photo click event + photo_type property.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> How many streamers set a schedule but fail to go live ("No-Show Rate")?</div><div class="qnote">Show Scheduled ✓ (8/mo) + Stream Started ✓. No-show = Scheduled with no matching Stream Started. Missing Show Deleted event to exclude cancelled shows.</div></div><div class="qtag part">Partial</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Do streamers with &gt;5 profile photos have longer retention or higher engagement?</div><div class="qnote">Gallery Media Uploaded ✓ but <code>total_media_count</code> missing. Retention analysis also needs streamer_id on Registration Completed first.</div></div><div class="qtag part">Partial</div></div>
+    </div>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">③ Revenue — Performance</span><span class="sec-hd-count">4 questions</span></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> How long between account approval and first Stream Started event (Time-to-Live)?</div><div class="qnote">Stream Started has streamer_id ✓. Registration Completed missing <code>streamer_id</code> — can't link the two events.</div></div><div class="qtag part">Partial</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Average FPS and Bitrate per stream session.</div><div class="qnote">FPS and Bitrate not in any event. Needs new properties on Stream Started or Stream Ended.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Percentage of streamers performing a VIP stream immediately after a Lounge stream.</div><div class="qnote">Needs stream_type property on Stream Started. Not currently tracked.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Count of First-Time Deposits generated per specific streamer session.</div><div class="qnote">FTD Completed fires (2/mo). Missing <code>streamer_id</code> and <code>stream_id</code> to attribute per streamer session.</div></div><div class="qtag part">Partial</div></div>
+    </div>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">③ Revenue — Finance</span><span class="sec-hd-count">1 question</span></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Breakdown of revenue by type: Tips/Tokens, 10% Referral, Guaranteed streams, 5% Casino Rev Share.</div><div class="qnote">All Finance events pending. Referral income, guaranteed streams and casino rev share not tracked in any event.</div></div><div class="qtag no">Gap</div></div>
+    </div>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">④ Retention</span><span class="sec-hd-count">3 questions</span></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Which streamers have had no Stream Started events in 14+ days?</div><div class="qnote">Stream Started has streamer_id ✓. Registration Completed missing <code>streamer_id</code> limits total cohort size.</div></div><div class="qtag part">Partial</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Lifetime average revenue generated per streamer for churned streamers.</div><div class="qnote">All withdrawal/payout events pending. No per-streamer revenue tracking yet.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Technical failure rate (crashes/low FPS) in the 3 sessions preceding inactivity.</div><div class="qnote">No technical quality metrics tracked. Prerequisite: FPS/Bitrate tracking (see Performance above).</div></div><div class="qtag no">Gap</div></div>
+    </div>
   </div>
 </div>
-
 </div><!-- /content -->
 </div><!-- /card -->
 </div><!-- /shell -->
