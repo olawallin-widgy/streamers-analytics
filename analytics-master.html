@@ -364,15 +364,15 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
           <div class="vf-conv blocked"><span>applicant → registered streamer</span></div>
         </div>
         <div class="vf-step">
-          <div class="vf-bar act"><div class="vf-lbl act">② Activation</div><div class="vf-name">Registration + KYC + first stream</div><div class="vf-stat">52 started → 15 registered (29%) → 40 streams</div></div>
-          <div class="vf-conv blocked"><span>registered → first stream</span></div>
+          <div class="vf-bar act"><div class="vf-lbl act">② Activation</div><div class="vf-name">Registration + identity verification + first stream</div><div class="vf-stat">52 started → 15 registered (29%) → 6 identity verified → 40 streams</div></div>
+          <div class="vf-conv blocked"><span>first stream → earning</span></div>
         </div>
         <div class="vf-step">
           <div class="vf-bar rev"><div class="vf-lbl rev">③ Revenue</div><div class="vf-name">Tips · outclicks · FTDs · payouts</div><div class="vf-stat">111 tips · 169 outclicks · 2 FTDs · payouts pending</div></div>
-          <div class="vf-conv blocked"><span>active → recurring streamer</span></div>
+          <div class="vf-conv blocked"><span>earning → recurring streamer</span></div>
         </div>
         <div class="vf-step">
-          <div class="vf-bar ret"><div class="vf-lbl ret">④ Retention</div><div class="vf-name">Streamers who keep streaming</div><div class="vf-stat">Not tracked yet</div></div>
+          <div class="vf-bar ret"><div class="vf-lbl ret">④ Retention</div><div class="vf-name">Earners + cohort return rate · churn</div><div class="vf-stat">~3 streams/streamer/30d · earner return rate tracked · monthly churn tracked</div></div>
           <div class="vf-conv blocked"><span></span></div>
         </div>
         <div class="vf-step">
@@ -904,7 +904,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
 <!-- ═══ STREAMER FINANCE ═══ -->
 <div class="panel" id="p-s-finance">
   <div class="toggle-row">
-    <div><div class="panel-title">Revenue — Streamer Finance</div><div class="panel-sub">Withdrawals, bank details, VIP pricing — all pending</span></div></div>
+    <div><div class="panel-title">Revenue — Streamer Finance</div><div class="panel-sub">Withdrawals, bank details — all events pending</div></div>
     <div class="toggle-pills">
       <button class="tpill on" onclick="tgl(this,'sfq','sfi')">Business Questions</button>
       <button class="tpill" onclick="tgl(this,'sfi','sfq')">Implementation</button>
@@ -922,9 +922,6 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Token Balance</span></div>
       <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">What is the total token balance sitting across all streamer accounts, and what is the average per streamer?</div><div class="qnote">Streamers accumulate tokens from tips and convert to USD on withdrawal. Needs token_balance on Withdrawal Requested (balance before payout). Currently token_balance exists on Streamer Login Completed but is misnamed and unreliable.</div></div><div class="qtag no">Gap</div></div>
       <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Are streamers withdrawing promptly or letting tokens accumulate?</div><div class="qnote">Needs token_balance on Withdrawal Requested — compare balance at time of request to see if streamers cash out frequently or sit on large balances.</div></div><div class="qtag no">Gap</div></div>
-    </div>
-    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Future</span></div>
-      <div class="q"><div class="qdot future"></div><div class="qtext"><div class="qmain">How do streamers price their VIP rooms?</div><div class="qnote">VIP Room feature not built yet. Revisit once feature is specced.</div></div><div class="qtag future">Future</div></div>
     </div>
   </div>
   <div id="sfi" style="display:none">
