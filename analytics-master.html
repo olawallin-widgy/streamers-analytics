@@ -877,7 +877,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     </div>
     <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Stickiness &amp; Churn</span></div>
       <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How many times per month does the average active streamer go live?</div><div class="qnote">~3 streams/streamer in 30d currently. Stream Started + streamer_id ✓ — group by streamer_id and count per month.</div></div><div class="qtag yes">Yes</div></div>
-      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Which streamers have gone inactive — no stream in 30+ days?</div><div class="qnote">Stream Started + streamer_id ✓ — filter for streamers with last Stream Started older than 30 days. Key churn signal.</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">What % of active streamers go inactive each month — no stream in 30+ days?</div><div class="qnote">Monthly churn rate: of all streamers who streamed in a given month, what % did not stream the following month. Stream Started + streamer_id ✓ — group by streamer_id per month, identify those absent the next month.</div></div><div class="qtag yes">Yes</div></div>
     </div>
   </div>
   <div id="srti" style="display:none">
