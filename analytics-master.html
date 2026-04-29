@@ -418,6 +418,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <button class="tpill on" onclick="tgl(this,'tq','ti')">Business Questions</button>
       <button class="tpill" onclick="tgl(this,'ti','tq')">Implementation</button>
     </div>
+  </div>
   <div id="tq">
     <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Volume &amp; Sources</span></div>
       <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How many sessions and unique visitors does the site get per day/week?</div><div class="qnote">Amplitude SDK tracks sessions reliably as a core feature. Available natively — no custom event needed.</div></div><div class="qtag yes">Yes</div></div>
@@ -717,6 +718,9 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">What % of members who made a payment (token purchase, tip, or casino) return within 7 and 30 days?</div><div class="qnote">Payer retention is the key metric behind "Payers who return" in the AARRR funnel. Requires user_id fix to link Token Purchase Completed / Tip Sent to future sessions for the same person.</div></div><div class="qtag no">Gap</div></div>
       <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">Are members from specific marketing channels more retained than others?</div><div class="qnote">Answerable today by segmenting retention cohorts by <code>gp:initial_utm_source</code>. Shows which channels bring the most loyal members, not just the most registrations.</div></div><div class="qtag part">Partial</div></div>
     </div>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Re-engagement</span></div>
+      <div class="q"><div class="qdot future"></div><div class="qtext"><div class="qmain"><span class="fredrik">F</span>Which emails and social posts bring users back?</div><div class="qnote">Requires email provider integration (e.g. Klaviyo) + UTM tracking on all campaign links. When live: segment returning sessions by <code>gp:utm_source</code> / <code>gp:utm_campaign</code> to attribute re-engagement to specific emails or posts.</div></div><div class="qtag future">Future</div></div>
+    </div>
     <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Activity &amp; Stickiness</span></div>
       <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">How sticky is the platform — how many days per week does the average member visit?</div><div class="qnote">WAU/DAU ratio measures habit formation. Amplitude sessions give DAU and WAU natively. A ratio of 3–4 means users visit 3–4 days/week on average.</div></div><div class="qtag part">Partial</div></div>
       <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">How many daily and weekly active members do we have?</div><div class="qnote">DAU/WAU available via Amplitude sessions. Login Completed (261/30d) gives a lower-bound but undercounts members who stay logged in.</div></div><div class="qtag part">Partial</div></div>
@@ -793,7 +797,15 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
         <tr><td class="en">Consent Form Viewed <span class="ev-src c">client</span></td><td class="vol">15</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
         <tr><td class="en">Terms Viewed <span class="ev-src c">client</span></td><td class="vol">3</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span></td><td class="act-warn">Viewed ≠ accepted. Add Registration Step Completed with step_name="sign_terms" fired on acceptance, not view.</td></tr>
         <tr><td class="en">Streamer Registration Completed <span class="ev-src s">server</span></td><td class="vol">15</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop miss">streamer_id ❌</span></td><td class="act-warn">Add streamer_id — needed to link wizard steps per individual and power dashboards B + D.</td></tr>
-        <tr><td class="en">Stream Started <span class="ev-src s">server</span></td><td class="vol">40</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span><span class="prop miss">webcam_model ❌</span></td><td class="act-warn">Add webcam_model — needed to profile the typical streamer hardware setup.</td></tr>
+      </tbody></table>
+    </div>
+    <div class="ev-sec"><div class="ev-sec-hd">Demographics &amp; Device</div>
+      <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
+      <tbody>
+        <tr><td class="en">Streamer Registration Completed <span class="ev-src s">server</span></td><td class="vol">15</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">country (native)</span><span class="prop ok">device (native)</span></td><td class="act-ok">Country, device type, time-of-day, and day-of-week are all Amplitude-native — no custom properties needed for the time, country, and mobile vs. desktop questions.</td></tr>
+        <tr><td class="en">Stream Started <span class="ev-src s">server</span></td><td class="vol">40</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span><span class="prop miss">webcam_model ❌</span></td><td class="act-warn">Add webcam_model — needed to profile the typical streamer hardware setup. Also referenced in Performance tab.</td></tr>
+        <tr><td class="en">KYC Completed <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span></td><td class="act-ok">Pending KYROS integration. Country (native) enables KYC approval rate by country once events fire. Also in Registration events.</td></tr>
+        <tr><td class="en">KYC Failed <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">failure_reason</span></td><td class="act-ok">Pending KYROS integration. Country rejection ratio answerable once both KYC Completed + KYC Failed fire. Also in Registration events.</td></tr>
       </tbody></table>
     </div>
     <div class="ev-sec"><div class="ev-sec-hd">Login &amp; Session</div>
@@ -838,7 +850,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     </div>
   </div>
   <div id="pli" style="display:none">
-    <div class="ev-sec"><div class="ev-sec-hd">Stream setup events</div>
+    <div class="ev-sec"><div class="ev-sec-hd">Shows &amp; Tip Templates</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
         <tr><td class="en">Show Scheduled <span class="ev-src c">client</span></td><td class="vol">8</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">show_date</span></td><td>—</td></tr>
@@ -900,17 +912,28 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     </div>
   </div>
   <div id="spi" style="display:none">
-    <div class="ev-sec"><div class="ev-sec-hd">Performance events</div>
+    <div class="ev-sec"><div class="ev-sec-hd">Audience &amp; Streams</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
         <tr><td class="en">Streamer Registration Completed <span class="ev-src s">server</span></td><td class="vol">15</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop miss">streamer_id ❌</span></td><td class="act-warn">Add streamer_id — needed to match against Stream Started to compute % who go live. Also in Registration tab.</td></tr>
         <tr><td class="en">Go Live Clicked <span class="ev-src c">client</span></td><td class="vol">34</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>—</td></tr>
-        <tr><td class="en">Stream Started <span class="ev-src s">server</span></td><td class="vol">40</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span><span class="prop miss">stream_type ❌</span></td><td class="act-warn">Add stream_type (lounge/vip) — needed when VIP streams are built to track sequence behaviour.</td></tr>
-        <tr><td class="en">Stream Ended <span class="ev-src s">server</span></td><td class="vol">51</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">duration_seconds</span><span class="prop ok">total_tips_received</span><span class="prop warn">unique_viewer_count ⚠</span><span class="prop miss">total_tips_usd ❌</span><span class="prop miss">avg_fps ❌</span><span class="prop miss">avg_bitrate ❌</span></td><td class="act-warn">Add total_tips_usd. Add avg_fps + avg_bitrate (session averages for stream quality tracking). Add unique_viewer_count to schema (fires but isInSchema: false, type: any).</td></tr>
-        <tr><td class="en">Tip Panel Opened <span class="ev-src c">client</span></td><td class="vol">431</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">context</span><span class="prop extra">streamer_name +</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id. Also in Stream Monetization.</td></tr>
-        <tr><td class="en">Tip Sent <span class="ev-src c">client</span></td><td class="vol">111</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">amount</span><span class="prop ok">tip_type</span><span class="prop ok">remaining_balance</span><span class="prop ok">context</span><span class="prop extra">streamer_name +</span><span class="prop miss">stream_id ❌</span><span class="prop miss">amount_usd ❌</span></td><td class="act-warn">Add stream_id + amount_usd. Also in Stream Monetization.</td></tr>
+        <tr><td class="en">Stream Started <span class="ev-src s">server</span></td><td class="vol">40</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span><span class="prop miss">stream_type ❌</span></td><td class="act-warn">Add stream_type (lounge/vip) — needed when VIP streams are built to track Lounge→VIP sequence behaviour.</td></tr>
+        <tr><td class="en">Stream Ended <span class="ev-src s">server</span></td><td class="vol">51</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">duration_seconds</span><span class="prop ok">total_tips_received</span><span class="prop warn">unique_viewer_count ⚠</span><span class="prop miss">total_tips_usd ❌</span><span class="prop miss">avg_fps ❌</span><span class="prop miss">avg_bitrate ❌</span></td><td class="act-warn">Add total_tips_usd. Add avg_fps + avg_bitrate (see Stream Quality section). Add unique_viewer_count to schema (fires but isInSchema: false).</td></tr>
+      </tbody></table>
+    </div>
+    <div class="ev-sec"><div class="ev-sec-hd">Earnings &amp; Conversions</div>
+      <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
+      <tbody>
+        <tr><td class="en">Tip Panel Opened <span class="ev-src c">client</span></td><td class="vol">431</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">context</span><span class="prop extra">streamer_name +</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id — needed to count unique tip-panel opens per stream. Also in Stream Monetization.</td></tr>
+        <tr><td class="en">Tip Sent <span class="ev-src c">client</span></td><td class="vol">111</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">amount</span><span class="prop ok">tip_type</span><span class="prop ok">remaining_balance</span><span class="prop ok">context</span><span class="prop extra">streamer_name +</span><span class="prop miss">stream_id ❌</span><span class="prop miss">amount_usd ❌</span></td><td class="act-warn">Add stream_id + amount_usd — needed for USD revenue ranking and per-stream tipper conversion rate. Also in Stream Monetization.</td></tr>
         <tr><td class="en">Casino Outclick <span class="ev-src s">server</span></td><td class="vol">169</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">casino_name</span><span class="prop warn">partner ⚠</span><span class="prop miss">operator_id ❌</span></td><td class="act-warn">Rename partner → operator_id. Also in Stream Monetization.</td></tr>
-        <tr><td class="en">FTD Completed <span class="ev-src s">server</span></td><td class="vol w">2 ⚠</td><td><span class="badge warn">Issue</span></td><td><span class="prop miss">streamer_id ❌</span><span class="prop miss">user_id ❌</span><span class="prop miss">transaction_id ❌</span></td><td class="act-err">Add streamer_id + user_id + transaction_id. Also in Stream Monetization.</td></tr>
+        <tr><td class="en">FTD Completed <span class="ev-src s">server</span></td><td class="vol w">2 ⚠</td><td><span class="badge warn">Issue</span></td><td><span class="prop miss">streamer_id ❌</span><span class="prop miss">user_id ❌</span><span class="prop miss">transaction_id ❌</span></td><td class="act-err">Add streamer_id + user_id + transaction_id — needed to link FTD to the streamer who was live. Also in Stream Monetization.</td></tr>
+      </tbody></table>
+    </div>
+    <div class="ev-sec"><div class="ev-sec-hd">Stream Quality</div>
+      <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
+      <tbody>
+        <tr><td class="en">Stream Ended <span class="ev-src s">server</span></td><td class="vol">51</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">duration_seconds</span><span class="prop ok">total_tips_received</span><span class="prop ok">unique_viewer_count</span><span class="prop miss">avg_fps ❌</span><span class="prop miss">avg_bitrate ❌</span></td><td class="act-err">Add avg_fps + avg_bitrate as session averages — needed to correlate stream quality with viewer retention and tips earned.</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -1015,15 +1038,15 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div style="display:flex;align-items:center;gap:12px;padding:6px 16px;background:#f9fafb;border-bottom:1px solid #eee;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#bbb;">
       <div style="width:7px;flex-shrink:0;"></div>
       <div style="flex:1;">Question</div>
-      <div style="width:96px;flex-shrink:0;text-align:center;">Tab</div>
       <div style="width:68px;flex-shrink:0;text-align:center;">New?</div>
       <div style="width:68px;flex-shrink:0;text-align:center;">Added?</div>
       <div style="width:72px;flex-shrink:0;text-align:center;">Tracking</div>
+      <div style="width:80px;flex-shrink:0;text-align:right;color:#bbb;">Tab</div>
     </div>
     <div class="sec"><div class="sec-hd"><span class="sec-hd-label">① Acquisition</span><span class="sec-hd-count">1 question</span></div>
       <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain"><span class="stk-src f">F</span> Which countries does our traffic come from?</div><div class="qnote">Amplitude captures country, region and city natively. Already in Traffic tab.</div></div><span class="tab-lbl">Traffic</span><span class="stk-badge existing">Existing</span><span class="qimpl yes">✓ Done</span><div class="qtag yes">Yes</div></div>
     </div>
-    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">② Activation</span><span class="sec-hd-count">5 questions</span></div>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">② Activation</span><span class="sec-hd-count">4 questions</span></div>
       <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Which streamers have the most followers on our platform?</div><div class="qnote">Performer Followed fires (118/mo) with <code>streamer_id</code> ✓ — rank streamers by follow count directly in Amplitude.</div></div><span class="tab-lbl">Discovery</span><span class="stk-badge new">New</span><span class="qimpl yes">✓ Done</span><div class="qtag yes">Yes</div></div>
       <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain"><span class="stk-src f">F</span> Which countries prefer which type of streamers — so we know what to push where?</div><div class="qnote">No <code>category</code> property on Stream Joined. Amplitude captures country natively — just need category added to Stream Joined.</div></div><span class="tab-lbl">Streams</span><span class="stk-badge new">New</span><span class="qimpl yes">✓ Done</span><div class="qtag no">Gap</div></div>
       <div class="q"><div class="qdot future"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> How do VIP streams compare to Lounge streams — viewers, duration, and token entry price?</div><div class="qnote">VIP streams not yet built. When live: add <code>stream_type</code> (lounge/vip) to Stream Joined and Stream Ended; add <code>entry_token_price</code> to Stream Joined.</div></div><span class="tab-lbl">Streams</span><span class="stk-badge new">New</span><span class="qimpl yes">✓ Done</span><div class="qtag future">Future</div></div>
@@ -1033,11 +1056,11 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src f">F</span> Which countries have the highest average revenue per user or highest % buying tokens?</div><div class="qnote">Token Purchase Completed fires. Country is native. <code>token_amount</code> stored as string not number — breaks revenue aggregation.</div></div><span class="tab-lbl">Tokens</span><span class="stk-badge new">New</span><span class="qimpl yes">✓ Done</span><div class="qtag part">Partial</div></div>
       <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Which in-stream CTA (overlay, chat link, casino banner) drives the most outclicks and deposits, and how much revenue does each generate?</div><div class="qnote">Casino Outclick has <code>source</code> (liveshow/browse) but no <code>cta_type</code>. FTD Completed missing <code>source</code> — can't close the loop to revenue.</div></div><span class="tab-lbl">Tips &amp; Casino</span><span class="stk-badge new">New</span><span class="qimpl yes">✓ Done</span><div class="qtag part">Partial</div></div>
       <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> How many First-Time Deposits are generated per streamer session?</div><div class="qnote">FTD Completed fires (2/mo). Missing <code>streamer_id</code> and <code>stream_id</code> to attribute per streamer session.</div></div><span class="tab-lbl">Tips &amp; Casino</span><span class="stk-badge existing">Existing</span><span class="qimpl yes">✓ Done</span><div class="qtag part">Partial</div></div>
-      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src f">F</span> What StreamSpecial token price drives the most triggers?</div><div class="qnote">StreamSpecial Triggered fires (52/mo) but missing <code>token_price</code> and <code>special_type</code> — can't segment by price or type.</div></div><span class="tab-lbl">Tips &amp; Casino</span><span class="stk-badge new">New</span><span class="qimpl yes">✓ Done</span><div class="qtag part">Partial</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src f">F</span> What StreamSpecial token price drives the most triggers?</div><div class="qnote">StreamSpecial Triggered fires (52/mo) and <code>cost</code> already captures token price. Only <code>special_type</code> is missing — can't segment by type until the event is documented and special_type is added.</div></div><span class="tab-lbl">Tips &amp; Casino</span><span class="stk-badge new">New</span><span class="qimpl yes">✓ Done</span><div class="qtag part">Partial</div></div>
       <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain"><span class="stk-src f">F</span> Which casino banner type generates the most outclicks?</div><div class="qnote">Casino Outclick fires (169/mo) but no <code>banner_type</code> property — can't distinguish between banner types.</div></div><span class="tab-lbl">Tips &amp; Casino</span><span class="stk-badge new">New</span><span class="qimpl yes">✓ Done</span><div class="qtag no">Gap</div></div>
     </div>
     <div class="sec"><div class="sec-hd"><span class="sec-hd-label">④ Retention</span><span class="sec-hd-count">1 question</span></div>
-      <div class="q"><div class="qdot future"></div><div class="qtext"><div class="qmain"><span class="stk-src f">F</span> Which emails and social posts bring users back?</div><div class="qnote">Requires a separate email provider integration + UTM tracking setup. Not answerable in Amplitude until that infrastructure is in place.</div></div><span class="tab-lbl">Retention</span><span class="stk-badge new">New</span><span class="qimpl no">— Todo</span><div class="qtag future">Future</div></div>
+      <div class="q"><div class="qdot future"></div><div class="qtext"><div class="qmain"><span class="stk-src f">F</span> Which emails and social posts bring users back?</div><div class="qnote">Requires a separate email provider integration + UTM tracking setup. Not answerable in Amplitude until that infrastructure is in place.</div></div><span class="tab-lbl">Retention</span><span class="stk-badge new">New</span><span class="qimpl yes">✓ Done</span><div class="qtag future">Future</div></div>
     </div>
   </div>
 
@@ -1045,10 +1068,10 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div style="display:flex;align-items:center;gap:12px;padding:6px 16px;background:#f9fafb;border-bottom:1px solid #eee;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#bbb;">
       <div style="width:7px;flex-shrink:0;"></div>
       <div style="flex:1;">Question</div>
-      <div style="width:96px;flex-shrink:0;text-align:center;">Tab</div>
       <div style="width:68px;flex-shrink:0;text-align:center;">New?</div>
       <div style="width:68px;flex-shrink:0;text-align:center;">Added?</div>
       <div style="width:72px;flex-shrink:0;text-align:center;">Tracking</div>
+      <div style="width:80px;flex-shrink:0;text-align:right;color:#bbb;">Tab</div>
     </div>
     <div class="sec"><div class="sec-hd"><span class="sec-hd-label">② Activation — Registration</span><span class="sec-hd-count">7 questions</span></div>
       <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="stk-src r">★ R</span> Which specific registration field or document upload step triggers the highest exit rate?</div><div class="qnote">Covered by registration flow 2 funnel question in Registration tab. KYC step detail still pending KYROS.</div></div><span class="tab-lbl">Registration</span><span class="stk-badge existing">Existing</span><span class="qimpl yes">✓ Done</span><div class="qtag part">Partial</div></div>
