@@ -259,22 +259,22 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
   <div class="astep act lit" id="step-act">
     <div class="astep-top"><div class="astep-num">②</div><div class="astep-label">Activation</div></div>
     <div class="astep-tabs">
-      <button class="astep-tab on" onclick="go('auth')">Auth</button>
-      <button class="astep-tab" onclick="go('discovery')">Discovery</button>
-      <button class="astep-tab" onclick="go('streams')">Streams</button>
+      <button class="astep-tab on" onclick="go('auth')">Auth<span class="done-check">✓</span></button>
+      <button class="astep-tab" onclick="go('discovery')">Discovery<span class="done-check">✓</span></button>
+      <button class="astep-tab" onclick="go('streams')">Streams<span class="done-check">✓</span></button>
     </div>
   </div>
   <div class="astep rev" id="step-rev">
     <div class="astep-top"><div class="astep-num">③</div><div class="astep-label">Revenue</div></div>
     <div class="astep-tabs">
-      <button class="astep-tab" onclick="go('tokens')">Tokens</button>
-      <button class="astep-tab" onclick="go('tips')">Tips &amp; Casino</button>
+      <button class="astep-tab" onclick="go('tokens')">Tokens<span class="done-check">✓</span></button>
+      <button class="astep-tab" onclick="go('tips')">Tips &amp; Casino<span class="done-check">✓</span></button>
     </div>
   </div>
   <div class="astep ret" id="step-ret">
     <div class="astep-top"><div class="astep-num">④</div><div class="astep-label">Retention</div></div>
     <div class="astep-tabs">
-      <button class="astep-tab" onclick="go('retention')">Returning</button>
+      <button class="astep-tab" onclick="go('retention')">Returning<span class="done-check">✓</span></button>
     </div>
   </div>
   <div class="astep ref">
@@ -999,7 +999,7 @@ document.querySelectorAll('.content > .panel').forEach(panel => {
     leg.innerHTML = '<span class="q-legend-lbl">Status</span>' +
       '<span class="ql-item"><span style="display:inline-block;width:7px;height:7px;background:#22c55e;flex-shrink:0;vertical-align:middle;"></span>Yes — answerable now</span>' +
       '<span class="ql-item"><span style="display:inline-block;width:7px;height:7px;background:#f59e0b;flex-shrink:0;vertical-align:middle;"></span>Partial — some data missing</span>' +
-      '<span class="ql-item"><span style="display:inline-block;width:7px;height:7px;background:#e5e7eb;border:1.5px solid #d1d5db;flex-shrink:0;vertical-align:middle;"></span>Gap — not tracked</span>' +
+      '<span class="ql-item"><span style="display:inline-block;width:7px;height:7px;background:#ef4444;flex-shrink:0;vertical-align:middle;"></span>Gap — not tracked</span>' +
       '<span class="ql-item"><span style="display:inline-block;width:7px;height:7px;background:#e5e7eb;flex-shrink:0;vertical-align:middle;"></span>Future — not built yet</span>';
     bqDiv.prepend(leg);
   }
