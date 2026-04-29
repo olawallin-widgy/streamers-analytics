@@ -206,11 +206,14 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
 .vf-n { font-size: 22px; font-weight: 800; color: #111; line-height: 1; }
 .vf-n.na { color: #ccc; font-size: 15px; }
 .vf-n-lbl { font-size: 10px; color: #aaa; margin-top: 3px; white-space: nowrap; }
-.vf-conv { display: flex; align-items: center; gap: 10px; padding: 10px 0; width: 100%; }
-.vf-conv::before, .vf-conv::after { content: ''; flex: 1; height: 1px; background: currentColor; opacity: .2; }
-.vf-conv span { font-size: 10px; font-weight: 700; white-space: nowrap; padding: 3px 10px; border: 1px solid currentColor; opacity: .8; }
+.vf-conv { display: flex; flex-direction: column; align-items: center; padding: 0; width: 100%; }
+.vf-conv::before { content: ''; width: 2px; height: 16px; background: currentColor; opacity: .2; flex-shrink: 0; }
+.vf-conv::after { content: '▼'; font-size: 9px; opacity: .45; margin-top: 5px; margin-bottom: 8px; flex-shrink: 0; }
+.vf-conv span { font-size: 12px; font-weight: 700; white-space: nowrap; padding: 6px 16px; border: 1.5px solid currentColor; letter-spacing: .01em; }
 .vf-conv.ok { color: #7c3aed; }
+.vf-conv.ok span { background: #f5f3ff; }
 .vf-conv.blocked { color: #bbb; }
+.vf-conv.blocked span { background: #f9f9f9; }
 
 /* ── QUESTION LEGEND ── */
 .q-legend { display: flex; align-items: center; gap: 18px; padding: 9px 16px; background: #fafafa; border-bottom: 1px solid #eee; margin-bottom: 12px; }
@@ -373,7 +376,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
         </div>
         <div class="vf-step">
           <div class="vf-bar ret"><div class="vf-lbl ret">④ Retention</div><div class="vf-name">Payers who return</div></div>
-          <div class="vf-conv blocked"><span></span></div>
+          <div class="vf-conv blocked"><span>retained member → referring friend</span></div>
         </div>
         <div class="vf-step">
           <div class="vf-bar ref"><div class="vf-lbl ref">⑤ Referral</div><div class="vf-name">Referred sign-ups</div></div>
@@ -399,7 +402,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
         </div>
         <div class="vf-step">
           <div class="vf-bar ret"><div class="vf-lbl ret">④ Retention</div><div class="vf-name">Earner return rate · churn</div></div>
-          <div class="vf-conv blocked"><span></span></div>
+          <div class="vf-conv blocked"><span>returning streamer → referring streamer</span></div>
         </div>
         <div class="vf-step">
           <div class="vf-bar ref"><div class="vf-lbl ref">⑤ Referral</div><div class="vf-name">Referral link sharing</div></div>
@@ -443,7 +446,6 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       </tbody></table>
     </div>
   </div>
-</div>
 </div>
 
 <!-- ═══ AUTH ═══ -->
