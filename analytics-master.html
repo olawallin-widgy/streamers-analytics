@@ -4,9 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Analytics Master — Sexy Streamers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f0f0; color: #1a1a1a; font-size: 14px; min-height: 100vh; }
+body { font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif; background: #f0f0f0; color: #1a1a1a; font-size: 14px; min-height: 100vh; }
 
 /* ── SHELL ── */
 .shell { max-width: 1200px; margin: 0 auto; padding: 20px 20px 60px; display: flex; flex-direction: column; gap: 0; }
@@ -88,7 +91,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .qdot { width: 7px; height: 7px; border-radius: 2px; flex-shrink: 0; margin-top: 4px; }
 .qdot.yes { background: #22c55e; }
 .qdot.part { background: #f59e0b; }
-.qdot.no { background: #e5e7eb; border: 1.5px solid #d1d5db; }
+.qdot.no { background: #ef4444; }
 .qdot.future { background: #e5e7eb; }
 .qtext { flex: 1; }
 .qmain { font-size: 13px; font-weight: 500; color: #111; line-height: 1.5; }
@@ -97,7 +100,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .qtag { font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 0; flex-shrink: 0; margin-top: 2px; white-space: nowrap; }
 .qtag.yes { background: #f0fdf4; color: #15803d; }
 .qtag.part { background: #fffbeb; color: #92400e; }
-.qtag.no { background: #fef2f2; color: #dc2626; }
+.qtag.no { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
 .qtag.future { background: #f5f5f5; color: #aaa; }
 .ramon { font-size: 10px; background: #ede9fe; border: 1px solid #c4b5fd; color: #6d28d9; padding: 1px 6px; border-radius: 0; font-weight: 600; margin-right: 5px; }
 
@@ -281,20 +284,36 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
 
 <!-- AARRR FUNNEL STRIP — STREAMERS -->
 <div class="aarrr" id="strip-s" style="display:none">
-  <div class="astep act lit" id="step-s-act">
-    <div class="astep-top"><div class="astep-num">①</div><div class="astep-label">Activation</div></div>
+  <div class="astep ref">
+    <div class="astep-top"><div class="astep-num">①</div><div class="astep-label">Acquisition</div></div>
     <div class="astep-tabs">
-      <button class="astep-tab on" onclick="go('s-auth')">Auth</button>
-      <button class="astep-tab" onclick="go('s-kyc')">KYC</button>
-      <button class="astep-tab" onclick="go('s-account')">Account</button>
-      <button class="astep-tab" onclick="go('s-shows')">Stream Prep</button>
+      <button class="astep-tab">Not tracked</button>
+    </div>
+  </div>
+  <div class="astep act lit" id="step-s-act">
+    <div class="astep-top"><div class="astep-num">②</div><div class="astep-label">Activation</div></div>
+    <div class="astep-tabs">
+      <button class="astep-tab on" onclick="go('s-auth')">Registration</button>
+      <button class="astep-tab" onclick="go('s-prelive')">Engagement</button>
     </div>
   </div>
   <div class="astep rev" id="step-s-rev">
-    <div class="astep-top"><div class="astep-num">②</div><div class="astep-label">Revenue</div></div>
+    <div class="astep-top"><div class="astep-num">③</div><div class="astep-label">Revenue</div></div>
     <div class="astep-tabs">
       <button class="astep-tab" onclick="go('s-perf')">Performance</button>
       <button class="astep-tab" onclick="go('s-finance')">Finance</button>
+    </div>
+  </div>
+  <div class="astep ref">
+    <div class="astep-top"><div class="astep-num">④</div><div class="astep-label">Retention</div></div>
+    <div class="astep-tabs">
+      <button class="astep-tab">Not tracked</button>
+    </div>
+  </div>
+  <div class="astep ref">
+    <div class="astep-top"><div class="astep-num">⑤</div><div class="astep-label">Referral</div></div>
+    <div class="astep-tabs">
+      <button class="astep-tab">Not tracked</button>
     </div>
   </div>
 </div>
@@ -520,7 +539,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
         <tr><td class="en">Stream Started <span class="ev-src s">server</span></td><td class="vol">40</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>—</td></tr>
-        <tr><td class="en">Stream Ended <span class="ev-src s">server</span></td><td class="vol">51</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">duration_seconds</span><span class="prop ok">total_tips_received</span><span class="prop ok">unique_viewer_count</span></td><td>—</td></tr>
+        <tr><td class="en">Stream Ended <span class="ev-src s">server</span></td><td class="vol">51</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">duration_seconds</span><span class="prop ok">total_tips_received</span><span class="prop warn">unique_viewer_count ⚠</span></td><td class="act-warn">Add unique_viewer_count to schema — fires but isInSchema: false, type: any.</td></tr>
         <tr><td class="en">Stream Joined <span class="ev-src c">client</span></td><td class="vol">1,020</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">stream_id</span><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>—</td></tr>
         <tr><td class="en">Stream Left <span class="ev-src c">client</span></td><td class="vol">568</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">stream_id</span><span class="prop ok">streamer_id</span><span class="prop ok">duration_seconds</span></td><td class="act-ok">Only 56% of viewers trigger this — 44% close browser.</td></tr>
       </tbody></table>
@@ -599,16 +618,21 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
   </div>
   <div id="tipq">
     <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Tipping</span></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How many tips are sent per week/month, and what is the total token value?</div><div class="qnote">111 tips in 30d. Total token value: Tip Sent + amount ✓ — sum by week to see volume trend.</div></div><div class="qtag yes">Yes</div></div>
       <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">What % of viewers tip — and of those who open the panel, how many follow through?</div><div class="qnote">1,020 joins → 431 panel opens (42%) → 111 tips (26% panel→tip, 11% of all viewers). Per-stream breakdown needs <code>stream_id</code> on Tip Sent.</div></div><div class="qtag part">Partial</div></div>
       <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Does tipping happen more in liveshow or messaging context?</div><div class="qnote">Liveshow: 373 opens (87%) · Messaging: 58 opens (13%). Via <code>context</code> on Tip Panel Opened.</div></div><div class="qtag yes">Yes</div></div>
       <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Do members prefer preset tips or custom amounts?</div><div class="qnote"><code>tip_type</code> property ✓ — verified present.</div></div><div class="qtag yes">Yes</div></div>
       <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Which streamers have the spin wheel enabled, and how does it affect earnings?</div><div class="qnote">No event for enabling/disabling the wheel. Add "Spin Wheel Enabled" event when streamer activates it.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">Is the average tips per stream trending up week over week?</div><div class="qnote"><code>total_tips_received</code> on Stream Ended ✓ — token average trendable today. USD trend needs <code>total_tips_usd</code> on Stream Ended.</div></div><div class="qtag part">Partial</div></div>
       <div class="q"><div class="qdot future"></div><div class="qtext"><div class="qmain">When VIP room launches — how many members enter, at what price, and for how long?</div><div class="qnote">Feature not built yet. Add VIP Room Entered / Exited with stream_id, price_tokens, duration_seconds.</div></div><div class="qtag future">Future</div></div>
     </div>
     <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Casino &amp; FTD</span></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How many total outclicks and FTDs do we generate per week/month?</div><div class="qnote">169 outclicks in 30d ✓. FTDs: only 2 in 30d — very low, likely a data quality issue. Both trendable by week to track growth.</div></div><div class="qtag yes">Yes</div></div>
       <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="ramon">★ R</span>Three casino conversion rates: viewers→outclicks, outclicks→FTDs, viewers→FTDs?</div><div class="qnote">Overall: viewers→outclicks ~17% · outclicks→FTDs ~1.2% · viewers→FTDs ~0.2%. Per-stream needs <code>stream_id</code> on Casino Outclick + FTD Completed.</div></div><div class="qtag part">Partial</div></div>
       <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Which streams generate the most outclicks and FTDs?</div><div class="qnote">Needs <code>stream_id</code> on Casino Outclick + FTD Completed.</div></div><div class="qtag no">Gap</div></div>
       <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">What is the average number of outclicks and FTDs per stream?</div><div class="qnote">Needs <code>stream_id</code> on Casino Outclick + FTD Completed — then group by stream_id and average across streams.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">How many FTDs come from in-stream casino clicks vs external affiliate links (social media etc)?</div><div class="qnote"><code>source</code> on Casino Outclick ✓ — 160 liveshow / 10 browse in 30d. No "social" or "external" source tracked yet for links shared outside the platform. FTD Completed has no source at all — needs <code>source</code> property added to link each FTD back to its origin.</div></div><div class="qtag part">Partial</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Is the outclick-to-FTD conversion rate improving week over week?</div><div class="qnote">Needs <code>streamer_id</code> on FTD Completed to compute a reliable rate. Only 2 FTDs in 30d — fix data quality first before trending.</div></div><div class="qtag no">Gap</div></div>
       <div class="q"><div class="qdot future"></div><div class="qtext"><div class="qmain">When the affiliate page launches — page views→outclicks, page views→FTDs, outclicks→FTDs?</div><div class="qnote">Page not built yet. Track page views + Casino Outclick with source=affiliate_page.</div></div><div class="qtag future">Future</div></div>
     </div>
   </div>
@@ -621,13 +645,14 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
         <tr><td class="en">StreamSpecial Triggered <span class="ev-src c">client</span></td><td class="vol">52</td><td><span class="badge pend">Undocumented</span></td><td><span class="prop ok">special_name</span><span class="prop ok">cost</span><span class="prop ok">streamer_id</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Clarify: is this the spin wheel? Confirm special_name values. Add stream_id.</td></tr>
         <tr><td class="en miss">Spin Wheel Enabled <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — fire when streamer enables the spin wheel. Props: streamer_id, stream_id.</td></tr>
         <tr><td class="en miss">Spin Wheel Action Triggered <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — viewer triggers action. Props: streamer_id, stream_id, action_name, cost_tokens, amount_usd, member_id.</td></tr>
+        <tr><td class="en">Stream Ended <span class="ev-src s">server</span></td><td class="vol">51</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">total_tips_received</span><span class="prop ok">duration_seconds</span><span class="prop warn">unique_viewer_count ⚠</span><span class="prop miss">total_tips_usd ❌</span></td><td class="act-warn">Add total_tips_usd. Add unique_viewer_count to schema (fires but isInSchema: false). Also in Streamer Performance.</td></tr>
       </tbody></table>
     </div>
     <div class="ev-sec"><div class="ev-sec-hd">Casino &amp; FTD events</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
         <tr><td class="en">Casino Outclick <span class="ev-src s">server</span></td><td class="vol">169</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">casino_name</span><span class="prop ok">affiliate_link</span><span class="prop ok">cta_text</span><span class="prop ok">source</span><span class="prop ok">streamer_id</span><span class="prop ok">member_id</span><span class="prop extra">partner +</span><span class="prop miss">operator_id ❌</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Rename partner → operator_id. Add stream_id.</td></tr>
-        <tr><td class="en">FTD Completed <span class="ev-src s">server</span></td><td class="vol w">2 ⚠</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">member_username</span><span class="prop ok">operator_name</span><span class="prop ok">operator_id</span><span class="prop ok">amount</span><span class="prop ok">currency</span><span class="prop miss">user_id ❌</span><span class="prop miss">streamer_id ❌</span><span class="prop miss">stream_id ❌</span><span class="prop miss">transaction_id ❌</span></td><td class="act-err">Add user_id, streamer_id, stream_id, transaction_id. Verify 2 events are real, not test data.</td></tr>
+        <tr><td class="en">FTD Completed <span class="ev-src s">server</span></td><td class="vol w">2 ⚠</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">member_username</span><span class="prop ok">operator_name</span><span class="prop ok">operator_id</span><span class="prop ok">amount</span><span class="prop ok">currency</span><span class="prop miss">user_id ❌</span><span class="prop miss">streamer_id ❌</span><span class="prop miss">stream_id ❌</span><span class="prop miss">transaction_id ❌</span><span class="prop miss">source ❌</span></td><td class="act-err">Add user_id, streamer_id, stream_id, transaction_id, source (in_stream / browse / external). Verify 2 events are real, not test data.</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -675,7 +700,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
 <!-- ═══ STREAMER AUTH ═══ -->
 <div class="panel" id="p-s-auth">
   <div class="toggle-row">
-    <div><div class="panel-title">Activation — Streamer Auth</div><div class="panel-sub">Registration, login, email verification, onboarding</div></div>
+    <div><div class="panel-title">Acquisition — Streamer Registration</div><div class="panel-sub">Full registration wizard (4 steps) + login</div></div>
     <div class="toggle-pills">
       <button class="tpill on" onclick="tgl(this,'saq','sai')">Business Questions</button>
       <button class="tpill" onclick="tgl(this,'sai','saq')">Implementation</button>
@@ -683,13 +708,17 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
   </div>
   <div id="saq">
     <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Registration</span></div>
-      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Streamer registration funnel — how many start, drop off, complete vs fail?</div><div class="qnote">52 started → 31 submitted (60%) → 15 completed (29%) + 24 failed (46%). Worse funnel than member registration.</div></div><div class="qtag yes">Yes</div></div>
-      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Why does streamer registration fail?</div><div class="qnote">24 failures, all <code>validation_failed</code> — useless. Dev needs specific error values.</div></div><div class="qtag no">Gap</div></div>
-      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Did the streamer verify their email?</div><div class="qnote">No Streamer Email Verified event — same gap as members. Only 2 resent emails tracked.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">Full registration funnel — from first click to fully registered streamer, what is the end-to-end conversion rate?</div><div class="qnote">52 started → 15 fully registered = 29% end-to-end. We can see the start and the finish but the wizard step drop-off (flow 2) is invisible until Registration Step Completed events are implemented.</div></div><div class="qtag part">Partial</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Registration flow 1 — how many streamers start, submit, and pass the basic account creation (name, email, password)?</div><div class="qnote">52 started → 31 submitted (60%) → 15 completed + 24 failed. 21 dropped before even submitting the form. This is before the wizard (personal data / identity / terms).</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Registration flow 2 — how many complete each wizard step (personal data → identity → sign terms)?</div><div class="qnote">31 submitted → 15 completed (48%). 16 dropped somewhere in the wizard. Personal data step has no tracking event — completely blind. Identity and terms steps have partial coverage but no step completion event.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Why does registration fail?</div><div class="qnote">24 failures, all <code>validation_failed</code> — generic and useless. Dev needs specific error values.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Did the streamer verify their email?</div><div class="qnote">No Streamer Email Verified event. Only 2 resent emails tracked.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How many streamers submit their identity documents during registration?</div><div class="qnote">8 submitted in 30d. Uploaded as part of the proof of identity wizard step.</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">How many streamers view and accept consent form and terms?</div><div class="qnote">Consent Form Viewed: 15 · Terms Viewed: 3. Viewed ≠ accepted — no "Terms Accepted" event.</div></div><div class="qtag part">Partial</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How many registered streamers pass the identity review and get approved to stream?</div><div class="qnote">8 submitted → 6 approved (Identity Verified). Currently manual review by team — KYROS will automate this. 2 submitted but not yet approved.</div></div><div class="qtag yes">Yes</div></div>
     </div>
-    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Login &amp; Onboarding</span></div>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Login &amp; Session</span></div>
       <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Why do streamer logins fail?</div><div class="qnote">36 failures: 34× <code>invalid_login_credentials</code> · 2× <code>email_not_confirmed</code>. Specific and actionable.</div></div><div class="qtag yes">Yes</div></div>
-      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">How many streamers complete full onboarding after registering?</div><div class="qnote">Individual account setup events exist but no single "Onboarding Completed" event to measure overall completion rate.</div></div><div class="qtag part">Partial</div></div>
     </div>
   </div>
   <div id="sai" style="display:none">
@@ -698,112 +727,61 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <tbody>
         <tr><td class="en">Streamer Registration Started <span class="ev-src c">client</span></td><td class="vol">52</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
         <tr><td class="en">Streamer Registration Submitted <span class="ev-src c">client</span></td><td class="vol">31</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
-        <tr><td class="en">Streamer Registration Completed <span class="ev-src s">server</span></td><td class="vol">15</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop miss">streamer_id ❌</span></td><td class="act-warn">Add streamer_id — needed to track all activity per streamer.</td></tr>
         <tr><td class="en">Streamer Registration Failed <span class="ev-src c">client</span></td><td class="vol w">24 ⚠</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">error_type (generic) ⚠</span></td><td class="act-err">Send specific error values.</td></tr>
         <tr><td class="en">Streamer Email Verification Resent <span class="ev-src c">client</span></td><td class="vol">2</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
         <tr><td class="en miss">Streamer Email Verified <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — fire when streamer clicks verification link.</td></tr>
+        <tr><td class="en miss">Registration Step Completed — personal_data <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">step_name</span></td><td class="act-err">Implement — fire when streamer completes the personal data step. step_name = "personal_data". Needed for dashboard D funnel.</td></tr>
+        <tr><td class="en">Identity Verification Submitted <span class="ev-src c">client</span></td><td class="vol">8</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
+        <tr><td class="en">Identity Verified <span class="ev-src s">server</span></td><td class="vol">6</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td class="act-ok">Currently fired by manual team review. Will be automated by KYROS.</td></tr>
+        <tr><td class="en">KYC Started <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span></td><td class="act-ok">Implement when KYROS integration is ready.</td></tr>
+        <tr><td class="en">KYC Step Completed <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">step_name</span><span class="prop ok">step_number</span></td><td class="act-ok">Implement when KYROS integration is ready.</td></tr>
+        <tr><td class="en">KYC Completed <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span></td><td class="act-ok">Implement when KYROS integration is ready — replaces manual Identity Verified.</td></tr>
+        <tr><td class="en">KYC Failed <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">failure_reason</span></td><td class="act-ok">Implement when KYROS integration is ready.</td></tr>
+        <tr><td class="en">Consent Form Viewed <span class="ev-src c">client</span></td><td class="vol">15</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
+        <tr><td class="en">Terms Viewed <span class="ev-src c">client</span></td><td class="vol">3</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span></td><td class="act-warn">Viewed ≠ accepted. Add Registration Step Completed with step_name="sign_terms" fired on acceptance, not view.</td></tr>
+        <tr><td class="en">Streamer Registration Completed <span class="ev-src s">server</span></td><td class="vol">15</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop miss">streamer_id ❌</span></td><td class="act-warn">Add streamer_id — needed to link wizard steps per individual and power dashboards B + D.</td></tr>
       </tbody></table>
     </div>
-    <div class="ev-sec"><div class="ev-sec-hd">Login events</div>
+    <div class="ev-sec"><div class="ev-sec-hd">Login &amp; Session</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
         <tr><td class="en">Streamer Login Submitted <span class="ev-src c">client</span></td><td class="vol">103</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
         <tr><td class="en">Streamer Login Completed <span class="ev-src s">server</span></td><td class="vol">70</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop warn">token_balance ⚠</span><span class="prop miss">streamer_id ❌</span></td><td class="act-warn">Rename token_balance → total_balance. Add streamer_id.</td></tr>
         <tr><td class="en">Streamer Login Failed <span class="ev-src c">client</span></td><td class="vol">36</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">error_type</span></td><td>—</td></tr>
         <tr><td class="en">Streamer Logout <span class="ev-src c">client</span></td><td class="vol">29</td><td><span class="badge ok">In Plan</span></td><td>—</td><td>—</td></tr>
-        <tr><td class="en miss">Onboarding Completed <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — fire when streamer finishes all onboarding steps. Needed for overall completion rate.</td></tr>
       </tbody></table>
     </div>
   </div>
 </div>
 
-<!-- ═══ STREAMER KYC ═══ -->
-<div class="panel" id="p-s-kyc">
+<!-- ═══ PRE-LIVE ═══ -->
+<div class="panel" id="p-s-prelive">
   <div class="toggle-row">
-    <div><div class="panel-title">Activation — KYC</div><div class="panel-sub">Pending KYROS integration — no events implemented yet</div></div>
+    <div><div class="panel-title">Activation — Engagement</div><div class="panel-sub">Stream setup, messaging and referral — everything between registration and first stream</div></div>
     <div class="toggle-pills">
-      <button class="tpill on" onclick="tgl(this,'kyq','kyi')">Business Questions</button>
-      <button class="tpill" onclick="tgl(this,'kyi','kyq')">Implementation</button>
+      <button class="tpill on" onclick="tgl(this,'plq','pli')">Business Questions</button>
+      <button class="tpill" onclick="tgl(this,'pli','plq')">Implementation</button>
     </div>
   </div>
-  <div class="warn-box">KYC is pending KYROS integration — no events are implemented or firing yet.</div>
-  <div id="kyq">
-    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">KYC Funnel</span></div>
-      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">What is the KYC completion rate and where do users drop off?</div><div class="qnote">All events pending KYROS integration.</div></div><div class="qtag no">Gap</div></div>
-      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Why do KYC submissions fail?</div><div class="qnote">KYC Failed event not yet implemented.</div></div><div class="qtag no">Gap</div></div>
-    </div>
-  </div>
-  <div id="kyi" style="display:none">
-    <div class="ev-sec"><div class="ev-sec-hd">KYC events (all pending)</div>
-      <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
-      <tbody>
-        <tr><td class="en">KYC Started <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td>—</td><td class="act-ok">Implement when KYROS integration is ready.</td></tr>
-        <tr><td class="en">KYC Step Completed <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">step_name</span><span class="prop ok">step_number</span></td><td class="act-ok">Implement when KYROS integration is ready.</td></tr>
-        <tr><td class="en">KYC Completed <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">user_id</span></td><td class="act-ok">Implement when KYROS integration is ready.</td></tr>
-        <tr><td class="en">KYC Failed <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">user_id</span><span class="prop ok">failure_reason</span></td><td class="act-ok">Implement when KYROS integration is ready.</td></tr>
-      </tbody></table>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ STREAMER ACCOUNT ═══ -->
-<div class="panel" id="p-s-account">
-  <div class="toggle-row">
-    <div><div class="panel-title">Activation — Account Setup</div><div class="panel-sub">Identity verification, profile, gallery, messaging, referral</div></div>
-    <div class="toggle-pills">
-      <button class="tpill on" onclick="tgl(this,'acq2','aci2')">Business Questions</button>
-      <button class="tpill" onclick="tgl(this,'aci2','acq2')">Implementation</button>
-    </div>
-  </div>
-  <div id="acq2">
-    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Profile &amp; Setup</span></div>
-      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How many streamers complete identity verification?</div><div class="qnote">8 submitted → 6 verified in 30d. 2 submitted but not yet verified.</div></div><div class="qtag yes">Yes</div></div>
-      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">What profile fields do streamers update most?</div><div class="qnote">Top: age (5) · breast_size (4) · hair_color (4) · body_type (3). Physical attributes dominate.</div></div><div class="qtag yes">Yes</div></div>
-      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">What type of media do streamers upload to their gallery?</div><div class="qnote">17 uploads, all images. No video uploads yet.</div></div><div class="qtag yes">Yes</div></div>
-    </div>
-    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Messaging &amp; Referral</span></div>
-      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">How actively do streamers message members?</div><div class="qnote">35 conversations opened, only 5 messages sent (14% send rate). Low engagement from streamer side.</div></div><div class="qtag part">Partial</div></div>
-      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">How often do streamers use their referral link?</div><div class="qnote">Referral Link Copied missing from Amplitude — marked implemented in ClickUp.</div></div><div class="qtag part">Partial</div></div>
-    </div>
-  </div>
-  <div id="aci2" style="display:none">
-    <div class="ev-sec"><div class="ev-sec-hd">Account setup events</div>
-      <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
-      <tbody>
-        <tr><td class="en">Identity Verification Submitted <span class="ev-src c">client</span></td><td class="vol">8</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
-        <tr><td class="en">Identity Verified <span class="ev-src s">server</span></td><td class="vol">6</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
-        <tr><td class="en">Consent Form Viewed <span class="ev-src c">client</span></td><td class="vol">15</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
-        <tr><td class="en">Terms Viewed <span class="ev-src c">client</span></td><td class="vol">3</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
-        <tr><td class="en">Streamer Profile Updated <span class="ev-src c">client</span></td><td class="vol">6</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">fields_updated</span></td><td>—</td></tr>
-        <tr><td class="en">Gallery Media Uploaded <span class="ev-src c">client</span></td><td class="vol">17</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">media_type</span></td><td>—</td></tr>
-        <tr><td class="en miss">Referral Link Copied <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — marked done in ClickUp but missing from Amplitude.</td></tr>
-        <tr><td class="en">Streamer Conversation Opened <span class="ev-src c">client</span></td><td class="vol">35</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">member_name</span><span class="prop ok">member_id</span></td><td>—</td></tr>
-        <tr><td class="en">Streamer Message Sent <span class="ev-src c">client</span></td><td class="vol">5</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">member_name</span><span class="prop ok">member_id</span><span class="prop ok">message_length</span></td><td>—</td></tr>
-        <tr><td class="en miss">Chat Disabled <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — marked done in ClickUp but missing from Amplitude.</td></tr>
-      </tbody></table>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ STREAM PREP ═══ -->
-<div class="panel" id="p-s-shows">
-  <div class="toggle-row">
-    <div><div class="panel-title">Activation — Stream Prep</div><div class="panel-sub">Scheduled shows, tip templates</div></div>
-    <div class="toggle-pills">
-      <button class="tpill on" onclick="tgl(this,'shq','shi')">Business Questions</button>
-      <button class="tpill" onclick="tgl(this,'shi','shq')">Implementation</button>
-    </div>
-  </div>
-  <div id="shq">
-    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Shows</span></div>
+  <div id="plq">
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Shows &amp; Tip Templates</span></div>
       <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How many shows are scheduled vs cancelled?</div><div class="qnote">8 scheduled, 2 cancelled in 30d. Low volume — streamers not using shows heavily yet.</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">How actively do streamers create and manage tip templates?</div><div class="qnote">Created: 1 · Edited: 5 · Deleted: missing from Amplitude. Tip Template Deleted marked done in ClickUp but not firing.</div></div><div class="qtag part">Partial</div></div>
     </div>
-    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Tip Templates</span></div>
-      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">How actively do streamers manage tip templates?</div><div class="qnote">Created: 1 · Edited: 5 · Deleted: missing from Amplitude (marked implemented in ClickUp).</div></div><div class="qtag part">Partial</div></div>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Profile &amp; Gallery</span></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How often do streamers update their profile and upload gallery media?</div><div class="qnote">Profile Updated: 6 · Gallery Uploaded: 17 in 30d. Baseline for profile completeness activity.</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">How complete are streamer profiles — are all fields filled and how many media items do they have?</div><div class="qnote">Current tracking only records upload activity, not total state. Needs <code>profile_completeness_pct</code> on Profile Updated and <code>total_media_count</code> on Gallery Media Uploaded to answer this.</div></div><div class="qtag no">Gap</div></div>
+    </div>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Messaging</span></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">How actively do streamers message members?</div><div class="qnote">35 conversations opened, only 5 messages sent (14% send rate). Low engagement from streamer side. Chat Disabled missing from Amplitude.</div></div><div class="qtag part">Partial</div></div>
+    </div>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Referral</span></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">How many streamers actively share their referral link?</div><div class="qnote">Referral Link Copied missing from Amplitude — marked implemented in ClickUp but not firing.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Do referral links bring in new member registrations?</div><div class="qnote">Needs utm_source or ref_id on member Registration Completed to link signups back to a streamer referral.</div></div><div class="qtag no">Gap</div></div>
     </div>
   </div>
-  <div id="shi" style="display:none">
-    <div class="ev-sec"><div class="ev-sec-hd">Show &amp; template events</div>
+  <div id="pli" style="display:none">
+    <div class="ev-sec"><div class="ev-sec-hd">Stream setup events</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
         <tr><td class="en">Show Scheduled <span class="ev-src c">client</span></td><td class="vol">8</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">show_date</span></td><td>—</td></tr>
@@ -812,6 +790,22 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
         <tr><td class="en">Tip Template Created <span class="ev-src c">client</span></td><td class="vol">1</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">action_count</span></td><td>—</td></tr>
         <tr><td class="en">Tip Template Edited <span class="ev-src c">client</span></td><td class="vol">5</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span></td><td>—</td></tr>
         <tr><td class="en miss">Tip Template Deleted <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — marked done in ClickUp but missing from Amplitude.</td></tr>
+      </tbody></table>
+    </div>
+    <div class="ev-sec"><div class="ev-sec-hd">Profile &amp; gallery events</div>
+      <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
+      <tbody>
+        <tr><td class="en">Streamer Profile Updated <span class="ev-src c">client</span></td><td class="vol">6</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">fields_updated</span><span class="prop miss">profile_completeness_pct ❌</span></td><td class="act-warn">Add profile_completeness_pct — needed to answer whether profiles are fully set up.</td></tr>
+        <tr><td class="en">Gallery Media Uploaded <span class="ev-src c">client</span></td><td class="vol">17</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">media_type</span><span class="prop miss">total_media_count ❌</span></td><td class="act-warn">Add total_media_count — needed to see how many items a streamer has in total, not just upload activity.</td></tr>
+      </tbody></table>
+    </div>
+    <div class="ev-sec"><div class="ev-sec-hd">Messaging &amp; referral events</div>
+      <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
+      <tbody>
+        <tr><td class="en">Streamer Conversation Opened <span class="ev-src c">client</span></td><td class="vol">35</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">member_name</span><span class="prop ok">member_id</span></td><td>—</td></tr>
+        <tr><td class="en">Streamer Message Sent <span class="ev-src c">client</span></td><td class="vol">5</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">member_name</span><span class="prop ok">member_id</span><span class="prop ok">message_length</span></td><td>—</td></tr>
+        <tr><td class="en miss">Chat Disabled <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — marked done in ClickUp but missing from Amplitude.</td></tr>
+        <tr><td class="en miss">Referral Link Copied <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td>—</td><td class="act-err">Implement — marked done in ClickUp but missing from Amplitude.</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -828,27 +822,30 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
   </div>
   <div id="spq">
     <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Audience &amp; Streams</span></div>
-      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How many streams has each streamer done, and how many are active?</div><div class="qnote">40 Stream Started in 30d across ~15 registered streamers. streamer_id on all stream events ✓.</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">What % of registered streamers go live at least once?</div><div class="qnote">Registration Completed (15) vs Stream Started (40) — needs <code>streamer_id</code> on Registration Completed to match the same individual. Note: 40 started vs 34 Go Live clicks — 6 streams started via a second launch path worth investigating.</div></div><div class="qtag part">Partial</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How often does each streamer go live — daily, a few times a week, or rarely?</div><div class="qnote">40 Stream Started in 30d across ~15 registered streamers = ~3 streams per streamer on average. <code>streamer_id</code> on Stream Started ✓ — group by streamer_id and count per week.</div></div><div class="qtag yes">Yes</div></div>
       <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain"><span class="ramon">★ R</span>Average viewers per streamer — who draws the biggest audience?</div><div class="qnote"><code>unique_viewer_count</code> on Stream Ended ✓ — group by streamer_id to rank.</div></div><div class="qtag yes">Yes</div></div>
-      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">What % of Go Live clicks result in a stream actually starting?</div><div class="qnote">34 clicked → 40 started. Ratio &gt;100% means 6 streams started without the button click — investigate second launch path.</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">What is the average stream duration per streamer?</div><div class="qnote"><code>duration_seconds</code> on Stream Ended ✓ — average and rank by streamer_id. Longer streams = more monetisation opportunity.</div></div><div class="qtag yes">Yes</div></div>
     </div>
     <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Earnings &amp; Conversions</span></div>
-      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Which streamers earn the most tips and what's the average tip?</div><div class="qnote">Tip Sent + streamer_id + amount ✓ — 111 tips in 30d. Group by streamer_id in Amplitude.</div></div><div class="qtag yes">Yes</div></div>
-      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">How much have streamers earned in dollar value?</div><div class="qnote"><code>total_tips_usd</code> not tracked. Need amount_usd on Tip Sent + total_tips_usd on Stream Ended.</div></div><div class="qtag no">Gap</div></div>
-      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Which streamers generate the most casino outclicks?</div><div class="qnote">streamer_id on Casino Outclick ✓ — 169 outclicks. Group by streamer_id.</div></div><div class="qtag yes">Yes</div></div>
-      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain"><span class="ramon">★ R</span>Which streamers generate the most FTDs?</div><div class="qnote">streamer_id missing from FTD Completed — can't link FTDs to the streamer who was live.</div></div><div class="qtag no">Gap</div></div>
-      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Which streamer has the best viewer-to-tipper conversion rate?</div><div class="qnote">Needs stream_id on Tip Sent to count unique tippers per stream per streamer.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">Which streamers earn the most tips — in tokens and USD — and what is the average tip per stream?</div><div class="qnote">Token ranking + average: Tip Sent + streamer_id + amount ✓ (111 tips in 30d). USD value: needs <code>amount_usd</code> on Tip Sent + <code>total_tips_usd</code> on Stream Ended.</div></div><div class="qtag part">Partial</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain"><span class="ramon">★ R</span>Which streamers generate the most casino outclicks and FTDs — in total and on average per stream?</div><div class="qnote">Outclicks per streamer: <code>streamer_id</code> on Casino Outclick ✓ — 169 outclicks in 30d (~3 per stream). FTDs per streamer: <code>streamer_id</code> missing from FTD Completed — can't link FTDs to the streamer who was live. Note: per-stream averages use Stream Ended as the denominator.</div></div><div class="qtag part">Partial</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Which streamers generate the most tip panel opens — and what % converts to an actual tip?</div><div class="qnote">Tip Panel Opened (431) + Tip Sent (111), both with <code>streamer_id</code> ✓. Overall: 26% open→tip rate. Group by streamer_id to see who monetises intent best.</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Which streamer has the best viewer-to-tipper conversion rate, and is it improving over time?</div><div class="qnote">Needs <code>stream_id</code> on Tip Sent to count unique tippers per stream per streamer — then trend the rate weekly.</div></div><div class="qtag no">Gap</div></div>
     </div>
   </div>
   <div id="spi" style="display:none">
     <div class="ev-sec"><div class="ev-sec-hd">Performance events</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
+        <tr><td class="en">Streamer Registration Completed <span class="ev-src s">server</span></td><td class="vol">15</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">username</span><span class="prop miss">streamer_id ❌</span></td><td class="act-warn">Add streamer_id — needed to match against Stream Started to compute % who go live. Also in Registration tab.</td></tr>
         <tr><td class="en">Go Live Clicked <span class="ev-src c">client</span></td><td class="vol">34</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>—</td></tr>
         <tr><td class="en">Stream Started <span class="ev-src s">server</span></td><td class="vol">40</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>—</td></tr>
-        <tr><td class="en">Stream Ended <span class="ev-src s">server</span></td><td class="vol">51</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">duration_seconds</span><span class="prop ok">total_tips_received</span><span class="prop ok">unique_viewer_count</span><span class="prop miss">total_tips_usd ❌</span></td><td class="act-warn">Add total_tips_usd — dollar value of all tips in stream session.</td></tr>
-        <tr><td class="en">Casino Outclick <span class="ev-src s">server</span></td><td class="vol">169</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">casino_name</span><span class="prop extra">partner +</span></td><td class="act-warn">Rename partner → operator_id.</td></tr>
-        <tr><td class="en">FTD Completed <span class="ev-src s">server</span></td><td class="vol w">2 ⚠</td><td><span class="badge warn">Issue</span></td><td><span class="prop miss">streamer_id ❌</span><span class="prop miss">user_id ❌</span><span class="prop miss">transaction_id ❌</span></td><td class="act-err">Add streamer_id + user_id + transaction_id.</td></tr>
+        <tr><td class="en">Stream Ended <span class="ev-src s">server</span></td><td class="vol">51</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">duration_seconds</span><span class="prop ok">total_tips_received</span><span class="prop warn">unique_viewer_count ⚠</span><span class="prop miss">total_tips_usd ❌</span></td><td class="act-warn">Add total_tips_usd. Add unique_viewer_count to schema (fires but isInSchema: false, type: any).</td></tr>
+        <tr><td class="en">Tip Panel Opened <span class="ev-src c">client</span></td><td class="vol">431</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">context</span><span class="prop miss">stream_id ❌</span></td><td class="act-warn">Add stream_id. Also in Stream Monetization.</td></tr>
+        <tr><td class="en">Tip Sent <span class="ev-src c">client</span></td><td class="vol">111</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">amount</span><span class="prop ok">tip_type</span><span class="prop ok">remaining_balance</span><span class="prop miss">stream_id ❌</span><span class="prop miss">amount_usd ❌</span></td><td class="act-warn">Add stream_id + amount_usd. Also in Stream Monetization.</td></tr>
+        <tr><td class="en">Casino Outclick <span class="ev-src s">server</span></td><td class="vol">169</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">casino_name</span><span class="prop extra">partner +</span></td><td class="act-warn">Rename partner → operator_id. Also in Stream Monetization.</td></tr>
+        <tr><td class="en">FTD Completed <span class="ev-src s">server</span></td><td class="vol w">2 ⚠</td><td><span class="badge warn">Issue</span></td><td><span class="prop miss">streamer_id ❌</span><span class="prop miss">user_id ❌</span><span class="prop miss">transaction_id ❌</span></td><td class="act-err">Add streamer_id + user_id + transaction_id. Also in Stream Monetization.</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -865,20 +862,29 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
   </div>
   <div class="warn-box">All finance events are pending implementation. No data available yet.</div>
   <div id="sfq">
-    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Finance</span></div>
-      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">How often do streamers request withdrawals and in what amounts?</div></div><div class="qtag no">Gap</div></div>
-      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Which payment method do streamers prefer — IBAN, Paxum, or Cosmo?</div></div><div class="qtag no">Gap</div></div>
-      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">How do streamers price their VIP rooms?</div></div><div class="qtag no">Gap</div></div>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Withdrawals</span></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">How many payouts are requested, paid, declined, and pending in total per week/month?</div><div class="qnote">Platform-wide pipeline overview. Needs Withdrawal Requested + Completed + Failed. Pending = Requested minus Completed/Failed. No failure event planned yet — critical gap for this question.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">What is the total USD paid out across all streamers per week/month?</div><div class="qnote">Top-line payout cost to the business. Needs amount_usd on Withdrawal Completed — sum across all streamers.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">How large are withdrawals — what is the typical and maximum USD amount?</div><div class="qnote">Needs amount_usd on Withdrawal Completed. Also useful to track token_amount to understand the token→USD conversion rate in practice.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Which payment method do streamers use for withdrawals?</div><div class="qnote">Needs payment_method on Withdrawal Completed (not just Bank Details Saved) to see actual usage at payout time.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Which streamers withdraw the most, and how frequently?</div><div class="qnote">Per-streamer: group Withdrawal Completed by streamer_id, sum amount_usd and count withdrawals.</div></div><div class="qtag no">Gap</div></div>
+    </div>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Token Balance</span></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">What is the total token balance sitting across all streamer accounts, and what is the average per streamer?</div><div class="qnote">Streamers accumulate tokens from tips and convert to USD on withdrawal. Needs token_balance on Withdrawal Requested (balance before payout). Currently token_balance exists on Streamer Login Completed but is misnamed and unreliable.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Are streamers withdrawing promptly or letting tokens accumulate?</div><div class="qnote">Needs token_balance on Withdrawal Requested — compare balance at time of request to see if streamers cash out frequently or sit on large balances.</div></div><div class="qtag no">Gap</div></div>
+    </div>
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Future</span></div>
+      <div class="q"><div class="qdot future"></div><div class="qtext"><div class="qmain">How do streamers price their VIP rooms?</div><div class="qnote">VIP Room feature not built yet. Revisit once feature is specced.</div></div><div class="qtag future">Future</div></div>
     </div>
   </div>
   <div id="sfi" style="display:none">
     <div class="ev-sec"><div class="ev-sec-hd">Finance events (all pending)</div>
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
-        <tr><td class="en">Withdrawal Requested <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">amount</span><span class="prop ok">currency</span></td><td class="act-ok">Implement when finance module is ready.</td></tr>
-        <tr><td class="en">Withdrawal Completed <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">amount</span><span class="prop ok">currency</span></td><td class="act-ok">Implement when finance module is ready.</td></tr>
+        <tr><td class="en">Withdrawal Requested <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">token_amount</span><span class="prop ok">amount_usd</span><span class="prop ok">payment_method</span><span class="prop ok">token_balance</span></td><td class="act-ok">Implement with these properties. token_amount + amount_usd replaces original amount/currency spec (~7 tokens = $1). token_balance = balance before payout.</td></tr>
+        <tr><td class="en">Withdrawal Completed <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">token_amount</span><span class="prop ok">amount_usd</span><span class="prop ok">payment_method</span><span class="prop ok">token_balance</span></td><td class="act-ok">Implement with these properties. token_balance = remaining balance after payout.</td></tr>
+        <tr><td class="en miss">Withdrawal Failed <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge miss">Missing</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">token_amount</span><span class="prop ok">amount_usd</span><span class="prop ok">payment_method</span><span class="prop ok">failure_reason</span></td><td class="act-err">Not in plan — add and implement. Needed for paid/declined/pending breakdown.</td></tr>
         <tr><td class="en">Bank Details Saved <span class="ev-src s">server</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">method</span></td><td class="act-ok">Implement when finance module is ready.</td></tr>
-        <tr><td class="en">VIP Room Price Set <span class="ev-src c">client</span></td><td class="vol z">—</td><td><span class="badge pend">⏳ Pending</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">price_tokens</span><span class="prop ok">price_usd</span></td><td class="act-ok">Implement when finance module is ready.</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -889,7 +895,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
 </div><!-- /shell -->
 
 <script>
-const PANELS = ['overview','traffic','auth','discovery','streams','tokens','tips','retention','s-auth','s-kyc','s-account','s-shows','s-perf','s-finance'];
+const PANELS = ['overview','traffic','auth','discovery','streams','tokens','tips','retention','s-auth','s-prelive','s-perf','s-finance'];
 const M_TABS = ['overview','traffic','auth','discovery','streams','tokens','tips','retention'];
 const S_TABS = ['s-auth','s-kyc','s-account','s-shows','s-perf','s-finance'];
 
@@ -908,7 +914,7 @@ function go(id) {
   document.getElementById('ov-btn').classList.remove('on');
   document.querySelectorAll('.astep-tab').forEach(t => t.classList.remove('on'));
   document.querySelectorAll('.astep-tab').forEach(t => { if(t.getAttribute('onclick') && t.getAttribute('onclick').includes("'"+id+"'")) t.classList.add('on'); });
-  const stepMap = { traffic:'acq', auth:'act', discovery:'act', streams:'act', tokens:'rev', tips:'rev', retention:'ret', 's-auth':'s-act', 's-kyc':'s-act', 's-account':'s-act', 's-shows':'s-act', 's-perf':'s-rev', 's-finance':'s-rev' };
+  const stepMap = { traffic:'acq', auth:'act', discovery:'act', streams:'act', tokens:'rev', tips:'rev', retention:'ret', 's-auth':'s-act', 's-prelive':'s-act', 's-perf':'s-rev', 's-finance':'s-rev' };
   document.querySelectorAll('.astep').forEach(s => s.classList.remove('lit'));
   const stepId = stepMap[id];
   if (stepId) { const s = document.getElementById('step-'+stepId); if(s) s.classList.add('lit'); }
