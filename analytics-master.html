@@ -867,7 +867,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
   </div>
   <div id="srtq">
     <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Earner Retention</span></div>
-      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Of streamers who earned tips in their last stream, what % come back to stream again within 7 and 30 days?</div><div class="qnote">The core streamer retention metric — mirrors "payers who return" on the member side. Tip Sent + streamer_id ✓, Stream Started + streamer_id ✓ — both answerable today.</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot part"></div><div class="qtext"><div class="qmain">Of streamers who earned tips or generated FTDs in their last stream, what % come back to stream again within 7 and 30 days?</div><div class="qnote">Core streamer retention metric — "made money" = tips or FTD commission. Tips: Tip Sent + streamer_id ✓ — answerable today. FTDs: FTD Completed missing streamer_id ❌ — can't identify which streamer drove the conversion.</div></div><div class="qtag part">Partial</div></div>
       <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Do earners retain better than non-earners — do tips incentivise streamers to return?</div><div class="qnote">Compare return rate: streamers who received at least one tip in a session vs those who didn't. Group Stream Started by streamer_id, cross-reference with Tip Sent.</div></div><div class="qtag yes">Yes</div></div>
     </div>
     <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Cohort Retention</span></div>
@@ -885,6 +885,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
         <tr><td class="en">Tip Sent <span class="ev-src c">client</span></td><td class="vol">111</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">amount</span><span class="prop extra">streamer_name +</span><span class="prop extra">tip_type +</span><span class="prop extra">remaining_balance +</span><span class="prop extra">context +</span><span class="prop miss">stream_id ❌</span><span class="prop miss">amount_usd ❌</span></td><td class="act-warn">Add stream_id + amount_usd. Needed to identify which streamers earned in a session and link back to a stream. Also in Stream Monetization + Performance.</td></tr>
+        <tr><td class="en">FTD Completed <span class="ev-src s">server</span></td><td class="vol">2</td><td><span class="badge warn">Issue</span></td><td><span class="prop miss">streamer_id ❌</span><span class="prop miss">stream_id ❌</span></td><td class="act-err">Add streamer_id + stream_id — needed to identify which streamer drove the FTD and link it to a stream. Also in Stream Monetization.</td></tr>
         <tr><td class="en">Stream Started <span class="ev-src s">server</span></td><td class="vol">40</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>Use as the "came back" signal — check for a Stream Started by the same streamer_id after their earning session.</td></tr>
       </tbody></table>
     </div>
