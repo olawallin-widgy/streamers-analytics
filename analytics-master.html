@@ -192,6 +192,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
 .bh-usd { font-size: 13px; font-weight: 700; color: #111; margin-top: 6px; }
 .bh-usd.pending { color: #bbb; font-weight: 400; }
 .bh-usd-fix { font-size: 9px; color: #f59e0b; margin-top: 2px; }
+.bh-n.na { color: #ccc; font-size: 16px; font-weight: 600; }
 
 .info-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0; padding: 12px 16px; margin-bottom: 18px; font-size: 12px; color: #1e40af; line-height: 1.6; }
 .warn-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 0; padding: 12px 16px; margin-bottom: 18px; font-size: 12px; color: #92400e; line-height: 1.6; }
@@ -391,6 +392,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="bh-row">
       <div class="bh-group-lbl">Numbers</div>
       <div class="bh-cards">
+        <div class="bh-card"><div class="bh-n na">—</div><div class="bh-lbl">Site sessions</div><div class="bh-desc">Total visits (30d)</div><div class="bh-usd-fix">⚠ Amplitude native — pull from dashboard</div></div>
         <div class="bh-card"><div class="bh-n">145</div><div class="bh-lbl">New members</div><div class="bh-desc">Registrations completed (30d)</div></div>
         <div class="bh-card"><div class="bh-n">15</div><div class="bh-lbl">New streamers</div><div class="bh-desc">Streamer registrations completed (30d)</div></div>
         <div class="bh-card"><div class="bh-n">1,020</div><div class="bh-lbl">Stream joins</div><div class="bh-desc">Member viewing sessions (30d)</div></div>
@@ -402,18 +404,18 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <div class="bh-group-lbl">Revenue</div>
       <div class="bh-cards">
         <div class="bh-card">
-          <div class="bh-n">111</div>
-          <div class="bh-lbl">Tips sent</div>
-          <div class="bh-desc">Token tips from members to streamers</div>
-          <div class="bh-usd pending">$— USD</div>
-          <div class="bh-usd-fix">⚠ Needs amount_usd on Tip Sent</div>
-        </div>
-        <div class="bh-card">
           <div class="bh-n">7</div>
           <div class="bh-lbl">Token purchases</div>
           <div class="bh-desc">Completed token package purchases</div>
           <div class="bh-usd pending">$— USD</div>
           <div class="bh-usd-fix">⚠ Needs price_usd fixed to number type</div>
+        </div>
+        <div class="bh-card">
+          <div class="bh-n">111</div>
+          <div class="bh-lbl">Tips sent</div>
+          <div class="bh-desc">Token tips from members to streamers</div>
+          <div class="bh-usd pending">$— USD</div>
+          <div class="bh-usd-fix">⚠ Needs amount_usd on Tip Sent</div>
         </div>
         <div class="bh-card">
           <div class="bh-n">2</div>
@@ -437,11 +439,12 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
         <div class="bh-card"><div class="bh-n">29%</div><div class="bh-lbl">Streamer reg funnel</div><div class="bh-desc">52 started → 15 completed</div></div>
         <div class="bh-card"><div class="bh-n">29%</div><div class="bh-lbl">Token purchase funnel</div><div class="bh-desc">24 started → 7 completed</div></div>
         <div class="bh-card"><div class="bh-n">~42%</div><div class="bh-lbl">Viewer → tip panel</div><div class="bh-desc">1,020 joins → 431 opens</div></div>
-        <div class="bh-card"><div class="bh-n">26%</div><div class="bh-lbl">Tip panel → tip sent</div><div class="bh-desc">431 opens → 111 tips</div></div>
         <div class="bh-card"><div class="bh-n">~11%</div><div class="bh-lbl">Viewer → tipper</div><div class="bh-desc">1,020 joins → 111 tips (end-to-end)</div></div>
         <div class="bh-card"><div class="bh-n">~17%</div><div class="bh-lbl">Viewer → outclick</div><div class="bh-desc">1,020 joins → 169 casino clicks</div></div>
         <div class="bh-card"><div class="bh-n">1.2%</div><div class="bh-lbl">Outclick → FTD</div><div class="bh-desc">169 outclicks → 2 FTDs</div></div>
         <div class="bh-card"><div class="bh-n">~0.2%</div><div class="bh-lbl">Viewer → FTD</div><div class="bh-desc">1,020 joins → 2 FTDs (end-to-end)</div></div>
+        <div class="bh-card"><div class="bh-n na">—</div><div class="bh-lbl">Member retention rate</div><div class="bh-desc">% of paying members who return (30d)</div><div class="bh-usd-fix">⚠ Blocked — needs user_id fix</div></div>
+        <div class="bh-card"><div class="bh-n na">—</div><div class="bh-lbl">Streamer return rate</div><div class="bh-desc">% of streamers who go live again within 30d</div><div class="bh-usd-fix">⚠ Answerable now — pull from Amplitude</div></div>
       </div>
     </div>
   </div>
