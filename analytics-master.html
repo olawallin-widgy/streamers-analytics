@@ -1278,7 +1278,7 @@ function setAudience(a) {
   document.getElementById('strip-m').style.display = a === 'm' ? 'flex' : 'none';
   document.getElementById('strip-s').style.display = a === 's' ? 'flex' : 'none';
   document.getElementById('ov-btn').classList.remove('on');
-  if (a === 'm') go('auth');
+  if (a === 'm') go('traffic');
   else go('s-auth');
 }
 
