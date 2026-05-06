@@ -286,7 +286,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="topbar-icon">SS</div>
     <div>
       <div class="topbar-logo">Sexy Streamers<span>—</span>Analytics Plan</div>
-      <div class="topbar-meta">AARRR framework · Amplitude project 100043044 · Last updated 2026-04-29</div>
+      <div class="topbar-meta">AARRR framework · Amplitude project 100043044 · Last updated 2026-05-06</div>
     </div>
   </div>
   <div class="topbar-badge">INTERNAL</div>
@@ -396,9 +396,9 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <div class="bh-cards">
         <div class="bh-card"><div class="bh-n na">—</div><div class="bh-lbl">Site sessions</div><div class="bh-desc">Total visits (30d)</div><div class="bh-usd-fix">⚠ Amplitude native — pull from dashboard</div></div>
         <div class="bh-card"><div class="bh-n">145</div><div class="bh-lbl">New members</div><div class="bh-desc">Registrations completed (30d)</div></div>
-        <div class="bh-card"><div class="bh-n">15</div><div class="bh-lbl">New streamers</div><div class="bh-desc">Streamer registrations completed (30d)</div></div>
+        <div class="bh-card"><div class="bh-n">31</div><div class="bh-lbl">New streamers</div><div class="bh-desc">Streamer Registration Submitted (30d) — basic form done, user in DB</div></div>
         <div class="bh-card"><div class="bh-n">1,020</div><div class="bh-lbl">Stream joins</div><div class="bh-desc">Member viewing sessions (30d)</div></div>
-        <div class="bh-card"><div class="bh-n">40</div><div class="bh-lbl">Active streams</div><div class="bh-desc">Streams started by streamers (30d)</div></div>
+        <div class="bh-card"><div class="bh-n">40</div><div class="bh-lbl">Stream starts</div><div class="bh-desc">Streams started by streamers (30d) — count of Stream Started events</div></div>
         <div class="bh-card"><div class="bh-n na">—</div><div class="bh-lbl">Withdrawal requests</div><div class="bh-desc">Streamer withdrawal requests (30d)</div><div class="bh-usd-fix">⚠ Pending — Withdrawal Requested event not yet built</div></div>
       </div>
     </div>
@@ -446,8 +446,10 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <div class="bh-group-lbl">Members — Conversion rates</div>
       <div class="bh-cards">
         <div class="bh-card"><div class="bh-n">27%</div><div class="bh-lbl">Member reg funnel</div><div class="bh-desc">540 started → 145 completed</div></div>
+        <div class="bh-card"><div class="bh-n na">—</div><div class="bh-lbl">Active members</div><div class="bh-desc">Unique users firing Login Completed (30d)</div><div class="bh-usd-fix">✓ Live on Members ④ Retention dashboard</div></div>
+        <div class="bh-card"><div class="bh-n na">—</div><div class="bh-lbl">Member return rate</div><div class="bh-desc">% of registered members who log in again (n-day retention curve)</div><div class="bh-usd-fix">✓ Live on Business Dashboard — Members Conversion Rates</div></div>
         <div class="bh-card"><div class="bh-n na">—</div><div class="bh-lbl">Registered → paying member</div><div class="bh-desc">% of registered members who make a purchase</div><div class="bh-usd-fix">⚠ Blocked — needs user_id fix</div></div>
-        <div class="bh-card"><div class="bh-n">29%</div><div class="bh-lbl">Token purchase funnel</div><div class="bh-desc">24 started → 7 completed</div></div>
+        <div class="bh-card"><div class="bh-n">29%</div><div class="bh-lbl">Token purchase funnel</div><div class="bh-desc">24 started → 7 completed (raw event ratio)</div><div class="bh-usd-fix">⚠ Amplitude funnel chart shows 0% due to user_id bug across client→server boundary</div></div>
         <div class="bh-card"><div class="bh-n">~11%</div><div class="bh-lbl">Viewer → tipper</div><div class="bh-desc">1,020 joins → 111 tips (end-to-end)</div></div>
         <div class="bh-card"><div class="bh-n">~17%</div><div class="bh-lbl">Viewer → outclick</div><div class="bh-desc">1,020 joins → 169 casino clicks</div></div>
         <div class="bh-card"><div class="bh-n">1.2%</div><div class="bh-lbl">Outclick → FTD</div><div class="bh-desc">169 outclicks → 2 FTDs</div></div>
@@ -458,9 +460,10 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <div class="bh-row">
       <div class="bh-group-lbl">Streamers — Conversion rates</div>
       <div class="bh-cards">
-        <div class="bh-card"><div class="bh-n">29%</div><div class="bh-lbl">Streamer reg funnel</div><div class="bh-desc">52 started → 15 completed</div></div>
-        <div class="bh-card"><div class="bh-n na">—</div><div class="bh-lbl">Active → earning streamer</div><div class="bh-desc">% of streamers who go live and earn tips or outclicks</div><div class="bh-usd-fix">⚠ Answerable now — pull from Amplitude</div></div>
-        <div class="bh-card"><div class="bh-n na">—</div><div class="bh-lbl">Streamer return rate</div><div class="bh-desc">% of streamers who go live again within 30d</div><div class="bh-usd-fix">⚠ Answerable now — pull from Amplitude</div></div>
+        <div class="bh-card"><div class="bh-n">60%</div><div class="bh-lbl">Streamer reg funnel</div><div class="bh-desc">52 started → 31 submitted (Started→Submitted, 1d window — matches dashboard chart)</div></div>
+        <div class="bh-card"><div class="bh-n na">—</div><div class="bh-lbl">Active streamers</div><div class="bh-desc">Unique streamers firing Stream Started (30d) — ~10 active typical</div><div class="bh-usd-fix">✓ Live on Business Dashboard — Streamers Conversion Rates</div></div>
+        <div class="bh-card"><div class="bh-n na">—</div><div class="bh-lbl">Active → earning streamer</div><div class="bh-desc">% of streamers who go live and earn tips or outclicks</div><div class="bh-usd-fix">⚠ Calculable from existing charts — not yet a dedicated chart</div></div>
+        <div class="bh-card"><div class="bh-n na">—</div><div class="bh-lbl">Streamer return rate</div><div class="bh-desc">% of streamers who go live again within 30d (n-day retention curve)</div><div class="bh-usd-fix">✓ Live on Business Dashboard — Streamers Conversion Rates</div></div>
         <div class="bh-card"><div class="bh-n na">—</div><div class="bh-lbl">Withdrawal completion rate</div><div class="bh-desc">Withdrawal requested → completed</div><div class="bh-usd-fix">⚠ Pending — Withdrawal events not yet built</div></div>
       </div>
     </div>
@@ -1142,12 +1145,12 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
   <div class="toggle-row">
     <div><div class="panel-title">Streamer Profile</div><div class="panel-sub">Per-streamer drill-down dashboard — pick one streamer, see their lifetime KPIs, trends, and conversion</div></div>
     <div class="toggle-pills">
-      <button class="tpill on" onclick="tgl(this,'spq','spi')">Business Questions</button>
-      <button class="tpill" onclick="tgl(this,'spi','spq')">Implementation</button>
+      <button class="tpill on" onclick="tgl(this,'spfq','spfi')">Business Questions</button>
+      <button class="tpill" onclick="tgl(this,'spfi','spfq')">Implementation</button>
     </div>
   </div>
 
-  <div id="spq">
+  <div id="spfq">
     <div class="ok-box">
       <strong>✓ Built 2026-05-05.</strong> Dashboard <code>e-yk0d0b2w</code> · <a href="https://app.eu.amplitude.com/analytics/streamingsystems-288712/dashboard/e-yk0d0b2w" target="_blank" style="color:#0066cc;font-weight:600;">Open in Amplitude →</a><br>
       <strong>How to use:</strong> open the dashboard, click <strong>+ Filter</strong> at the top, choose Event Property <code>streamer_name</code> = [streamer]. For Profile Views also add <code>performer_name</code> = [streamer]. All charts re-render for that streamer. Default time range: Last 365 Days.<br>
@@ -1187,7 +1190,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     </div>
   </div>
 
-  <div id="spi" style="display:none">
+  <div id="spfi" style="display:none">
     <div class="ok-box">
       All 6 events used by this dashboard already exist and are documented in detail in the <strong>Streamers ②/③ AARRR tabs</strong>. The summary below is a focused subset showing only the properties relied on by the Streamer Profile dashboard. Full property tables, volumes, and all gaps live in the AARRR implementation tabs.
     </div>
