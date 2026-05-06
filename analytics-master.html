@@ -301,7 +301,8 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     <button class="audience-btn" onclick="setAudience('s')">Streamers AARRR</button>
   </div>
   <div class="ov-divider"></div>
-  <button class="ov-btn" id="dn-btn" onclick="goDevNotes()" style="margin-left:auto;">Dev Priorities</button>
+  <button class="ov-btn" id="sp-btn" onclick="goStreamerProfile()" style="margin-left:auto;">Streamer Profile</button>
+  <button class="ov-btn" id="dn-btn" onclick="goDevNotes()" style="margin-left:8px;">Dev Priorities</button>
   <button class="ov-btn" id="sh-btn" onclick="goStakeholder()" style="margin-left:8px;">Stakeholder Input</button>
 </div>
 
@@ -642,7 +643,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
         <tr><td class="en">Performer Filter Applied <span class="ev-src c">client</span></td><td class="vol">3,387</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">filter (inconsistent) ⚠</span></td><td class="act-warn">Standardise filter values to snake_case. Investigate missing: favorites, vip_room, new, trending.</td></tr>
-        <tr><td class="en">Stream Joined <span class="ev-src c">client</span></td><td class="vol">1,020</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">stream_id</span><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span><span class="prop miss">last_filter_used ❌</span></td><td class="act-warn">Add last_filter_used — the active filter when the member joined.</td></tr>
+        <tr><td class="en">Stream Joined <span class="ev-src c">client</span></td><td class="vol">1,020</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">stream_id ⚠</span><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span><span class="prop miss">last_filter_used ❌</span></td><td class="act-warn">Add last_filter_used. Also: <code>stream_id</code> is mis-populated — values are streamer usernames + bcrypt hashes (~30 distinct values), not per-session IDs. Per-stream session breakdown blocked until fixed.</td></tr>
       </tbody></table>
     </div>
     <div class="ev-sec"><div class="ev-sec-hd">Profiles</div>
@@ -690,7 +691,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <tbody>
         <tr><td class="en">Stream Started <span class="ev-src s">server</span></td><td class="vol">40</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>—</td></tr>
         <tr><td class="en">Stream Ended <span class="ev-src s">server</span></td><td class="vol">51</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">duration_seconds</span><span class="prop ok">total_tips_received</span><span class="prop warn">unique_viewer_count ⚠</span></td><td class="act-warn">Add unique_viewer_count to schema — fires but isInSchema: false, type: any.</td></tr>
-        <tr><td class="en">Stream Joined <span class="ev-src c">client</span></td><td class="vol">1,020</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">stream_id</span><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span><span class="prop miss">category ❌</span></td><td class="act-warn">Add category (streamer genre/type) — needed to segment viewer countries by streamer type.</td></tr>
+        <tr><td class="en">Stream Joined <span class="ev-src c">client</span></td><td class="vol">1,020</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">stream_id ⚠</span><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span><span class="prop miss">category ❌</span></td><td class="act-warn">Add category (streamer genre/type) — needed to segment viewer countries by streamer type. Also: <code>stream_id</code> is mis-populated (streamer-level identifier, not per-session).</td></tr>
         <tr><td class="en">Stream Left <span class="ev-src c">client</span></td><td class="vol">568</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">stream_id</span><span class="prop ok">streamer_id</span><span class="prop warn">duration_seconds ⚠</span></td><td class="act-err">⚠ <code>duration_seconds</code> appears to measure stream age (how long the stream had been running when viewer left), NOT individual viewer watch time. Avg value is 46,587s = 12.9 hours — impossible for personal watch duration. <strong>Confirm with dev (Jamie/Justin):</strong> what is this property capturing? If it's stream age, add a true <code>watch_duration_seconds</code> property to enable real watch-time analytics. Also: only 56% of viewers trigger Stream Left — 44% close browser.</td></tr>
       </tbody></table>
     </div>
@@ -710,7 +711,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
       <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties</th><th>Action needed</th></tr></thead>
       <tbody>
         <tr><td class="en">Screen Orientation Changed <span class="ev-src c">client</span></td><td class="vol">52</td><td><span class="badge pend">Undocumented</span></td><td>—</td><td class="act-warn">Captures rotations only. Add orientation to Stream Joined instead.</td></tr>
-        <tr><td class="en">Stream Joined <span class="ev-src c">client</span></td><td class="vol">1,020</td><td><span class="badge warn">Issue</span></td><td><span class="prop ok">stream_id</span><span class="prop ok">streamer_id</span><span class="prop miss">orientation ❌</span></td><td class="act-warn">Add orientation (horizontal/vertical) at join time.</td></tr>
+        <tr><td class="en">Stream Joined <span class="ev-src c">client</span></td><td class="vol">1,020</td><td><span class="badge warn">Issue</span></td><td><span class="prop warn">stream_id ⚠</span><span class="prop ok">streamer_id</span><span class="prop miss">orientation ❌</span></td><td class="act-warn">Add orientation (horizontal/vertical) at join time. Also: <code>stream_id</code> is mis-populated (streamer-level identifier, not per-session).</td></tr>
       </tbody></table>
     </div>
   </div>
@@ -1136,28 +1137,136 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
   </div>
 </div>
 
+<!-- STREAMER PROFILE PANEL -->
+<div class="panel" id="p-sprofile">
+  <div class="toggle-row">
+    <div><div class="panel-title">Streamer Profile</div><div class="panel-sub">Per-streamer drill-down dashboard — pick one streamer, see their lifetime KPIs, trends, and conversion</div></div>
+    <div class="toggle-pills">
+      <button class="tpill on" onclick="tgl(this,'spq','spi')">Business Questions</button>
+      <button class="tpill" onclick="tgl(this,'spi','spq')">Implementation</button>
+    </div>
+  </div>
+
+  <div id="spq">
+    <div class="ok-box">
+      <strong>✓ Built 2026-05-05.</strong> Dashboard <code>e-yk0d0b2w</code> · <a href="https://app.eu.amplitude.com/analytics/streamingsystems-288712/dashboard/e-yk0d0b2w" target="_blank" style="color:#0066cc;font-weight:600;">Open in Amplitude →</a><br>
+      <strong>How to use:</strong> open the dashboard, click <strong>+ Filter</strong> at the top, choose Event Property <code>streamer_name</code> = [streamer]. For Profile Views also add <code>performer_name</code> = [streamer]. All charts re-render for that streamer. Default time range: Last 365 Days.<br>
+      13 live charts + 4 placeholders blocked by Tier 1 dev fixes: <strong>1 per-stream breakdown table</strong> (one row per stream session, columns for tips/tokens/duration/viewers/outclicks/FTDs/USD) + <strong>3 per-streamer aggregates</strong> (FTDs total, casino outclicks total, USD revenue total). All unblock once Tier 1 ② + ④ + ⑤ ship.
+    </div>
+
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Section 1 — Lifetime KPIs (cumulative)</span><span class="sec-hd-count">7 questions</span></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How many streams has this streamer done in total?</div><div class="qnote">Cumulative count of <code>Stream Started</code> filtered by <code>streamer_name</code>. Chart: SP — Streams (KPI).</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How big is this streamer's lifetime audience — how many unique viewers have ever joined their streams?</div><div class="qnote">Cumulative uniques on <code>Stream Joined</code> filtered by <code>streamer_name</code>. Chart: SP — Unique Viewers (KPI).</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How long does this streamer typically stream for?</div><div class="qnote">Property average of <code>duration_seconds</code> on <code>Stream Ended</code> filtered by <code>streamer_name</code>. Chart: SP — Avg Stream Duration (KPI).</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How many fans has this streamer accumulated?</div><div class="qnote">Cumulative count of <code>Performer Followed</code> filtered by <code>streamer_name</code>. Chart: SP — Followers (KPI).</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How many tips has this streamer received in total?</div><div class="qnote">Cumulative count of <code>Tip Sent</code> filtered by <code>streamer_name</code>. Chart: SP — Tips Received (KPI).</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How many tokens has this streamer earned from tips?</div><div class="qnote">Cumulative sum of <code>amount</code> on <code>Tip Sent</code> filtered by <code>streamer_name</code>. Chart: SP — Tip Tokens Received (KPI).</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">How often is this streamer's profile viewed?</div><div class="qnote">Cumulative count of <code>Performer Profile Viewed</code> filtered by <code>performer_name</code> (note: this event uses <code>performer_name</code>, not <code>streamer_name</code>). Chart: SP — Profile Views (KPI).</div></div><div class="qtag yes">Yes</div></div>
+    </div>
+
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Section 2 — Trends</span><span class="sec-hd-count">5 questions</span></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Is this streamer's streaming cadence increasing or declining?</div><div class="qnote">Daily count of <code>Stream Started</code> filtered by <code>streamer_name</code>. Chart: SP — Streams (trend).</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Is this streamer's audience growing or shrinking week over week?</div><div class="qnote">Daily uniques on <code>Stream Joined</code> filtered by <code>streamer_name</code>. Chart: SP — Unique Viewers (trend).</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Is tipping activity for this streamer trending up or down?</div><div class="qnote">Daily count of <code>Tip Sent</code> filtered by <code>streamer_name</code>. Chart: SP — Tips (trend).</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Is this streamer's token earnings trajectory healthy?</div><div class="qnote">Daily sum of <code>amount</code> on <code>Tip Sent</code> filtered by <code>streamer_name</code>. Chart: SP — Tip Tokens (trend).</div></div><div class="qtag yes">Yes</div></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Is discovery interest in this streamer growing — profile views and follows over time?</div><div class="qnote">Two-event chart: daily count of <code>Performer Profile Viewed</code> + <code>Performer Followed</code> filtered by <code>performer_name</code> + <code>streamer_name</code>. Chart: SP — Profile Views + Follows (trend).</div></div><div class="qtag yes">Yes</div></div>
+    </div>
+
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Section 3 — Conversion</span><span class="sec-hd-count">1 question</span></div>
+      <div class="q"><div class="qdot yes"></div><div class="qtext"><div class="qmain">Of viewers who join this streamer's streams, what % tip them within 1 day?</div><div class="qnote">Funnel <code>Stream Joined</code> → <code>Tip Sent</code> with 86,400s (1d) conversion window, OVER_TIME view, weekly interval, filtered by <code>streamer_name</code>. The single most important monetization KPI per streamer. Chart: SP — Viewer → Tipper rate.</div></div><div class="qtag yes">Yes</div></div>
+    </div>
+
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Section 4a — Per-stream breakdown table (one row per individual stream)</span><span class="sec-hd-count">1 question · Blocked</span></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">Show me a stream-by-stream breakdown for this streamer — every individual stream as a row, with columns for date, duration, viewers, tips (count + tokens + USD), casino outclicks, FTDs, USD revenue.</div><div class="qnote">Single Amplitude <code>dataTableV2</code> chart. Replaces what would otherwise be 6 separate ranking charts (per-stream tips, duration, viewers, FTDs, outclicks, USD) with one consolidated table view. Blocked by: <strong>Tier 1 ④</strong> (true per-session <code>stream_id</code> on Stream Started/Ended/Joined + Tip Sent + Casino Outclick + FTD Completed — the table's row key) · <strong>Tier 1 ②</strong> (<code>amount_usd</code> on Tip Sent + <code>streamer_id</code> + revenue value on FTD Completed — for the USD/FTD columns) · <strong>Tier 1 ⑤</strong> (<code>streamer_name</code> on Casino Outclick — so the dashboard filter works for the outclick column). <strong>→ Dev Priorities Tier 1 ② + ④ + ⑤</strong>.</div></div><div class="qtag no">Gap</div></div>
+    </div>
+
+    <div class="sec"><div class="sec-hd"><span class="sec-hd-label">Section 4b — Per-streamer aggregate (totals for this streamer)</span><span class="sec-hd-count">3 questions · Blocked</span></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">How many casino FTDs has this streamer driven in total?</div><div class="qnote">Streamer-attributed FTD total. Blocked: <code>streamer_id</code> missing on <code>FTD Completed</code>. <strong>→ Dev Priorities Tier 1 ②</strong>.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">How many casino outclicks have this streamer's viewers generated in total?</div><div class="qnote"><code>streamer_id</code> on Casino Outclick is populated, but <code>streamer_name</code> is empty — the dashboard filter (set on <code>streamer_name</code>) returns 0 for this event. Either populate <code>streamer_name</code> or use a separate streamer_id-keyed filter. <strong>→ Dev Priorities Tier 1 ⑤</strong>.</div></div><div class="qtag no">Gap</div></div>
+      <div class="q"><div class="qdot no"></div><div class="qtext"><div class="qmain">How much USD revenue (tips + FTD-attributed) has this streamer generated in total?</div><div class="qnote">Total USD revenue per streamer. Blocked: needs <code>amount_usd</code> on <code>Tip Sent</code>, <code>price_usd</code> type fix on <code>Token Purchase Completed</code>, <code>streamer_id</code> + revenue value on <code>FTD Completed</code>. <strong>→ Dev Priorities Tier 1 ②</strong>.</div></div><div class="qtag no">Gap</div></div>
+    </div>
+  </div>
+
+  <div id="spi" style="display:none">
+    <div class="ok-box">
+      All 6 events used by this dashboard already exist and are documented in detail in the <strong>Streamers ②/③ AARRR tabs</strong>. The summary below is a focused subset showing only the properties relied on by the Streamer Profile dashboard. Full property tables, volumes, and all gaps live in the AARRR implementation tabs.
+    </div>
+
+    <div class="ev-sec"><div class="ev-sec-hd">Live charts — events &amp; properties used</div>
+      <table><thead><tr><th>Event</th><th>30d</th><th>Status</th><th>Properties used by live charts</th><th>Charts</th></tr></thead>
+      <tbody>
+        <tr><td class="en">Stream Started <span class="ev-src s">server</span></td><td class="vol">40</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>SP — Streams (KPI + trend)</td></tr>
+        <tr><td class="en">Stream Joined <span class="ev-src c">client</span></td><td class="vol">1,020</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>SP — Unique Viewers (KPI + trend) · Viewer → Tipper funnel</td></tr>
+        <tr><td class="en">Stream Ended <span class="ev-src s">server</span></td><td class="vol">51</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span><span class="prop ok">duration_seconds</span></td><td>SP — Avg Stream Duration (KPI)</td></tr>
+        <tr><td class="en">Tip Sent <span class="ev-src c">client</span></td><td class="vol">111</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span><span class="prop ok">amount</span></td><td>SP — Tips (KPI + trend) · SP — Tip Tokens (KPI + trend) · Viewer → Tipper funnel</td></tr>
+        <tr><td class="en">Performer Profile Viewed <span class="ev-src c">client</span></td><td class="vol">936</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">performer_name</span><span class="prop ok">streamer_id</span></td><td>SP — Profile Views (KPI) · SP — Profile Views + Follows (trend) <em>(filter on <code>performer_name</code>, not <code>streamer_name</code> — needs separate dashboard filter)</em></td></tr>
+        <tr><td class="en">Performer Followed <span class="ev-src c">client</span></td><td class="vol">118</td><td><span class="badge ok">In Plan</span></td><td><span class="prop ok">streamer_id</span><span class="prop ok">streamer_name</span></td><td>SP — Followers (KPI) · SP — Profile Views + Follows (trend)</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="ev-sec"><div class="ev-sec-hd">Section 4a placeholder — per-stream breakdown table (single dataTableV2 chart, one row per stream)</div>
+      <table><thead><tr><th>Column</th><th>Event(s) needed</th><th>Missing properties</th><th>Tier</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Stream ID</strong> (row key)</td><td class="en">Stream Started · Stream Ended · Stream Joined · Tip Sent · Casino Outclick · FTD Completed</td><td><span class="prop miss">stream_id ❌</span> on all 6 events (per-session, not the existing mis-populated streamer-level ID)</td><td><strong>Tier 1 ④</strong></td></tr>
+        <tr><td>Date/time</td><td class="en">Stream Started</td><td>Native — already captured</td><td>—</td></tr>
+        <tr><td>Duration</td><td class="en">Stream Ended</td><td><span class="prop miss">stream_id ❌</span> to group <code>duration_seconds</code> by stream</td><td><strong>Tier 1 ④</strong></td></tr>
+        <tr><td>Unique viewers</td><td class="en">Stream Joined</td><td><span class="prop warn">stream_id ⚠</span> (mis-populated, needs replacement)</td><td><strong>Tier 1 ④</strong></td></tr>
+        <tr><td>Tips (count + tokens)</td><td class="en">Tip Sent</td><td><span class="prop miss">stream_id ❌</span></td><td><strong>Tier 1 ④</strong></td></tr>
+        <tr><td>Tip USD</td><td class="en">Tip Sent</td><td><span class="prop miss">stream_id ❌</span> + <span class="prop miss">amount_usd ❌</span></td><td><strong>Tier 1 ② + ④</strong></td></tr>
+        <tr><td>Casino outclicks</td><td class="en">Casino Outclick</td><td><span class="prop miss">stream_id ❌</span> + <span class="prop warn">streamer_name ⚠</span> (so dashboard filter matches)</td><td><strong>Tier 1 ④ + ⑤</strong></td></tr>
+        <tr><td>FTDs</td><td class="en">FTD Completed</td><td><span class="prop miss">stream_id ❌</span> + <span class="prop miss">streamer_id ❌</span></td><td><strong>Tier 1 ② + ④</strong></td></tr>
+        <tr><td>USD revenue (FTD-attributed)</td><td class="en">FTD Completed</td><td><span class="prop miss">stream_id ❌</span> + <span class="prop miss">streamer_id ❌</span> + revenue value</td><td><strong>Tier 1 ② + ④</strong></td></tr>
+      </tbody></table>
+      <div style="padding:10px 16px;font-size:12px;color:#666;font-style:italic;background:#fafbfc;">All columns ship together once Tier 1 ② + ④ + ⑤ land. Until then the table sits as a single placeholder card on the dashboard.</div>
+    </div>
+
+    <div class="ev-sec"><div class="ev-sec-hd">Section 4b placeholders — per-streamer aggregate (totals for this streamer)</div>
+      <table><thead><tr><th>Blocked chart</th><th>Event(s)</th><th>Missing</th><th>Tier</th></tr></thead>
+      <tbody>
+        <tr><td>FTDs attributed to streamer (total)</td><td class="en">FTD Completed</td><td><span class="prop miss">streamer_id ❌</span></td><td><strong>Tier 1 ②</strong></td></tr>
+        <tr><td>Casino outclicks for streamer (total)</td><td class="en">Casino Outclick</td><td><span class="prop warn">streamer_name ⚠</span> (fires empty)</td><td><strong>Tier 1 ⑤</strong></td></tr>
+        <tr><td>USD revenue per streamer (total)</td><td class="en">Tip Sent · Token Purchase Completed · FTD Completed</td><td><span class="prop miss">amount_usd ❌</span> on Tip Sent · <span class="prop warn">price_usd ⚠</span> type fix · <span class="prop miss">streamer_id ❌</span> on FTD</td><td><strong>Tier 1 ②</strong></td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="ev-sec"><div class="ev-sec-hd">⚠ Schema gotcha — discovered during build (2026-05-05)</div>
+      <div style="padding:14px 16px;font-size:13px;line-height:1.55;">
+        <p>The existing <code>stream_id</code> property on <code>Stream Joined</code> is <strong>mis-populated</strong>. Querying it returns ~30 distinct values, all of which are either:</p>
+        <ul style="margin:6px 0 0 18px;color:#444;">
+          <li>Streamer usernames (e.g. <code>quincy</code> 380, <code>carlasophie</code> 231, <code>scottyt</code> 160, <code>sabiendemonia</code> 156, <code>marlasinger</code> 97, <code>sabrina</code> 36)</li>
+          <li>Bcrypt password hashes (e.g. <code>$2y$12$8O2rCKgPs.lTcS6j79XNteAtSQrJ89yM8hxTeoq7e9OSxrJvA4IHW</code> 71)</li>
+        </ul>
+        <p style="margin-top:12px;">It behaves like a <strong>streamer-level identifier</strong>, not a per-session one. Combined with the absence of <code>stream_id</code> on Stream Started and Stream Ended, this means <strong>per-stream session breakdown is impossible across all events today</strong>.</p>
+        <p style="margin-top:12px;"><strong>Required dev fix (Tier 1 ④):</strong> mint a true per-session <code>stream_id</code> at <code>Stream Started</code> and propagate it through the lifecycle: <code>Stream Started</code>, <code>Stream Ended</code>, <code>Stream Joined</code>, <code>Tip Sent</code>, <code>Casino Outclick</code>, <code>FTD Completed</code>. Once shipped, all 6 placeholders in Section 4 become live charts.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- DEV PRIORITIES PANEL -->
 <div class="panel" id="p-devnotes">
   <div class="toggle-row">
     <div><div class="panel-title">Dev Priorities</div><div class="panel-sub">High-leverage tracking fixes ranked by impact — what to give the dev team next</div></div>
   </div>
 
-  <div class="ok-box"><strong>TL;DR:</strong> The Tier 1 batch (~7 small property fixes) turns ~12 placeholder dashboards into live charts AND unlocks the per-streamer dashboard. This is the difference between "analytics is mostly broken" and "analytics is mostly working".</div>
+  <div class="ok-box"><strong>TL;DR:</strong> Tier 1 (~7 small property fixes) unlocks ~25 currently-blocked charts across all 9 built dashboards (8 AARRR + Streamer Profile), including all <strong>4 placeholders on the Streamer Profile dashboard</strong> — a single per-stream breakdown table (one row per stream session, with columns for tips/tokens/duration/viewers/outclicks/FTDs/USD) plus 3 per-streamer aggregates (FTDs total, casino outclicks total, USD revenue total). Tier 2 (~9 fixes) adds another ~20 charts plus the entire Streamer Finance section.</div>
 
   <div class="ev-sec"><div class="ev-sec-hd">Tier 1 — Critical (biggest unlocks · ship together)</div>
+    <div style="padding:12px 16px;font-size:13px;line-height:1.55;color:#444;background:#fafbfc;border-bottom:1px solid #eee;"><strong>Why it matters:</strong> ~25 currently-blocked charts across all 9 built dashboards go live. Specifically: <strong>(a)</strong> all USD revenue tracking activates ($— → live for Token, Tip, FTD, and combined Revenue in USD), <strong>(b)</strong> the 0% Token Purchase + Streamer Reg funnels start showing real conversion rates, <strong>(c)</strong> member retention &amp; cohort analysis becomes possible (Payer retention, Registered → Paying, Payers Who Return, retention by channel), <strong>(d)</strong> streamer cohort metrics activate (% registered active at 30/60/90, Time-to-Live, Earner retention), <strong>(e)</strong> per-channel and streamer-referral attribution close the loop, <strong>(f)</strong> the <strong>Streamer Profile</strong> dashboard's 4 placeholders activate — most importantly the <strong>per-stream breakdown table</strong> (one row per stream, with tips/tokens/duration/viewers/outclicks/FTDs/USD columns), plus the 3 per-streamer aggregate placeholders.</div>
     <table><thead><tr><th>Fix</th><th>What changes</th><th>Unlocks</th></tr></thead>
     <tbody>
       <tr><td><strong>① user_id linking</strong><br><span style="color:#888;font-size:11px;">Auth + payment events</span></td><td>Add a consistent <code>user_id</code> to: Registration Completed, Login Completed, Token Purchase Started, Token Purchase Completed, Streamer Registration Started, Streamer Registration Completed.</td><td>Member retention curve · Payer retention · Token Purchase funnel <strong>real %</strong> · Streamer Reg funnel <strong>real %</strong> · Registered → Paying conversion · Payers Who Return. <em>Fixes the embarrassing 0% funnels.</em></td></tr>
-      <tr><td><strong>② USD on revenue events</strong><br><span style="color:#888;font-size:11px;">3 small property fixes</span></td><td><code>price_usd</code> type fix (string → number) on Token Purchase Completed · <code>amount_usd</code> property added on Tip Sent · <code>streamer_id</code> on FTD Completed.</td><td>All USD revenue tracking (currently $— everywhere) · <strong>Earner retention</strong> · FTD attribution to streamers · Top streamers by tip USD · Top streamers by FTDs · Country ARPU.</td></tr>
+      <tr><td><strong>② USD on revenue events</strong><br><span style="color:#888;font-size:11px;">3 small property fixes</span></td><td><code>price_usd</code> type fix (string → number) on Token Purchase Completed · <code>amount_usd</code> property added on Tip Sent · <code>streamer_id</code> on FTD Completed.</td><td>All USD revenue tracking (currently $— everywhere) · <strong>Earner retention</strong> · FTD attribution to streamers · Top streamers by tip USD · Top streamers by FTDs · Country ARPU. <strong>On Streamer Profile:</strong> fully unblocks the FTDs total + USD revenue total per-streamer placeholders, and powers the FTDs / Tip USD / FTD-USD columns of the per-stream breakdown table (paired with Tier 1 ④).</td></tr>
       <tr><td><strong>③ streamer_id on Streamer Reg Completed</strong><br><span style="color:#888;font-size:11px;">Single property addition</span></td><td>Add <code>streamer_id</code> to <code>Streamer Registration Completed</code> so cohort start can be anchored per individual.</td><td>% registered active at 30/60/90 days · Time-to-Live (registration → first stream) · Full streamer cohort retention.</td></tr>
-      <tr><td><strong>④ stream_id on revenue events</strong><br><span style="color:#888;font-size:11px;">3 events</span></td><td>Add <code>stream_id</code> to: Tip Sent · Casino Outclick · FTD Completed. (Stream Started, Stream Joined, Stream Ended already have it.)</td><td><strong>Per-stream revenue breakdown</strong> in a per-streamer dashboard ("for streamer X, here's stream 1, stream 2, stream 3 with their individual KPIs") · Per-stream tipper conversion · Per-stream FTD/outclick avg · Stream-level revenue attribution.</td></tr>
-      <tr><td><strong>⑤ streamer_name on Casino Outclick</strong><br><span style="color:#888;font-size:11px;">Property currently fires empty</span></td><td>Populate <code>streamer_name</code> on <code>Casino Outclick</code> events. <code>streamer_id</code> is there ✓ but <code>streamer_name</code> is empty so dashboards fall back to numeric IDs.</td><td>Readable streamer names on Casino Outclick rankings (instead of numeric IDs like "1228" / "1644"). Cleans up the per-streamer outclick chart on Streamers ③ Revenue.</td></tr>
+      <tr><td><strong>④ True per-session stream_id on stream + revenue events</strong><br><span style="color:#888;font-size:11px;">6 events</span></td><td><strong>All 6 events need a true per-session <code>stream_id</code></strong>: Stream Started · Stream Ended · Stream Joined · Tip Sent · Casino Outclick · FTD Completed.<br><br><strong>Discovery (2026-05-05):</strong> the existing <code>stream_id</code> property on Stream Joined is mis-populated — its ~30 distinct values are streamer usernames (quincy, carlasophie) and bcrypt password hashes (<code>$2y$12$...</code>), i.e. a streamer-level identifier, not a per-session one. Stream Started and Stream Ended have no <code>stream_id</code> at all. Need a single canonical session ID minted at Stream Started and propagated through the lifecycle.</td><td><strong>The per-stream breakdown table</strong> on the Streamer Profile dashboard (single <code>dataTableV2</code> chart with one row per stream session, columns for tips/tokens/duration/viewers/outclicks/FTDs/USD) — without a per-session <code>stream_id</code>, the table has nothing to make rows from. Also unblocks per-stream tipper conversion and stream-level revenue attribution. Pairs with Tier 1 ② (USD/FTD columns) and Tier 1 ⑤ (Casino outclick column).</td></tr>
+      <tr><td><strong>⑤ streamer_name on Casino Outclick</strong><br><span style="color:#888;font-size:11px;">Property currently fires empty</span></td><td>Populate <code>streamer_name</code> on <code>Casino Outclick</code> events. <code>streamer_id</code> is there ✓ but <code>streamer_name</code> is empty so dashboards fall back to numeric IDs.</td><td>Readable streamer names on Casino Outclick rankings (instead of numeric IDs like "1228" / "1644"). Cleans up the per-streamer outclick chart on Streamers ③ Revenue. <strong>On Streamer Profile:</strong> fully unblocks the Casino outclicks total per-streamer placeholder, and powers the Casino outclicks column of the per-stream breakdown table (paired with Tier 1 ④). Without this, the dashboard filter on <code>streamer_name</code> returns 0 for any Casino Outclick event.</td></tr>
       <tr><td><strong>⑥ utm_source as event property on Reg Completed</strong><br><span style="color:#888;font-size:11px;">Currently only a user property</span></td><td>Add <code>utm_source</code> as an <strong>event</strong> property on <code>Registration Completed</code> (currently only available as a user property, which makes per-session funnel analysis impossible).</td><td>Per-channel registration conversion rate · Cleaner attribution by marketing source · Foundation for funnel analysis by channel.</td></tr>
       <tr><td><strong>⑦ referrer_streamer_id on Reg Completed</strong><br><span style="color:#888;font-size:11px;">New property + landing-page capture</span></td><td>Capture a referral parameter on the landing URL (e.g. <code>?ref=streamer_id</code>) and pass it to <code>Registration Completed</code> as <code>referrer_streamer_id</code>.</td><td>Streamer referral attribution — which streamer's audience drives the most member signups · Closes the loop on the streamer referral programme.</td></tr>
     </tbody></table>
   </div>
 
   <div class="ev-sec"><div class="ev-sec-hd">Tier 2 — Quality &amp; Polish</div>
+    <div style="padding:12px 16px;font-size:13px;line-height:1.55;color:#444;background:#fafbfc;border-bottom:1px solid #eee;"><strong>Why it matters:</strong> ~20 additional charts unlock — most importantly the entire <strong>Streamer Finance section</strong> (Withdrawal pipeline, total USD paid out, withdrawal size, payment method, top withdrawing streamers, token balance, withdrawal promptness — 8 charts). Plus failure-analysis depth (specific error reasons + payment provider failure rates), email verification rate (member + streamer), stream quality monitoring (FPS/bitrate), the watch-time fix that removes a misleading 12.9-hour-average metric, KYC visibility (when KYROS ships), and the Casino &amp; FTD CTA/banner attribution that answers Ramon's CTA question and Fredrik's banner question.</div>
     <table><thead><tr><th>Fix</th><th>What changes</th><th>Unlocks</th></tr></thead>
     <tbody>
       <tr><td><strong>⑧ Withdrawal events</strong><br><span style="color:#888;font-size:11px;">Section blocker</span></td><td>Implement <code>Withdrawal Requested</code>, <code>Withdrawal Completed</code>, <code>Withdrawal Failed</code>, <code>Bank Details Saved</code> with <code>streamer_id</code>, <code>token_amount</code>, <code>amount_usd</code>, <code>payment_method</code>, <code>token_balance</code>, <code>failure_reason</code>.</td><td>Entire <strong>Streamer Finance</strong> section: payout pipeline, total USD paid out, withdrawal size, payment method usage, top withdrawing streamers, token balance, withdrawal promptness.</td></tr>
@@ -1172,26 +1281,17 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
     </tbody></table>
   </div>
 
-  <div class="ev-sec"><div class="ev-sec-hd">Per-Streamer Dashboard — what's possible today</div>
+  <div class="ev-sec"><div class="ev-sec-hd">Streamer Profile Dashboard — built 2026-05-05</div>
     <div style="padding:14px 16px;font-size:13px;line-height:1.55;">
-      <p><strong>Goal:</strong> a "Streamer Profile" dashboard with a <code>streamer_name</code> filter at the top — drill into any streamer, see their aggregate KPIs and per-stream breakdown.</p>
-      <p style="margin-top:12px;"><strong>What works today</strong> (you could build this dashboard right now):</p>
+      <p><strong>Status:</strong> ✓ Built. Dashboard ID <code>e-yk0d0b2w</code>. <a href="https://app.eu.amplitude.com/analytics/streamingsystems-288712/dashboard/e-yk0d0b2w" target="_blank" style="color:#0066cc;">Open in Amplitude</a>. See the <strong>Streamer Profile</strong> tab in the top nav for the full business question list.</p>
+      <p style="margin-top:12px;"><strong>13 live charts</strong> (filtered by <code>streamer_name</code> dashboard filter): Lifetime KPIs (Streams, Unique Viewers, Avg Stream Duration, Followers, Tips Received, Tip Tokens, Profile Views) + Trends + Viewer→Tipper conversion rate.</p>
+      <p style="margin-top:12px;"><strong>6 placeholders blocked by Tier 1 fixes:</strong></p>
       <ul style="margin:6px 0 0 18px;color:#444;">
-        <li>Total streams + avg duration (Stream Started, Stream Ended)</li>
-        <li>Unique viewers (Stream Joined uniques)</li>
-        <li>Tips received — count + tokens (USD blocked by Tier 1 ②)</li>
-        <li>Outclicks generated (Casino Outclick count)</li>
-        <li>Profile views + follows (Performer Profile Viewed + Performer Followed)</li>
-        <li>Stream-by-stream timeline by start time (Stream Started events)</li>
+        <li>Per-stream tips · Per-stream duration · Per-stream unique viewers → blocked by Tier 1 ④ (per-session stream_id)</li>
+        <li>FTDs attributed to streamer · USD revenue per streamer → blocked by Tier 1 ②</li>
+        <li>Casino outclicks for streamer → blocked by Tier 1 ⑤ (streamer_name on Casino Outclick)</li>
       </ul>
-      <p style="margin-top:12px;"><strong>What's blocked:</strong></p>
-      <ul style="margin:6px 0 0 18px;color:#444;">
-        <li>FTDs per streamer → blocked by missing <code>streamer_id</code> on FTD Completed (<strong>Tier 1 ②</strong>)</li>
-        <li>USD revenue per streamer → blocked by USD fixes (<strong>Tier 1 ②</strong>)</li>
-        <li>Per-stream revenue table ("stream 1: 12 tips, 3 outclicks, 1 FTD; stream 2: 8 tips, 2 outclicks…") → blocked by missing <code>stream_id</code> on Tip Sent / Casino Outclick / FTD Completed (<strong>Tier 1 ④</strong>)</li>
-        <li>Earner retention curve filtered to one streamer → needs <code>streamer_id</code> on FTD Completed (<strong>Tier 1 ②</strong>)</li>
-      </ul>
-      <p style="margin-top:12px;color:#666;font-style:italic;">After Tier 1 ships, the per-streamer dashboard becomes fully complete (aggregate KPIs + per-stream breakdown).</p>
+      <p style="margin-top:12px;color:#666;font-style:italic;">After Tier 1 ships, all 6 placeholders become live charts.</p>
     </div>
   </div>
 </div>
@@ -1280,7 +1380,7 @@ th:nth-child(5), td:nth-child(5) { width: 27%; }
 </div><!-- /shell -->
 
 <script>
-const PANELS = ['overview','traffic','auth','discovery','streams','tokens','tips','retention','s-auth','s-prelive','s-ret','s-perf','s-finance','devnotes','stakeholder'];
+const PANELS = ['overview','traffic','auth','discovery','streams','tokens','tips','retention','s-auth','s-prelive','s-ret','s-perf','s-finance','sprofile','devnotes','stakeholder'];
 const M_TABS = ['overview','traffic','auth','discovery','streams','tokens','tips','retention'];
 const S_TABS = ['s-auth','s-kyc','s-account','s-shows','s-perf','s-finance'];
 
@@ -1292,6 +1392,7 @@ function goOverview() {
   document.getElementById('ov-btn').classList.add('on');
   document.getElementById('sh-btn').classList.remove('on');
   const dn = document.getElementById('dn-btn'); if(dn) dn.classList.remove('on');
+  const sp = document.getElementById('sp-btn'); if(sp) sp.classList.remove('on');
   document.getElementById('strip-m').style.display = 'none';
   document.getElementById('strip-s').style.display = 'none';
   document.querySelectorAll('.audience-btn').forEach(b => b.classList.remove('on'));
@@ -1305,6 +1406,18 @@ function goDevNotes() {
   document.getElementById('ov-btn').classList.remove('on');
   document.getElementById('sh-btn').classList.remove('on');
   document.getElementById('dn-btn').classList.add('on');
+  const sp = document.getElementById('sp-btn'); if(sp) sp.classList.remove('on');
+}
+
+function goStreamerProfile() {
+  PANELS.forEach(p => { const el = document.getElementById('p-'+p); if(el) el.classList.remove('on'); });
+  document.getElementById('p-sprofile').classList.add('on');
+  document.querySelectorAll('.astep-tab').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('.astep').forEach(s => s.classList.remove('lit'));
+  document.getElementById('ov-btn').classList.remove('on');
+  document.getElementById('sh-btn').classList.remove('on');
+  const dn = document.getElementById('dn-btn'); if(dn) dn.classList.remove('on');
+  document.getElementById('sp-btn').classList.add('on');
 }
 
 function stkTab(a) {
@@ -1322,6 +1435,7 @@ function goStakeholder() {
   document.getElementById('ov-btn').classList.remove('on');
   document.getElementById('sh-btn').classList.add('on');
   const dn = document.getElementById('dn-btn'); if(dn) dn.classList.remove('on');
+  const sp = document.getElementById('sp-btn'); if(sp) sp.classList.remove('on');
 }
 
 function go(id) {
@@ -1331,6 +1445,7 @@ function go(id) {
   document.getElementById('ov-btn').classList.remove('on');
   document.getElementById('sh-btn').classList.remove('on');
   const dn = document.getElementById('dn-btn'); if(dn) dn.classList.remove('on');
+  const sp = document.getElementById('sp-btn'); if(sp) sp.classList.remove('on');
   document.querySelectorAll('.astep-tab').forEach(t => t.classList.remove('on'));
   document.querySelectorAll('.astep-tab').forEach(t => { if(t.getAttribute('onclick') && t.getAttribute('onclick').includes("'"+id+"'")) t.classList.add('on'); });
   const stepMap = { traffic:'acq', auth:'act', discovery:'act', streams:'act', tokens:'rev', tips:'rev', retention:'ret', 's-auth':'s-act', 's-prelive':'s-act', 's-ret':'s-ret', 's-perf':'s-rev', 's-finance':'s-rev' };
