@@ -1,0 +1,9 @@
+{
+  "name": "tg3-weekly-review",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TG3 weekly investor review — password-protected static page hosted on Vercel",
+  "dependencies": {
+    "@vercel/edge": "^1.2.1"
+  }
+}
